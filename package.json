@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build:code": "NODE_ENV=production yarn zcloak-dev-build-ts",
+    "build": "yarn build:code",
     "clean": "zcloak-dev-clean-build",
     "lint": "zcloak-dev-run-lint",
     "lint:css": "stylelint './packages/**/src/**/*.tsx'",
