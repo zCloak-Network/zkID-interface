@@ -1,3 +1,3 @@
-# @zcloak/react-wallet
+# @zkid/app-config
 
-This is react wallet for zCloak dapps.
+zkID interface app config.

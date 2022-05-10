@@ -7,12 +7,16 @@
     "esModuleInterop": true,
     "jsx": "react",
     "paths": {
+      "@zcloak/react-wallet/*": ["react-wallet/src/*"],
+      "@zcloak/react-wallet": ["react-wallet/src"],
       "@zkid/app/*": ["app/src/*"],
       "@zkid/app": ["app/src"],
       "@zkid/app-config/*": ["app-config/src/*"],
       "@zkid/app-config": ["app-config/src"],
-      "@zcloak/react-wallet/*": ["react-wallet/src/*"],
-      "@zcloak/react-wallet": ["react-wallet/src"],
+      "@zkid/react-components/*": ["react-components/src/*"],
+      "@zkid/react-components": ["react-components/src"],
+      "@zkid/page-tutorial/*": ["page-tutorial/src/*"],
+      "@zkid/page-tutorial": ["page-tutorial/src"],
     },
     "skipLibCheck": true
   }
