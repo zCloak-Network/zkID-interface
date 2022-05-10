@@ -8,7 +8,7 @@
   "maintainers": [],
   "name": "@zkid/app",
   "repository": {
-    "directory": "packages/dev",
+    "directory": "packages/app-config",
     "type": "git",
     "url": "https://github.com/zCloak/zkID-interface2.0.git"
   },

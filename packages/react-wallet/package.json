@@ -1,0 +1,34 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
+  "contributors": [],
+  "description": "zCloak react-wallet",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/react-wallet#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/react-wallet",
+  "repository": {
+    "directory": "packages/app-config",
+    "type": "git",
+    "url": "https://github.com/zCloak/zkID-interface2.0.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "dependencies": {
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.2.10",
+    "ethers": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
