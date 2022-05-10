@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <Route element={<BaseFrame />}>
           <Route element={<Tutorial />} path="tutorial" />
         </Route>
-        <Route element={<NoMatch to="/" />} path="*" />
+        <Route element={<NoMatch to="/tutorial" />} path="*" />
       </Routes>
     </HashRouter>
   );
