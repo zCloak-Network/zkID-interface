@@ -4112,6 +4112,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zcloak/zkid-core@workspace:packages/zkid-core":
+  version: 0.0.0-use.local
+  resolution: "@zcloak/zkid-core@workspace:packages/zkid-core"
+  dependencies:
+    eventemitter3: ^4.0.7
+  languageName: unknown
+  linkType: soft
+
 "@zkid/app-config@workspace:packages/app-config":
   version: 0.0.0-use.local
   resolution: "@zkid/app-config@workspace:packages/app-config"
@@ -4170,6 +4178,12 @@ __metadata:
 "@zkid/react-components@workspace:packages/react-components":
   version: 0.0.0-use.local
   resolution: "@zkid/react-components@workspace:packages/react-components"
+  languageName: unknown
+  linkType: soft
+
+"@zkid/react-hooks@workspace:packages/react-hooks":
+  version: 0.0.0-use.local
+  resolution: "@zkid/react-hooks@workspace:packages/react-hooks"
   languageName: unknown
   linkType: soft
 
@@ -7695,7 +7709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:4.0.7, eventemitter3@npm:^4.0.0":
+"eventemitter3@npm:4.0.7, eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374

@@ -2,17 +2,20 @@
   "author": "zCloak",
   "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
   "contributors": [],
-  "description": "zkID react-components",
-  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/react-components#readme",
+  "description": "zCloak zkid-core",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/zkid-core#readme",
   "license": "Apache-2.0",
   "maintainers": [],
-  "name": "@zkid/react-components",
+  "name": "@zcloak/zkid-core",
   "repository": {
-    "directory": "packages/react-components",
+    "directory": "packages/app-config",
     "type": "git",
     "url": "https://github.com/zCloak/zkID-interface2.0.git"
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "eventemitter3": "^4.0.7"
+  }
 }

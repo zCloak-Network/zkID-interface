@@ -4,7 +4,7 @@ import React from 'react';
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
-import { ThemeProvider } from '@zkid/react-components';
+import { ThemeProvider, ZkidExtensionProvider } from '@zkid/react-components';
 
 import App from './App';
 
@@ -13,8 +13,10 @@ const Root: React.FC = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider>
         <WalletProvider supportedChainIds={[MOONBASE.chainId]}>
-          <CssBaseline />
-          <App />
+          <ZkidExtensionProvider>
+            <CssBaseline />
+            <App />
+          </ZkidExtensionProvider>
         </WalletProvider>
       </ThemeProvider>
     </StyledEngineProvider>

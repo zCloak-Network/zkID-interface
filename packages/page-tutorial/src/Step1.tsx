@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
-import React from 'react';
+import { Button, Container } from '@mui/material';
+import React, { useContext } from 'react';
 
+import { ZkidExtensionContext } from '@zkid/react-components';
+
+import Createpassword from './components/Createpassword';
 import InstallExtension from './components/InstallExtension';
+import { TutorialContext } from '.';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -29,6 +33,9 @@ const Wrapper = styled(Container)`
 `;
 
 const Step1: React.FC = () => {
+  const { hasPassword, isInstall } = useContext(ZkidExtensionContext);
+  const { nextStep } = useContext(TutorialContext);
+
   return (
     <Wrapper>
       <h2>Install extension</h2>
@@ -37,7 +44,15 @@ const Step1: React.FC = () => {
         private transactions.
       </p>
       <img src="/images/step_install.svg" />
-      <InstallExtension />
+      {isInstall && hasPassword ? (
+        <Button onClick={nextStep} variant="rounded">
+          Next
+        </Button>
+      ) : !isInstall ? (
+        <InstallExtension />
+      ) : (
+        !hasPassword && <Createpassword />
+      )}
     </Wrapper>
   );
 };

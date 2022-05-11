@@ -2,13 +2,13 @@
   "author": "zCloak",
   "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
   "contributors": [],
-  "description": "zkID react-components",
-  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/react-components#readme",
+  "description": "zkID react-hooks",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/react-hooks#readme",
   "license": "Apache-2.0",
   "maintainers": [],
-  "name": "@zkid/react-components",
+  "name": "@zkid/react-hooks",
   "repository": {
-    "directory": "packages/react-components",
+    "directory": "packages/react-hooks",
     "type": "git",
     "url": "https://github.com/zCloak/zkID-interface2.0.git"
   },
