@@ -10,6 +10,14 @@ export function shortenAddress(address?: string | null, chars = 4): string {
   return `${parsed.slice(0, chars + 2)}...${parsed.slice(-chars)}`;
 }
 
+export function shortenHash(hash?: string | null, chars = 8): string {
+  if (!hash) {
+    return '';
+  }
+
+  return `${hash.slice(0, chars + 2)}...${hash.slice(-chars)}`;
+}
+
 export function assert(condition: unknown, message: string | (() => Error)): asserts condition {
   if (!condition) {
     throw typeof message === 'string' ? new Error(message) : message();

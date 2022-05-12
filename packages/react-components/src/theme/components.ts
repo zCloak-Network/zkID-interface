@@ -38,6 +38,13 @@ const createComponents: Func = () => ({
       font-weight: 400;
       src: url("/fonts/Roboto-Regular.ttf");
     }
+    @font-face {
+      font-family: "iconfont";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url("/fonts/iconfont.ttf");
+    }
   `
   },
 
@@ -130,6 +137,9 @@ const createComponents: Func = () => ({
       }
     ],
     styleOverrides: {
+      root: {
+        borderRadius: 10
+      },
       outlined: {
         borderRadius: 10,
         border: '1px solid #ba60f2',
@@ -203,6 +213,25 @@ const createComponents: Func = () => ({
         background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)'
       }
     }
+  },
+
+  MuiDialog: {
+    styleOverrides: {
+      root: {
+        '.MuiDialogTitle-root': {
+          textAlign: 'center',
+          fontSize: '18px',
+          fontWeight: 700,
+          padding: '24px'
+        }
+      },
+      paper: {
+        borderRadius: '24px'
+      }
+    }
+  },
+  MuiDialogContent: {
+    styleOverrides: {}
   }
 });
 
