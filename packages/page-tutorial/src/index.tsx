@@ -12,7 +12,7 @@ const Wrapper = styled(Container)`
   padding: 52px 172px;
   margin-top: 12px;
 
-  backdrop-filter: blur(8px) brightness(120%);
+  /* backdrop-filter: blur(8px) brightness(120%); */
   border-radius: 12px;
   box-shadow: 0 0 20px rgb(34 13 13 / 42%);
 `;
@@ -26,7 +26,7 @@ interface TutorialState {
 export const TutorialContext = createContext<TutorialState>({} as TutorialState);
 
 const Tutorial: React.FC = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
   const prevStep = useCallback(() => setStep(step - 1), [step]);

@@ -8,7 +8,7 @@
   "maintainers": [],
   "name": "@zcloak/react-wallet",
   "repository": {
-    "directory": "packages/app-config",
+    "directory": "packages/react-wallet",
     "type": "git",
     "url": "https://github.com/zCloak/zkID-interface2.0.git"
   },

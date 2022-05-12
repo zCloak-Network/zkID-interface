@@ -10,6 +10,7 @@ type Func = () => NonNullable<ThemeOptions['typography']>;
  */
 const createTypography: Func = () => ({
   fontFamily: [
+    'Kanit',
     'system-ui',
     '-apple-system',
     'BlinkMacSystemFont',

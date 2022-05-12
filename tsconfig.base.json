@@ -20,6 +20,8 @@
       "@zkid/react-hooks": ["react-hooks/src"],
       "@zkid/page-tutorial/*": ["page-tutorial/src/*"],
       "@zkid/page-tutorial": ["page-tutorial/src"],
+      "@zkid/service/*": ["service/src/*"],
+      "@zkid/service": ["service/src"],
     },
     "skipLibCheck": true
   }

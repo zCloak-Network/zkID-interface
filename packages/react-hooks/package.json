@@ -14,5 +14,9 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "@kiltprotocol/sdk-js": "^0.26.0",
+    "axios": "^0.27.2"
+  }
 }

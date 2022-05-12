@@ -15,15 +15,87 @@ type Func = (mode: PaletteMode) => NonNullable<ThemeOptions['components']>;
  * @see https://github.com/mui-org/material-ui/tree/master/packages/mui-material/src
  */
 const createComponents: Func = () => ({
+  MuiCssBaseline: {
+    styleOverrides: `
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url("/fonts/Kanit-Regular.ttf");
+    }
+  `
+  },
+
   MuiLink: {
     defaultProps: {
       underline: 'none'
     }
   },
 
-  MuiTextField: {
-    defaultProps: {
-      InputLabelProps: { shrink: true }
+  MuiInputLabel: {
+    styleOverrides: {
+      outlined: {
+        position: 'relative',
+        color: 'white',
+        transform: 'none',
+        marginBottom: '8px'
+      },
+      root: {
+        '&.Mui-focused': {
+          color: 'white'
+        }
+      }
+    }
+  },
+
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        background: 'rgba(255, 255, 255, 0.5)',
+        borderRadius: '10px',
+        '&.Mui-focused': {}
+      },
+      notchedOutline: {
+        border: '1px solid rgba(255, 255, 255, 0.6)',
+        ':hover': {}
+      }
+    }
+  },
+
+  MuiMenu: {
+    styleOverrides: {
+      paper: {
+        backgroundColor: 'red !important',
+        borderRadius: '10px !important'
+      },
+      list: {
+        background: '#D4CAFE',
+        border: '1px solid rgba(255, 255, 255, 0.6)',
+        borderRadius: '10px'
+      }
+    }
+  },
+
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        borderRadius: '6px',
+        ':hover, &.Mui-selected,&.Mui-focusVisible': {
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          ':hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.6)'
+          }
+        }
+      }
+    }
+  },
+
+  MuiButtonBase: {
+    styleOverrides: {
+      root: {
+        borderRadius: 10
+      }
     }
   },
 
@@ -44,6 +116,13 @@ const createComponents: Func = () => ({
       }
     ],
     styleOverrides: {
+      outlined: {
+        borderRadius: 10,
+        border: '1px solid #ba60f2',
+        ':hover': {
+          background: 'hsla(0,0%,100%,.7)'
+        }
+      },
       contained: {
         boxShadow: 'none',
         '&:hover': {
@@ -91,6 +170,23 @@ const createComponents: Func = () => ({
       },
       text: {
         fontWeight: 700
+      }
+    }
+  },
+
+  MuiAlert: {
+    styleOverrides: {
+      message: {
+        padding: 0
+      },
+      root: {
+        alignItems: 'center',
+        padding: '0px 16px',
+        height: '32px',
+        borderRadius: '16px'
+      },
+      filledWarning: {
+        background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)'
       }
     }
   }
