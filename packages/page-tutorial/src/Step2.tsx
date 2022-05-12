@@ -1,19 +1,7 @@
 import type { ICTypeSchema, IMessage, MessageBody } from '@kiltprotocol/sdk-js';
 
 import { Did, Message } from '@kiltprotocol/sdk-js';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  styled
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { Box, Button, CircularProgress, Container, styled } from '@mui/material';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import FileSaver from 'file-saver';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -28,8 +16,8 @@ import {
 } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service/Api';
 
+import Contents from './components/Contents';
 import Credential from './components/Credential';
-import EquipmentRarity from './components/EquipmentRarity';
 import SubmitClaim from './components/SubmitClaim';
 import { TUTORIAL_MNEMONIC } from './keys';
 import { TutorialContext } from '.';
@@ -57,31 +45,14 @@ const Wrapper = styled(Container)`
 const Step2: React.FC = () => {
   const { nextStep } = useContext(TutorialContext);
   const [ready, setReady] = useState(false);
-  const [name, setName] = useState<string>();
-  const [birthday, setBirthday] = useState<Date | null>(null);
-  const [clazz, setClazz] = useState<number>();
-  const [rarity, setRarity] = useState<[number, number, number]>();
   const [mnemonic, setMnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
   const [credential, setCredential] = useState<IMessage | null>(null);
+  const [contents, setContents] = useState<any>();
 
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const lightDid = useLightDid(keystore, mnemonic);
-
-  const contents = useMemo(() => {
-    return name && clazz && rarity && birthday
-      ? {
-          name,
-          class: clazz,
-          age: new Date().getFullYear() - birthday.getFullYear(),
-          helmet_rarity: rarity[0],
-          chest_rarity: rarity[1],
-          weapon_rarity: rarity[2]
-        }
-      : undefined;
-  }, [birthday, clazz, name, rarity]);
   const claim = useClaim(CTYPE as ICTypeSchema, contents, lightDid?.did);
   const requestForAttestation = useRequestForAttestation(keystore, claim, lightDid);
-
   const attesterFullDid = useFullDid(ADMIN_ATTESTER_ADDRESS);
 
   const message = useMemo(() => {
@@ -97,12 +68,6 @@ const Step2: React.FC = () => {
     }
   }, [attesterFullDid, lightDid, requestForAttestation]);
 
-  useEffect(() => {
-    if (!mnemonic) {
-      setMnemonic(mnemonicGenerate());
-    }
-  }, [mnemonic, setMnemonic]);
-
   const download = useCallback(async () => {
     if (credential) {
       const blob = new Blob([JSON.stringify(credential.body.content)], {
@@ -114,7 +79,7 @@ const Step2: React.FC = () => {
     }
   }, [credential]);
 
-  useEffect(() => {
+  const fetchAttestation = useCallback(() => {
     if (lightDid?.did && lightDid.encryptionKey?.id) {
       credentialApi
         .getAttestation({
@@ -134,6 +99,16 @@ const Step2: React.FC = () => {
     }
   }, [keystore, lightDid]);
 
+  useEffect(() => {
+    if (!mnemonic) {
+      setMnemonic(mnemonicGenerate());
+    }
+  }, [mnemonic, setMnemonic]);
+
+  useEffect(() => {
+    fetchAttestation();
+  }, [fetchAttestation]);
+
   return (
     <Wrapper>
       <h2>Describe Yourself</h2>
@@ -142,9 +117,13 @@ const Step2: React.FC = () => {
         equipment. To claim it, first describe yourself. Then submit.
       </p>
       {ready ? (
-        credential ? (
-          <>
+        <>
+          {credential ? (
             <Credential credential={credential} />
+          ) : (
+            <Contents contentsChange={setContents} />
+          )}
+          {credential ? (
             <Box sx={{ display: 'flex' }}>
               <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
                 Download
@@ -153,71 +132,18 @@ const Step2: React.FC = () => {
                 Next
               </Button>
             </Box>
-          </>
-        ) : (
-          <Box
-            autoComplete="off"
-            component="form"
-            noValidate
-            sx={{
-              width: '100%',
-              textAlign: 'left',
-
-              '> .MuiFormControl-root': {
-                mb: 2
-              }
-            }}
-          >
-            <FormControl fullWidth variant="outlined">
-              <InputLabel shrink>Name</InputLabel>
-              <OutlinedInput
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Please input name"
-                value={name}
-              />
-            </FormControl>
-            <DatePicker
-              onChange={setBirthday}
-              renderInput={(params) => (
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel shrink>Birthday</InputLabel>
-                  <OutlinedInput
-                    endAdornment={params.InputProps?.endAdornment}
-                    inputProps={params.inputProps}
-                    ref={params.inputRef}
-                  />
-                </FormControl>
-              )}
-              value={birthday}
-            />
-            <FormControl fullWidth>
-              <InputLabel shrink>Class</InputLabel>
-              <Select
-                onChange={(e) => setClazz(Number(e.target.value))}
-                value={clazz}
-                variant="outlined"
-              >
-                <MenuItem value={1}>Warrior</MenuItem>
-                <MenuItem value={2}>Paladin</MenuItem>
-                <MenuItem value={3}>Priest</MenuItem>
-                <MenuItem value={4}>Mage</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel shrink>Equipment Rarity</InputLabel>
-              <EquipmentRarity onChange={setRarity} value={rarity} />
-            </FormControl>
-
+          ) : (
             <div style={{ textAlign: 'center' }}>
               <SubmitClaim
                 attesterFullDid={attesterFullDid}
                 claimLightDid={lightDid}
                 keystore={keystore}
                 message={message}
+                onDone={fetchAttestation}
               />
             </div>
-          </Box>
-        )
+          )}
+        </>
       ) : (
         <Box sx={{ display: 'flex' }}>
           <CircularProgress color="inherit" />

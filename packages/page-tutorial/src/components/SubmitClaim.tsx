@@ -14,9 +14,16 @@ interface Props {
   message?: Message | null;
   claimLightDid?: LightDidDetails | null;
   attesterFullDid?: FullDidDetails | null;
+  onDone: () => void;
 }
 
-const SubmitClaim: React.FC<Props> = ({ attesterFullDid, claimLightDid, keystore, message }) => {
+const SubmitClaim: React.FC<Props> = ({
+  attesterFullDid,
+  claimLightDid,
+  keystore,
+  message,
+  onDone
+}) => {
   const [loading, setLoading] = useState(false);
   const handleClick = useCallback(async () => {
     if (
@@ -58,8 +65,9 @@ const SubmitClaim: React.FC<Props> = ({ attesterFullDid, claimLightDid, keystore
       }
 
       setLoading(false);
+      onDone();
     }
-  }, [attesterFullDid, claimLightDid, keystore, message]);
+  }, [attesterFullDid, claimLightDid, keystore, message, onDone]);
 
   return (
     <>
