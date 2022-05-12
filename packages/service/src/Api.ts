@@ -35,6 +35,21 @@ export class CredentialApi extends Request {
       }
     );
   }
+
+  getAttestation(params: { receiverKeyId: string }) {
+    return this.get<
+      ServerResponse<
+        {
+          ciphertext: string;
+          nonce: string;
+          receiverKeyId: string;
+          senderKeyId: string;
+          __v: number;
+          _id: string;
+        }[]
+      >
+    >('/attestation/one', { params });
+  }
 }
 
 export const credentialApi = new CredentialApi();

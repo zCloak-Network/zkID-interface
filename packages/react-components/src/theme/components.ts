@@ -24,6 +24,20 @@ const createComponents: Func = () => ({
       font-weight: 400;
       src: url("/fonts/Kanit-Regular.ttf");
     }
+    @font-face {
+      font-family: "RobotoSlab";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 700;
+      src: url("/fonts/RobotoSlab-Bold.ttf");
+    }
+    @font-face {
+      font-family: "Roboto";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url("/fonts/Roboto-Regular.ttf");
+    }
   `
   },
 
