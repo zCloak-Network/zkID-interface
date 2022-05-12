@@ -26,7 +26,7 @@ interface TutorialState {
 export const TutorialContext = createContext<TutorialState>({} as TutorialState);
 
 const Tutorial: React.FC = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
   const prevStep = useCallback(() => setStep(step - 1), [step]);

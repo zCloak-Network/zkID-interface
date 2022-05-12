@@ -20,16 +20,5 @@ export interface ZKIDExtensionResponses {
   SEND_BACKNEXT_TO_WEB: undefined;
   SEND_NEXT_TO_WEB: undefined;
   SEND_CREATE_PASSWORD_SUCCESS_TO_WEB: undefined;
-  SEND_IMPORT_CREDENTIAL_SUCCESS_TO_WEB: undefined;
-}
-
-export interface ZKIDInject {
-  getIfCreatePassword: () => Promise<boolean>;
-  getCredentialByCHash: (chash: string) => Promise<any>;
-  name: string;
-  openzkIDPopup: <Request extends keyof ZKIDExtensionRequests>(
-    request: Request,
-    values: ZKIDExtensionRequests[Request]
-  ) => Promise<any>;
-  version: string;
+  SEND_IMPORT_CREDENTIAL_SUCCESS: undefined;
 }
