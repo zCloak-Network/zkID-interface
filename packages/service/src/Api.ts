@@ -50,6 +50,14 @@ export class CredentialApi extends Request {
       >
     >('/attestation/one', { params });
   }
+
+  faucet(params: { address: string }) {
+    return this.get<ServerResponse<any>>('/user/faucet', { params });
+  }
+
+  faucetStatus(params: { address: string }) {
+    return this.get<ServerResponse<{ status: number }>>('/user/faucet-status', { params });
+  }
 }
 
 export const credentialApi = new CredentialApi();
