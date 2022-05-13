@@ -1,10 +1,8 @@
-import type { IMessage } from '@kiltprotocol/sdk-js';
-
 import { Box, styled } from '@mui/material';
 import React from 'react';
 
 interface Props {
-  credential?: IMessage;
+  credential?: any;
 }
 
 const Wrapper = styled(Box)`
@@ -87,15 +85,12 @@ const Wrapper = styled(Box)`
 `;
 
 const Credential: React.FC<Props> = ({ credential }) => {
-  const name = (credential?.body.content as unknown as any)?.request?.claim?.contents?.name;
-  const age = (credential?.body.content as unknown as any)?.request?.claim?.contents?.age;
-  const clazz = (credential?.body.content as unknown as any)?.request?.claim?.contents?.class;
-  const helmet = (credential?.body.content as unknown as any)?.request?.claim?.contents
-    ?.helmet_rarity;
-  const weapon = (credential?.body.content as unknown as any)?.request?.claim?.contents
-    ?.weapon_rarity;
-  const chest = (credential?.body.content as unknown as any)?.request?.claim?.contents
-    ?.chest_rarity;
+  const name = credential?.request?.claim?.contents?.name;
+  const age = credential?.request?.claim?.contents?.age;
+  const clazz = credential?.request?.claim?.contents?.class;
+  const helmet = credential?.request?.claim?.contents?.helmet_rarity;
+  const weapon = credential?.request?.claim?.contents?.weapon_rarity;
+  const chest = credential?.request?.claim?.contents?.chest_rarity;
 
   const ClazzName: Record<number, string> = {
     1: 'Warrior',

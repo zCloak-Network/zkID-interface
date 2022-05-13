@@ -1,25 +1,19 @@
 import type { ICTypeSchema, IMessage, MessageBody } from '@kiltprotocol/sdk-js';
 
-import { Did, Message } from '@kiltprotocol/sdk-js';
+import { Message } from '@kiltprotocol/sdk-js';
 import { Box, Button, CircularProgress, Container, styled } from '@mui/material';
-import { mnemonicGenerate } from '@polkadot/util-crypto';
 import FileSaver from 'file-saver';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { ADMIN_ATTESTER_ADDRESS, CTYPE } from '@zkid/app-config/constants';
-import {
-  useClaim,
-  useFullDid,
-  useLightDid,
-  useLocalStorage,
-  useRequestForAttestation
-} from '@zkid/react-hooks';
+import { CTYPE } from '@zkid/app-config/constants';
+import { useClaim, useRequestForAttestation } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service/Api';
+import { AttestationStatus } from '@zkid/service/types';
+import { sleep } from '@zkid/service/utils';
 
 import Contents from './components/Contents';
 import Credential from './components/Credential';
 import SubmitClaim from './components/SubmitClaim';
-import { TUTORIAL_MNEMONIC } from './keys';
 import { TutorialContext } from '.';
 
 const Wrapper = styled(Container)`
@@ -43,70 +37,73 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { nextStep } = useContext(TutorialContext);
+  const { attesterFullDid, claimerLightDid, keystore, nextStep } = useContext(TutorialContext);
   const [ready, setReady] = useState(false);
-  const [mnemonic, setMnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
-  const [credential, setCredential] = useState<IMessage | null>(null);
+  const [originMessage, setOriginMessage] = useState<IMessage | null>(null);
   const [contents, setContents] = useState<any>();
 
-  const keystore = useMemo(() => new Did.DemoKeystore(), []);
-  const lightDid = useLightDid(keystore, mnemonic);
-  const claim = useClaim(CTYPE as ICTypeSchema, contents, lightDid?.did);
-  const requestForAttestation = useRequestForAttestation(keystore, claim, lightDid);
-  const attesterFullDid = useFullDid(ADMIN_ATTESTER_ADDRESS);
+  const claim = useClaim(CTYPE as ICTypeSchema, contents, claimerLightDid?.did);
+  const requestForAttestation = useRequestForAttestation(keystore, claim, claimerLightDid);
 
   const message = useMemo(() => {
-    if (requestForAttestation && lightDid && attesterFullDid) {
+    if (requestForAttestation && claimerLightDid && attesterFullDid) {
       const messageBody: MessageBody = {
         content: { requestForAttestation },
         type: Message.BodyType.REQUEST_ATTESTATION
       };
 
-      return new Message(messageBody, lightDid.did, attesterFullDid.did);
+      return new Message(messageBody, claimerLightDid.did, attesterFullDid.did);
     } else {
       return null;
     }
-  }, [attesterFullDid, lightDid, requestForAttestation]);
+  }, [attesterFullDid, claimerLightDid, requestForAttestation]);
 
-  const download = useCallback(async () => {
-    if (credential) {
-      const blob = new Blob([JSON.stringify(credential.body.content)], {
+  const download = useCallback(() => {
+    if (originMessage) {
+      const blob = new Blob([JSON.stringify(originMessage.body.content)], {
         type: 'text/plain;charset=utf-8'
       });
 
-      // eslint-disable-next-line @typescript-eslint/await-thenable
-      await FileSaver.saveAs(blob, 'credential.json');
+      FileSaver.saveAs(blob, 'credential.json');
     }
-  }, [credential]);
+  }, [originMessage]);
 
-  const fetchAttestation = useCallback(() => {
-    if (lightDid?.did && lightDid.encryptionKey?.id) {
+  const fetchAttestation = useCallback(async () => {
+    if (claimerLightDid?.did && claimerLightDid.encryptionKey?.id) {
+      while (true) {
+        await sleep(6000);
+        const {
+          data: { attestationStatus }
+        } = await credentialApi.getAttestationStatus({
+          senderKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
+        });
+
+        if (attestationStatus === AttestationStatus.attested) {
+          break;
+        } else if (attestationStatus === AttestationStatus.notAttested) {
+          return;
+        }
+      }
+
       credentialApi
         .getAttestation({
-          receiverKeyId: `${lightDid.did}#${lightDid.encryptionKey.id}`
+          receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
         })
         .then(({ data }) => {
           if (data.length > 0) {
-            return Message.decrypt(data[0], keystore, lightDid);
+            return Message.decrypt(data[0], keystore, claimerLightDid);
           } else {
             return null;
           }
         })
         .then((message) => {
-          setCredential(message);
-          setReady(true);
+          setOriginMessage(message);
         });
     }
-  }, [keystore, lightDid]);
+  }, [keystore, claimerLightDid]);
 
   useEffect(() => {
-    if (!mnemonic) {
-      setMnemonic(mnemonicGenerate());
-    }
-  }, [mnemonic, setMnemonic]);
-
-  useEffect(() => {
-    fetchAttestation();
+    fetchAttestation().finally(() => setReady(true));
   }, [fetchAttestation]);
 
   return (
@@ -118,12 +115,12 @@ const Step2: React.FC = () => {
       </p>
       {ready ? (
         <>
-          {credential ? (
-            <Credential credential={credential} />
+          {originMessage ? (
+            <Credential credential={originMessage.body.content} />
           ) : (
             <Contents contentsChange={setContents} />
           )}
-          {credential ? (
+          {originMessage ? (
             <Box sx={{ display: 'flex' }}>
               <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
                 Download
@@ -136,7 +133,7 @@ const Step2: React.FC = () => {
             <div style={{ textAlign: 'center' }}>
               <SubmitClaim
                 attesterFullDid={attesterFullDid}
-                claimLightDid={lightDid}
+                claimerLightDid={claimerLightDid}
                 keystore={keystore}
                 message={message}
                 onDone={fetchAttestation}

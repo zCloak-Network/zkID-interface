@@ -198,23 +198,6 @@ const createComponents: Func = () => ({
     }
   },
 
-  // MuiAlert: {
-  //   styleOverrides: {
-  //     message: {
-  //       padding: 0
-  //     },
-  //     root: {
-  //       alignItems: 'center',
-  //       padding: '0px 16px',
-  //       height: '32px',
-  //       borderRadius: '16px'
-  //     },
-  //     filledWarning: {
-  //       background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)'
-  //     }
-  //   }
-  // },
-
   MuiDialog: {
     styleOverrides: {
       root: {

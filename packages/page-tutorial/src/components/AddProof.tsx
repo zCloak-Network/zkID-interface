@@ -14,19 +14,18 @@ import { KiltProofsAdddress } from '@zkid/app-config/constants/address';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
 import { ButtonEnable, NotificationContext } from '@zkid/react-components';
-import { useLocalStorage } from '@zkid/react-hooks';
 
-import { TUTORIAL_MNEMONIC } from '../keys';
+import { TutorialContext } from '..';
 
 interface Props {
   proof?: Proof;
 }
 
 const AddProof: React.FC<Props> = ({ children, proof }) => {
+  const { mnemonic } = useContext(TutorialContext);
   const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
   const { account, library } = useWallet();
-  const [mnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
   const kiltProofs = useMemo(
     () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),
     [account, library]

@@ -2,24 +2,22 @@ import type { FullDidDetails, LightDidDetails } from '@kiltprotocol/did';
 
 import { Did, Message } from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Portal, Snackbar } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
 import { credentialApi } from '@zkid/service';
-import { AttestationStatus } from '@zkid/service/types';
-import { sleep } from '@zkid/service/utils';
 
 interface Props {
   keystore: Did.DemoKeystore;
   message?: Message | null;
-  claimLightDid?: LightDidDetails | null;
+  claimerLightDid?: LightDidDetails | null;
   attesterFullDid?: FullDidDetails | null;
   onDone: () => void;
 }
 
 const SubmitClaim: React.FC<Props> = ({
   attesterFullDid,
-  claimLightDid,
+  claimerLightDid,
   keystore,
   message,
   onDone
@@ -28,16 +26,16 @@ const SubmitClaim: React.FC<Props> = ({
   const handleClick = useCallback(async () => {
     if (
       message &&
-      claimLightDid &&
+      claimerLightDid &&
       attesterFullDid &&
-      claimLightDid.encryptionKey &&
+      claimerLightDid.encryptionKey &&
       attesterFullDid.encryptionKey
     ) {
       setLoading(true);
 
       const encryptedPresentationMessage = await message.encrypt(
-        claimLightDid.encryptionKey.id,
-        claimLightDid,
+        claimerLightDid.encryptionKey.id,
+        claimerLightDid,
         keystore,
         attesterFullDid.assembleKeyId(attesterFullDid.encryptionKey.id)
       );
@@ -50,36 +48,36 @@ const SubmitClaim: React.FC<Props> = ({
       });
 
       if (data.code === 200) {
-        while (true) {
-          await sleep(6000);
-          const {
-            data: { attestationStatus }
-          } = await credentialApi.getAttestationStatus({
-            senderKeyId: `${claimLightDid.did}#${claimLightDid.encryptionKey.id}`
-          });
-
-          if (attestationStatus === AttestationStatus.attested) {
-            break;
-          }
-        }
+        onDone();
       }
 
       setLoading(false);
-      onDone();
     }
-  }, [attesterFullDid, claimLightDid, keystore, message, onDone]);
+  }, [attesterFullDid, claimerLightDid, keystore, message, onDone]);
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        autoHideDuration={null}
-        open={loading}
-      >
-        <Alert icon={<></>} severity="warning" variant="filled">
-          We are checking your documents. The attestation takes 30-60s.
-        </Alert>
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          autoHideDuration={null}
+          open={loading}
+        >
+          <Alert
+            icon={<></>}
+            severity="warning"
+            sx={{
+              alignItems: 'center',
+              padding: '0 16px',
+              background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)',
+              borderRadius: '16px'
+            }}
+            variant="filled"
+          >
+            We are checking your documents. The attestation takes 30-60s.
+          </Alert>
+        </Snackbar>
+      </Portal>
       <LoadingButton disabled={!message} loading={loading} onClick={handleClick} variant="rounded">
         Submit
       </LoadingButton>
