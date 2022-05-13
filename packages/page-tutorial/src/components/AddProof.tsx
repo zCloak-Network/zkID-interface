@@ -4,7 +4,7 @@ import { Utils } from '@kiltprotocol/sdk-js';
 import { decodeAddress } from '@polkadot/keyring';
 import { stringToHex, u8aToHex } from '@polkadot/util';
 import { waitReady } from '@polkadot/wasm-crypto';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 import { KiltProofs } from '@zcloak/zkid-core';
@@ -13,7 +13,7 @@ import { ADMIN_ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { KiltProofsAdddress } from '@zkid/app-config/constants/address';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
-import { ButtonEnable } from '@zkid/react-components';
+import { ButtonEnable, NotificationContext } from '@zkid/react-components';
 import { useLocalStorage } from '@zkid/react-hooks';
 
 import { TUTORIAL_MNEMONIC } from '../keys';
@@ -23,6 +23,7 @@ interface Props {
 }
 
 const AddProof: React.FC<Props> = ({ children, proof }) => {
+  const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
   const { account, library } = useWallet();
   const [mnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
@@ -51,9 +52,10 @@ const AddProof: React.FC<Props> = ({ children, proof }) => {
           proof.rootHash,
           [proof.expectResult]
         )
+        .catch(notifyError)
         .finally(() => setLoading(false));
     }
-  }, [kiltProofs, mnemonic, proof]);
+  }, [kiltProofs, mnemonic, notifyError, proof]);
 
   return (
     <ButtonEnable loading={loading} onClick={handleClick} variant="rounded">

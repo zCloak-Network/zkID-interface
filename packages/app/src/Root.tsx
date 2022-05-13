@@ -6,7 +6,7 @@ import React from 'react';
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
-import { ThemeProvider, ZkidExtensionProvider } from '@zkid/react-components';
+import { NotificationProvider, ThemeProvider, ZkidExtensionProvider } from '@zkid/react-components';
 
 import App from './App';
 
@@ -15,12 +15,14 @@ const Root: React.FC = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <WalletProvider supportedChainIds={[MOONBASE.chainId]}>
-            <ZkidExtensionProvider>
-              <CssBaseline />
-              <App />
-            </ZkidExtensionProvider>
-          </WalletProvider>
+          <NotificationProvider>
+            <WalletProvider supportedChainIds={[MOONBASE.chainId]}>
+              <ZkidExtensionProvider>
+                <CssBaseline />
+                <App />
+              </ZkidExtensionProvider>
+            </WalletProvider>
+          </NotificationProvider>
         </LocalizationProvider>
       </ThemeProvider>
     </StyledEngineProvider>
