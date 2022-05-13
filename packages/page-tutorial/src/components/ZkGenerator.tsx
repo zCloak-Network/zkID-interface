@@ -9,6 +9,8 @@ import { CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { ZkidExtensionContext, ZkRule } from '@zkid/react-components';
 
+import AddProof from './AddProof';
+
 const Wrapper = styled(Box)`
   width: 100%;
   text-align: left;
@@ -138,6 +140,9 @@ const ZkGenerator: React.FC = () => {
           </span>
         </div>
       </Item>
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
+        <AddProof proof={proof}>Submit</AddProof>
+      </Box>
     </Wrapper>
   );
 };

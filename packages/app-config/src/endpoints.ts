@@ -11,3 +11,4 @@ export const MOONBASE: Endpoint = {
 };
 
 export const KILT_ENDPOINT = 'wss://peregrine.kilt.io/parachain-public-ws/';
+export const KILT_SS58 = 38;
