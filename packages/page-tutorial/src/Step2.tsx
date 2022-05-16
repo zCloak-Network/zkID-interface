@@ -105,8 +105,6 @@ const Step2: React.FC = () => {
     fetchAttestation().finally(() => setReady(true));
   }, [fetchAttestation]);
 
-  console.log(originMessage, ready);
-
   return (
     <Wrapper>
       <h2>Describe Yourself</h2>

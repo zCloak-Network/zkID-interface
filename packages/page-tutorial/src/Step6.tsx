@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
-import { Box, Container } from '@mui/material';
-import React, { useCallback, useContext, useState } from 'react';
+import { Box, CircularProgress, Container } from '@mui/material';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+
+import { useWallet } from '@zcloak/react-wallet';
 
 import { ButtonEnable, NotificationContext, PoapCard } from '@zkid/react-components';
+import { zkidApi } from '@zkid/service';
 
 import { TutorialContext } from '.';
 
@@ -27,10 +30,25 @@ const Wrapper = styled(Container)`
 `;
 
 const Step6: React.FC = () => {
+  const { account } = useWallet();
   const { poap } = useContext(TutorialContext);
   const { notifyError } = useContext(NotificationContext);
+  const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nftId, setNftId] = useState<string>();
+
+  useEffect(() => {
+    if (account) {
+      zkidApi
+        .getMintPoap({ who: account })
+        .then(({ data }) => {
+          if (data) {
+            setNftId(data.nftId);
+          }
+        })
+        .finally(() => setReady(true));
+    }
+  }, [account]);
 
   const claim = useCallback(() => {
     if (poap) {
@@ -38,7 +56,7 @@ const Step6: React.FC = () => {
       poap
         .claim()
         .then((tx) => tx.wait())
-        .then(poap.getMintLog)
+        .then((receipt) => poap.getMintLog(receipt))
         .then((mintLog) => {
           if (mintLog) {
             setNftId(mintLog.nftId.toString());
@@ -55,23 +73,35 @@ const Step6: React.FC = () => {
     <Wrapper>
       <h2>Claim Your POAP</h2>
       <p>Claim your POAP and enjoy your stay in zCloak Kingdom.</p>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginY: '44px'
-        }}
-      >
-        {nftId ? (
-          <PoapCard nftId={nftId} />
-        ) : (
-          <img src="/images/nft_cover.webp" style={{ width: 200 }} />
-        )}
-      </Box>
-      <ButtonEnable loading={loading} onClick={claim} variant="rounded">
-        Claim POAP
-      </ButtonEnable>
+      {ready ? (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginY: '44px'
+            }}
+          >
+            {nftId ? (
+              <PoapCard nftId={nftId} />
+            ) : (
+              <img src="/images/nft_cover.webp" style={{ width: 200 }} />
+            )}
+          </Box>
+          {nftId ? (
+            <ButtonEnable variant="rounded">Go to dashboard</ButtonEnable>
+          ) : (
+            <ButtonEnable loading={loading} onClick={claim} variant="rounded">
+              Claim POAP
+            </ButtonEnable>
+          )}
+        </>
+      ) : (
+        <Box>
+          <CircularProgress color="inherit" />
+        </Box>
+      )}
     </Wrapper>
   );
 };

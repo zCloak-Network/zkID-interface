@@ -12,7 +12,7 @@ interface Props {
   message?: Message | null;
   claimerLightDid?: LightDidDetails | null;
   attesterFullDid?: FullDidDetails | null;
-  onDone: () => void;
+  onDone: () => Promise<void>;
 }
 
 const SubmitClaim: React.FC<Props> = ({
@@ -48,7 +48,7 @@ const SubmitClaim: React.FC<Props> = ({
       });
 
       if (data.code === 200) {
-        onDone();
+        await onDone();
       }
 
       setLoading(false);

@@ -67,15 +67,22 @@ const ProofTrue: React.FC = () => {
 };
 
 const Step5: React.FC = () => {
-  const { kiltProofs, nextStep } = useContext(TutorialContext);
+  const { kiltProofs, nextStep, simpleAggregator } = useContext(TutorialContext);
   const { account } = useWallet();
   const [exists, setExists] = useState(false);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    if (account && kiltProofs) {
-      kiltProofs.singleProofExists(account, requestHash).then(setExists);
+    if (account && kiltProofs && simpleAggregator) {
+      Promise.all([
+        kiltProofs.singleProofExists(account, requestHash),
+        simpleAggregator.isFinished(account, requestHash)
+      ]).then(([exists, isFinished]) => {
+        setExists(exists);
+        setFinished(isFinished);
+      });
     }
-  }, [account, kiltProofs]);
+  }, [account, kiltProofs, simpleAggregator]);
 
   return (
     <Wrapper>
@@ -84,8 +91,8 @@ const Step5: React.FC = () => {
         To claim your POAP, you first need to generate a STARK proof based on your credential in
         your zCloak ID Wallet then upload it.
       </p>
-      {exists ? <ProofTrue /> : <ZkGenerator />}
-      {exists && (
+      {finished ? <ProofTrue /> : exists ? <>Wait for vote</> : <ZkGenerator />}
+      {finished && (
         <Button onClick={nextStep} variant="rounded">
           Next
         </Button>

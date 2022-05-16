@@ -58,6 +58,8 @@ const Step4: React.FC = () => {
       credentialApi.faucetStatus({ address: account }).then(({ data: { status } }) => {
         if (status === 3) {
           setFaucetSuccess(true);
+        } else {
+          setFaucetSuccess(false);
         }
       });
     }

@@ -22,3 +22,15 @@ export enum AttestationStatus {
   attesting = 2,
   attested = 3
 }
+
+export type MintPoap = {
+  blockHash: string;
+  blockNumber: number;
+  blockTime: number;
+  nftId: string;
+  poapId: string;
+  transactionHash: string;
+  who: string;
+  __v: number;
+  _id: string;
+};

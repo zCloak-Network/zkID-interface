@@ -28,10 +28,8 @@ class Poap extends ERC1155 {
     }
 
     const mintLog = txIdOrReceipt.logs
-      .map((log) => this.contract.interface.parseLog(log))
+      .map(this.contract.interface.parseLog.bind(this.contract.interface))
       .find(({ name }) => name === 'MintPoap');
-
-    console.log(mintLog);
 
     return mintLog
       ? {

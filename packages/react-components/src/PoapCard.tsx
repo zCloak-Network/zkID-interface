@@ -20,8 +20,6 @@ const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftI
     [nftId]
   );
 
-  console.log(num);
-
   return (
     <Box
       sx={{

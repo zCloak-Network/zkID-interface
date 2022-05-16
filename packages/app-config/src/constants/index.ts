@@ -20,6 +20,6 @@ export const ADMIN_ATTESTER = 'did:kilt:4rdUX21mgJYGPpU3PmmjSMDkthg9yD2eFeRXyh84
 export const ADMIN_ATTESTER_ADDRESS = '4rdUX21mgJYGPpU3PmmjSMDkthg9yD2eFeRXyh84tD6ssvS4';
 
 export const HOSTPREFIX = 'https://credential-service.zcloak.network';
-export const PROOFHOSTPREFIX = 'https://zkid-service.zcloak.network';
+export const ZKIDHOSTPREFIX = 'https://zkid-service.zcloak.network';
 
 export const CTYPE_HASH = '0xe21c5f437332f33db0e6f9cef958f2ff3fedfbcdeb60d4ff24db978b487aad1a';

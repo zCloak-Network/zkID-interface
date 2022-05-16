@@ -5,10 +5,14 @@ import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useEagerConnect, useWallet } from '@zcloak/react-wallet';
-import { KiltProofs, Poap } from '@zcloak/zkid-core';
+import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/zkid-core';
 
 import { ADMIN_ATTESTER_ADDRESS } from '@zkid/app-config/constants';
-import { KiltProofsAdddress, PoapAdddress } from '@zkid/app-config/constants/address';
+import {
+  KiltProofsAdddress,
+  PoapAdddress,
+  SimpleAggregatorAddress
+} from '@zkid/app-config/constants/address';
 import { useFullDid, useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { TUTORIAL_MNEMONIC } from './keys';
@@ -36,6 +40,7 @@ interface TutorialState {
   attesterFullDid?: Did.FullDidDetails | null;
   kiltProofs: KiltProofs | null;
   poap: Poap | null;
+  simpleAggregator: SimpleAggregator | null;
   nextStep: () => void;
   prevStep: () => void;
 }
@@ -65,6 +70,11 @@ const Tutorial: React.FC = () => {
     [account, library]
   );
 
+  const simpleAggregator = useMemo(
+    () => (library ? new SimpleAggregator(SimpleAggregatorAddress, library, account) : null),
+    [account, library]
+  );
+
   useEffect(() => {
     if (!mnemonic) {
       setMnemonic(mnemonicGenerate());
@@ -79,6 +89,7 @@ const Tutorial: React.FC = () => {
         keystore,
         kiltProofs,
         poap,
+        simpleAggregator,
         claimerLightDid,
         attesterFullDid,
         nextStep,
