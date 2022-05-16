@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 
-import { ButtonEnable, NotificationContext } from '@zkid/react-components';
+import { ButtonEnable, NotificationContext, PoapCard } from '@zkid/react-components';
 
 import { TutorialContext } from '.';
 
@@ -24,18 +24,13 @@ const Wrapper = styled(Container)`
   > p {
     opacity: 0.8;
   }
-
-  > img {
-    display: block;
-    width: 200px;
-    margin: 44px auto;
-  }
 `;
 
 const Step6: React.FC = () => {
   const { poap } = useContext(TutorialContext);
   const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
+  const [nftId, setNftId] = useState<string>();
 
   const claim = useCallback(() => {
     if (poap) {
@@ -43,6 +38,14 @@ const Step6: React.FC = () => {
       poap
         .claim()
         .then((tx) => tx.wait())
+        .then(poap.getMintLog)
+        .then((mintLog) => {
+          if (mintLog) {
+            setNftId(mintLog.nftId.toString());
+          }
+
+          return mintLog;
+        })
         .catch(notifyError)
         .finally(() => setLoading(false));
     }
@@ -52,7 +55,20 @@ const Step6: React.FC = () => {
     <Wrapper>
       <h2>Claim Your POAP</h2>
       <p>Claim your POAP and enjoy your stay in zCloak Kingdom.</p>
-      <img src="/images/nft_cover.png" />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginY: '44px'
+        }}
+      >
+        {nftId ? (
+          <PoapCard nftId={nftId} />
+        ) : (
+          <img src="/images/nft_cover.webp" style={{ width: 200 }} />
+        )}
+      </Box>
       <ButtonEnable loading={loading} onClick={claim} variant="rounded">
         Claim POAP
       </ButtonEnable>
