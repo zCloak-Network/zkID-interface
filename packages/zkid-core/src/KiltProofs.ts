@@ -1,7 +1,6 @@
+import type { BigNumberish } from '@ethersproject/bignumber';
+import type { BytesLike } from '@ethersproject/bytes';
 import type { JsonRpcProvider } from '@ethersproject/providers';
-
-import { BigNumberish } from '@ethersproject/bignumber';
-import { BytesLike } from '@ethersproject/bytes';
 
 import * as abis from './abis';
 import { BaseContract } from './base';
@@ -10,6 +9,10 @@ import { callMethod } from './utils';
 class KiltProofs extends BaseContract {
   constructor(address: string, provider: JsonRpcProvider, account?: string | null) {
     super(address, provider, abis.KiltProofs, account);
+  }
+
+  public singleProofExists(who: string, requestHash: BytesLike): Promise<boolean> {
+    return this.contract.single_proof_exists(who, requestHash);
   }
 
   public addProof(

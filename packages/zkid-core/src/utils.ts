@@ -1,11 +1,13 @@
 import type { CallOverrides } from '@ethersproject/contracts';
 import type { TransactionResponse } from '@ethersproject/providers';
+import type { RequestDetails } from './types';
 
 import { getAddress, isAddress } from '@ethersproject/address';
 import { BigNumber } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
 import { Contract } from '@ethersproject/contracts';
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers';
+import { keccak256 } from '@ethersproject/solidity';
 
 import { CallError, ContractError, OutOfGasError, UserRejectError } from './errors';
 
@@ -137,4 +139,16 @@ export async function callMethod<T>(
         throw new ContractError(methodName, `${methodName} failed: ${error.message}`);
       }
     });
+}
+
+export function getRequestHash(requestDetails: RequestDetails) {
+  return keccak256(
+    ['bytes32', 'uint128[]', 'bytes32', 'bytes32'],
+    [
+      requestDetails.cType,
+      requestDetails.fieldNames,
+      requestDetails.programHash,
+      requestDetails.attester
+    ]
+  );
 }

@@ -1,3 +1,6 @@
+import type { BigNumberish } from '@ethersproject/bignumber';
+import type { BytesLike } from '@ethersproject/bytes';
+
 export interface ZKIDExtensionRequests {
   OPEN_GENERATE_PROOF: {
     cTypeHash: string;
@@ -23,4 +26,11 @@ export interface ZKIDExtensionResponses {
   SEND_NEXT_TO_WEB: undefined;
   SEND_CREATE_PASSWORD_SUCCESS_TO_WEB: undefined;
   SEND_IMPORT_CREDENTIAL_SUCCESS: undefined;
+}
+
+export interface RequestDetails {
+  cType: BytesLike;
+  fieldNames: BigNumberish[];
+  programHash: BytesLike;
+  attester: BytesLike;
 }

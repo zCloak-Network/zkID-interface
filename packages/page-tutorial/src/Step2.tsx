@@ -71,7 +71,6 @@ const Step2: React.FC = () => {
   const fetchAttestation = useCallback(async () => {
     if (claimerLightDid?.did && claimerLightDid.encryptionKey?.id) {
       while (true) {
-        await sleep(6000);
         const {
           data: { attestationStatus }
         } = await credentialApi.getAttestationStatus({
@@ -83,9 +82,11 @@ const Step2: React.FC = () => {
         } else if (attestationStatus === AttestationStatus.notAttested) {
           return;
         }
+
+        await sleep(6000);
       }
 
-      credentialApi
+      await credentialApi
         .getAttestation({
           receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
         })
@@ -96,15 +97,15 @@ const Step2: React.FC = () => {
             return null;
           }
         })
-        .then((message) => {
-          setOriginMessage(message);
-        });
+        .then((message) => setOriginMessage(message));
     }
   }, [keystore, claimerLightDid]);
 
   useEffect(() => {
     fetchAttestation().finally(() => setReady(true));
   }, [fetchAttestation]);
+
+  console.log(originMessage, ready);
 
   return (
     <Wrapper>

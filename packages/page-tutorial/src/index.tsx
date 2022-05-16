@@ -4,7 +4,11 @@ import { Container, Step, StepLabel, Stepper } from '@mui/material';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useEagerConnect, useWallet } from '@zcloak/react-wallet';
+import { KiltProofs } from '@zcloak/zkid-core';
+
 import { ADMIN_ATTESTER_ADDRESS } from '@zkid/app-config/constants';
+import { KiltProofsAdddress } from '@zkid/app-config/constants/address';
 import { useFullDid, useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { TUTORIAL_MNEMONIC } from './keys';
@@ -15,7 +19,7 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 
 const Wrapper = styled(Container)`
-  padding: 52px 172px;
+  padding: 52px 122px;
   margin-top: 12px;
 
   backdrop-filter: blur(8px) brightness(120%);
@@ -29,6 +33,7 @@ interface TutorialState {
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
   attesterFullDid?: Did.FullDidDetails | null;
+  kiltProofs: KiltProofs | null;
   nextStep: () => void;
   prevStep: () => void;
 }
@@ -36,7 +41,8 @@ interface TutorialState {
 export const TutorialContext = createContext<TutorialState>({} as TutorialState);
 
 const Tutorial: React.FC = () => {
-  const [step, setStep] = useState(0);
+  const { account, library } = useWallet();
+  const [step, setStep] = useState(4);
   const [mnemonic, setMnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
@@ -44,6 +50,13 @@ const Tutorial: React.FC = () => {
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
   const attesterFullDid = useFullDid(ADMIN_ATTESTER_ADDRESS);
+
+  useEagerConnect();
+
+  const kiltProofs = useMemo(
+    () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),
+    [account, library]
+  );
 
   useEffect(() => {
     if (!mnemonic) {
@@ -53,7 +66,16 @@ const Tutorial: React.FC = () => {
 
   return (
     <TutorialContext.Provider
-      value={{ step, mnemonic, keystore, claimerLightDid, attesterFullDid, nextStep, prevStep }}
+      value={{
+        step,
+        mnemonic,
+        keystore,
+        kiltProofs,
+        claimerLightDid,
+        attesterFullDid,
+        nextStep,
+        prevStep
+      }}
     >
       <Wrapper disableGutters maxWidth="md">
         <Stepper activeStep={step} alternativeLabel>
