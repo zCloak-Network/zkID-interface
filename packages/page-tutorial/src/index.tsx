@@ -49,7 +49,7 @@ export const TutorialContext = createContext<TutorialState>({} as TutorialState)
 
 const Tutorial: React.FC = () => {
   const { account, library } = useWallet();
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(0);
   const [mnemonic, setMnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
