@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Container } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { decodeAddress } from '@polkadot/keyring';
 import { u8aToHex } from '@polkadot/util';
 import React, { useContext, useEffect, useState } from 'react';
@@ -50,7 +50,7 @@ const ProofTrue: React.FC = () => {
         width: '90%',
         height: '149px',
         margin: '0 auto',
-        marginTop: '72px',
+        marginY: '72px',
         border: '1px solid rgba(255, 255, 255, 0.6)',
         boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)',
         borderRadius: '13px',
@@ -67,7 +67,7 @@ const ProofTrue: React.FC = () => {
 };
 
 const Step5: React.FC = () => {
-  const { kiltProofs } = useContext(TutorialContext);
+  const { kiltProofs, nextStep } = useContext(TutorialContext);
   const { account } = useWallet();
   const [exists, setExists] = useState(false);
 
@@ -85,6 +85,11 @@ const Step5: React.FC = () => {
         your zCloak ID Wallet then upload it.
       </p>
       {exists ? <ProofTrue /> : <ZkGenerator />}
+      {exists && (
+        <Button onClick={nextStep} variant="rounded">
+          Next
+        </Button>
+      )}
     </Wrapper>
   );
 };

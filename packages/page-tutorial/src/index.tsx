@@ -5,10 +5,10 @@ import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useEagerConnect, useWallet } from '@zcloak/react-wallet';
-import { KiltProofs } from '@zcloak/zkid-core';
+import { KiltProofs, Poap } from '@zcloak/zkid-core';
 
 import { ADMIN_ATTESTER_ADDRESS } from '@zkid/app-config/constants';
-import { KiltProofsAdddress } from '@zkid/app-config/constants/address';
+import { KiltProofsAdddress, PoapAdddress } from '@zkid/app-config/constants/address';
 import { useFullDid, useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { TUTORIAL_MNEMONIC } from './keys';
@@ -17,6 +17,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
+import Step6 from './Step6';
 
 const Wrapper = styled(Container)`
   padding: 52px 122px;
@@ -34,6 +35,7 @@ interface TutorialState {
   claimerLightDid?: Did.LightDidDetails;
   attesterFullDid?: Did.FullDidDetails | null;
   kiltProofs: KiltProofs | null;
+  poap: Poap | null;
   nextStep: () => void;
   prevStep: () => void;
 }
@@ -42,7 +44,7 @@ export const TutorialContext = createContext<TutorialState>({} as TutorialState)
 
 const Tutorial: React.FC = () => {
   const { account, library } = useWallet();
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(5);
   const [mnemonic, setMnemonic] = useLocalStorage<string>(TUTORIAL_MNEMONIC);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
@@ -55,6 +57,11 @@ const Tutorial: React.FC = () => {
 
   const kiltProofs = useMemo(
     () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),
+    [account, library]
+  );
+
+  const poap = useMemo(
+    () => (library ? new Poap(PoapAdddress, library, account) : null),
     [account, library]
   );
 
@@ -71,6 +78,7 @@ const Tutorial: React.FC = () => {
         mnemonic,
         keystore,
         kiltProofs,
+        poap,
         claimerLightDid,
         attesterFullDid,
         nextStep,
@@ -103,6 +111,7 @@ const Tutorial: React.FC = () => {
         {step === 2 && <Step3 />}
         {step === 3 && <Step4 />}
         {step === 4 && <Step5 />}
+        {step === 5 && <Step6 />}
       </Wrapper>
     </TutorialContext.Provider>
   );
