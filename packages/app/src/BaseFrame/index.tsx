@@ -8,7 +8,7 @@ import Header from './Header';
 const Wrapper = styled(Box)`
   width: 100vw;
   height: 100vh;
-  background: url('/images/tutorial-bg.svg') no-repeat;
+  background: url('/images/tutorial-bg.webp') no-repeat;
   background-size: cover;
   background-position: center;
 `;

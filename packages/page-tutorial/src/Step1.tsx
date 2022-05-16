@@ -43,7 +43,7 @@ const Step1: React.FC = () => {
         Your wallet is used to derive private keys, which are used to encrypt your data and sign
         private transactions.
       </p>
-      <img src="/images/step_install.svg" />
+      <img src="/images/pic_install.webp" />
       {isInstall && hasPassword ? (
         <Button onClick={nextStep} variant="rounded">
           Next
