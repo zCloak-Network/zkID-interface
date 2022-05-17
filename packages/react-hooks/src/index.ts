@@ -3,3 +3,4 @@ export * from './useFullDid';
 export * from './useLightDid';
 export * from './useLocalStorage';
 export * from './useRequestForAttestation';
+export * from './useToggle';

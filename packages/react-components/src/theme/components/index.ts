@@ -1,11 +1,7 @@
 import { type PaletteMode } from '@mui/material';
 import { type ThemeOptions } from '@mui/material/styles';
 
-declare module '@mui/material/Button' {
-  interface ButtonPropsVariantOverrides {
-    rounded: true;
-  }
-}
+import { createRoundedButton } from './createButton';
 
 type Func = (mode: PaletteMode) => NonNullable<ThemeOptions['components']>;
 
@@ -121,21 +117,7 @@ const createComponents: Func = () => ({
   },
 
   MuiButton: {
-    variants: [
-      {
-        props: { variant: 'rounded', size: 'medium' },
-        style: {
-          background: '#fff',
-          boxShadow: '0px 3px 6px rgba(196, 203, 214, 0.1)',
-          color: '#000',
-          borderRadius: 20,
-          '&:hover': {
-            background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
-            boxShadow: '0px 3px 6px rgba(51, 51, 51, 0.3)'
-          }
-        }
-      }
-    ],
+    variants: [...createRoundedButton()],
     styleOverrides: {
       root: {
         borderRadius: 10
@@ -151,6 +133,11 @@ const createComponents: Func = () => ({
         boxShadow: 'none',
         '&:hover': {
           boxShadow: 'none'
+        }
+      },
+      text: {
+        ':hover': {
+          background: '#F4F6FD'
         }
       }
     }

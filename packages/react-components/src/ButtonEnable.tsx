@@ -2,20 +2,16 @@ import { LoadingButton, LoadingButtonProps } from '@mui/lab';
 import { UnsupportedChainIdError } from '@web3-react/core';
 import React, { useCallback } from 'react';
 
-import { switchNetwork, useConnectors, useWallet } from '@zcloak/react-wallet';
-import useAuth from '@zcloak/react-wallet/useAuth';
+import { switchNetwork, useWallet } from '@zcloak/react-wallet';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
+import { useToggle } from '@zkid/react-hooks';
+
+import WalletModal from './WalletModal';
 
 const ButtonEnable: React.FC<LoadingButtonProps> = ({ children, ...props }) => {
-  const { login } = useAuth();
-  const { injected } = useConnectors();
   const { active, error } = useWallet();
-
-  const onClick = useCallback(() => {
-    login(injected);
-  }, [injected, login]);
-
+  const [open, toggle] = useToggle(true);
   const onSwitchNetwork = useCallback(() => {
     switchNetwork(MOONBASE.chainId, {
       chainId: MOONBASE.chainId,
@@ -39,10 +35,11 @@ const ButtonEnable: React.FC<LoadingButtonProps> = ({ children, ...props }) => {
           Switch network
         </LoadingButton>
       ) : (
-        <LoadingButton {...props} onClick={onClick}>
+        <LoadingButton {...props} onClick={toggle}>
           {'Connect wallet'}
         </LoadingButton>
       )}
+      <WalletModal onClose={toggle} open={open} />
     </>
   );
 };
