@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
+import Home from '@zkid/page-home';
 import Tutorial from '@zkid/page-tutorial';
 
 import BaseFrame from './BaseFrame';
@@ -15,8 +16,9 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<BaseFrame />}>
           <Route element={<Tutorial />} path="tutorial" />
+          <Route element={<Home />} index />
         </Route>
-        <Route element={<NoMatch to="/tutorial" />} path="*" />
+        <Route element={<NoMatch to="/" />} path="*" />
       </Routes>
     </HashRouter>
   );

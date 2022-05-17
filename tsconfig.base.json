@@ -18,6 +18,8 @@
       "@zkid/react-components/*": ["react-components/src/*"],
       "@zkid/react-hooks": ["react-hooks/src"],
       "@zkid/react-hooks/*": ["react-hooks/src/*"],
+      "@zkid/page-home": ["page-home/src"],
+      "@zkid/page-home/*": ["page-home/src/*"],
       "@zkid/page-tutorial": ["page-tutorial/src"],
       "@zkid/page-tutorial/*": ["page-tutorial/src/*"],
       "@zkid/service": ["service/src"],
