@@ -2,15 +2,19 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Provider } from '@ethersproject/providers';
 import { useEffect, useMemo, useState } from 'react';
 
+import { useWallet } from '@zcloak/react-wallet';
 import { Web3Query } from '@zcloak/web3-query';
 
 export const useNativeBalance = (
   accounts?: string[] | null,
   provider?: Provider
 ): BigNumber[] | undefined => {
+  const { library } = useWallet();
   const [balances, setBalances] = useState<BigNumber[]>();
 
-  const web3Query = useMemo(() => (provider ? new Web3Query(provider) : null), [provider]);
+  const _provider = useMemo(() => provider || library, [library, provider]);
+
+  const web3Query = useMemo(() => (_provider ? new Web3Query(_provider) : null), [_provider]);
 
   useEffect(() => {
     let unsub: (() => void) | undefined;

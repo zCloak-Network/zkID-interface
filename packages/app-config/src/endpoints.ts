@@ -10,5 +10,7 @@ export const MOONBASE: Endpoint = {
   explorer: 'https://moonbase.moonscan.io/'
 };
 
+export const endpoints: Endpoint[] = [MOONBASE];
+
 export const KILT_ENDPOINT = 'wss://peregrine.kilt.io/parachain-public-ws/';
 export const KILT_SS58 = 38;

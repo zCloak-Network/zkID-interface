@@ -24,7 +24,13 @@
     "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.6.4",
     "@mui/x-date-pickers": "^5.0.0-alpha.2",
+    "@web3-react/core": "^6.1.9",
+    "@zcloak/react-wallet": "^0.0.0",
+    "@zcloak/zkid-core": "^0.0.0",
+    "@zkid/app-config": "^0.0.0",
+    "@zkid/react-hooks": "^0.0.0",
     "ace-builds": "^1.5.0",
+    "ethers": "^5.6.6",
     "react-ace": "^10.1.0",
     "react-transition-group": "^4.4.2"
   }

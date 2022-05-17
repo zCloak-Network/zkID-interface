@@ -22,8 +22,8 @@
   "dependencies": {
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
-    "@web3-react/walletconnect-connector": "^6.2.10",
-    "ethers": "^5.6.2"
+    "@web3-react/walletconnect-connector": "^6.2.13",
+    "ethers": "^5.6.6"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",

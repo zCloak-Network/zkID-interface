@@ -4,7 +4,7 @@ import { Container, Step, StepLabel, Stepper } from '@mui/material';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useEagerConnect, useWallet } from '@zcloak/react-wallet';
+import { useWallet } from '@zcloak/react-wallet';
 import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/zkid-core';
 
 import { ADMIN_ATTESTER_ADDRESS } from '@zkid/app-config/constants';
@@ -57,8 +57,6 @@ const Tutorial: React.FC = () => {
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
   const attesterFullDid = useFullDid(ADMIN_ATTESTER_ADDRESS);
-
-  useEagerConnect();
 
   const kiltProofs = useMemo(
     () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),

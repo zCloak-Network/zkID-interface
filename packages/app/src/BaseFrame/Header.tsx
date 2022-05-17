@@ -18,8 +18,6 @@ const Wrapper = styled(Box)`
   padding: 0 30px;
 
   color: #fff;
-  font-size: 20px;
-  font-weight: 700;
 
   .ZkidHeader-right {
     position: absolute;
@@ -31,6 +29,9 @@ const Logo = styled('div')`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  font-size: 20px;
+  font-weight: 700;
 
   > img {
     margin-right: 14px;
