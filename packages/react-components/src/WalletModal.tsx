@@ -40,7 +40,8 @@ const WalletModal: React.FC<Props> = ({ onClose, open }) => {
 
   const toggleMetamask = useCallback(() => {
     login(injected);
-  }, [injected, login]);
+    onClose?.();
+  }, [injected, login, onClose]);
 
   return (
     <Dialog maxWidth="sm" onClose={onClose} open={open}>

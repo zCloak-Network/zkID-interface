@@ -11,7 +11,7 @@ import WalletModal from './WalletModal';
 
 const ButtonEnable: React.FC<LoadingButtonProps> = ({ children, ...props }) => {
   const { active, error } = useWallet();
-  const [open, toggle] = useToggle(true);
+  const [open, toggle] = useToggle();
   const onSwitchNetwork = useCallback(() => {
     switchNetwork(MOONBASE.chainId, {
       chainId: MOONBASE.chainId,

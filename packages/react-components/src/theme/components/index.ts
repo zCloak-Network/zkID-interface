@@ -13,6 +13,9 @@ type Func = (mode: PaletteMode) => NonNullable<ThemeOptions['components']>;
 const createComponents: Func = () => ({
   MuiCssBaseline: {
     styleOverrides: `
+    * {
+      box-sizing: border-box;
+    }
     @font-face {
       font-family: "Kanit";
       font-style: normal;

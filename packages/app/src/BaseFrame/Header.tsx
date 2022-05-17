@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, Grid, Stack, styled } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,15 +6,25 @@ import { useWallet } from '@zcloak/react-wallet';
 
 import { ButtonEnable } from '@zkid/react-components';
 
+import AccountInfo from '../AccountInfo';
+
 const Wrapper = styled(Box)`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100px;
+  padding: 0 30px;
 
   color: #fff;
   font-size: 20px;
   font-weight: 700;
+
+  .ZkidHeader-right {
+    position: absolute;
+    right: 30px;
+  }
 `;
 
 const Logo = styled('div')`
@@ -37,22 +47,27 @@ const Header: React.FC = () => {
         <img src={require('@zkid/app-config/assets/logo.svg')} />
         zCloak Network
       </Logo>
-      {account ? (
-        <>account</>
-      ) : (
-        <ButtonEnable
-          sx={{
-            background: 'linear-gradient(221deg, #D7ADF8 0%, #A29CF3 100%, #6C59E0 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.6)',
-            color: '#000',
-            '&:hover': {
-              background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
-              color: '#fff'
-            }
-          }}
-          variant="rounded"
-        ></ButtonEnable>
-      )}
+      <Stack className="ZkidHeader-right" direction="row" spacing={2}>
+        {!account && (
+          <ButtonEnable
+            sx={{
+              background: 'linear-gradient(221deg, #D7ADF8 0%, #A29CF3 100%, #6C59E0 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.6)',
+              color: '#000',
+              '&:hover': {
+                background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
+                color: '#fff'
+              }
+            }}
+            variant="rounded"
+          ></ButtonEnable>
+        )}
+        {account && (
+          <>
+            <AccountInfo account={account} />
+          </>
+        )}
+      </Stack>
     </Wrapper>
   );
 };

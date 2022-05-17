@@ -1,3 +1,4 @@
+export * from './useBalance';
 export * from './useClaim';
 export * from './useFullDid';
 export * from './useLightDid';

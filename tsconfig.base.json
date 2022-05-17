@@ -10,6 +10,8 @@
       "@zcloak/react-wallet/*": ["react-wallet/src/*"],
       "@zcloak/zkid-core": ["zkid-core/src"],
       "@zcloak/zkid-core/*": ["zkid-core/src/*"],
+      "@zcloak/web3-query": ["web3-query/src"],
+      "@zcloak/web3-query/*": ["web3-query/src/*"],
       "@zkid/app": ["app/src"],
       "@zkid/app/*": ["app/src/*"],
       "@zkid/app-config": ["app-config/src"],

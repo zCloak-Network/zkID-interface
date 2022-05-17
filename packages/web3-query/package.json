@@ -1,0 +1,22 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
+  "contributors": [],
+  "description": "zCloak web3-query",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/web3-query#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/web3-query",
+  "repository": {
+    "directory": "packages/web3-query",
+    "type": "git",
+    "url": "https://github.com/zCloak/zkID-interface2.0.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.0",
+  "dependencies": {
+    "ethers": "^5.6.5",
+    "eventemitter3": "^4.0.7"
+  }
+}

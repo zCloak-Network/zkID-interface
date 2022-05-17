@@ -4889,6 +4889,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zcloak/web3-query@workspace:packages/web3-query":
+  version: 0.0.0-use.local
+  resolution: "@zcloak/web3-query@workspace:packages/web3-query"
+  dependencies:
+    ethers: ^5.6.5
+    eventemitter3: ^4.0.7
+  languageName: unknown
+  linkType: soft
+
 "@zcloak/zkid-core@workspace:packages/zkid-core":
   version: 0.0.0-use.local
   resolution: "@zcloak/zkid-core@workspace:packages/zkid-core"
