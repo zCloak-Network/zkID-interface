@@ -5,7 +5,7 @@ import { Box, Button, CircularProgress, Container, styled } from '@mui/material'
 import FileSaver from 'file-saver';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { CTYPE } from '@zkid/app-config/constants';
+import { ATTESTER_DID, ATTESTER_ENCRYPTION_KEY_ID, CTYPE } from '@zkid/app-config/constants';
 import { useClaim, useRequestForAttestation } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service/Api';
 import { AttestationStatus } from '@zkid/service/types';
@@ -37,7 +37,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { attesterFullDid, claimerLightDid, keystore, nextStep } = useContext(TutorialContext);
+  const { claimerLightDid, keystore, nextStep } = useContext(TutorialContext);
   const [ready, setReady] = useState(false);
   const [originMessage, setOriginMessage] = useState<IMessage | null>(null);
   const [contents, setContents] = useState<any>();
@@ -46,17 +46,17 @@ const Step2: React.FC = () => {
   const requestForAttestation = useRequestForAttestation(keystore, claim, claimerLightDid);
 
   const message = useMemo(() => {
-    if (requestForAttestation && claimerLightDid && attesterFullDid) {
+    if (requestForAttestation && claimerLightDid) {
       const messageBody: MessageBody = {
         content: { requestForAttestation },
         type: Message.BodyType.REQUEST_ATTESTATION
       };
 
-      return new Message(messageBody, claimerLightDid.did, attesterFullDid.did);
+      return new Message(messageBody, claimerLightDid.did, ATTESTER_DID);
     } else {
       return null;
     }
-  }, [attesterFullDid, claimerLightDid, requestForAttestation]);
+  }, [claimerLightDid, requestForAttestation]);
 
   const download = useCallback(() => {
     if (originMessage) {
@@ -88,6 +88,7 @@ const Step2: React.FC = () => {
 
       await credentialApi
         .getAttestation({
+          senderKeyId: `${ATTESTER_DID}#${ATTESTER_ENCRYPTION_KEY_ID}`,
           receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
         })
         .then(({ data }) => {
@@ -131,7 +132,6 @@ const Step2: React.FC = () => {
           ) : (
             <div style={{ textAlign: 'center' }}>
               <SubmitClaim
-                attesterFullDid={attesterFullDid}
                 claimerLightDid={claimerLightDid}
                 keystore={keystore}
                 message={message}

@@ -1,4 +1,5 @@
 export * from './theme';
+export { default as CredentialProvider, CredentialContext } from './Credential';
 export { default as NotificationProvider, NotificationContext } from './Notification';
 export { default as ZkidExtensionProvider, ZkidExtensionContext } from './ZkidExtension';
 export { default as Address } from './Address';

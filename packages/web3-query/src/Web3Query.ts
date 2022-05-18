@@ -23,6 +23,7 @@ export class Web3Query {
     this._provider.on('block', this.blockNumberCallback);
   }
 
+  // TODO: this method maybe to use debounce.
   private blockNumberCallback = (blockNumber: number) => {
     if (blockNumber !== this.#blockNumber) {
       this.#callbacks.forEach((callback) => callback());

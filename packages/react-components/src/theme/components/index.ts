@@ -190,21 +190,33 @@ const createComponents: Func = () => ({
 
   MuiDialog: {
     styleOverrides: {
-      root: {
+      root: ({ theme: { spacing } }) => ({
         '.MuiDialogTitle-root': {
           textAlign: 'center',
           fontSize: '18px',
           fontWeight: 700,
-          padding: '24px'
+          padding: spacing(3)
         }
-      },
+      }),
       paper: {
         borderRadius: '24px'
       }
     }
   },
   MuiDialogContent: {
-    styleOverrides: {}
+    styleOverrides: {
+      root: ({ theme: { spacing } }) => ({
+        padding: spacing(3)
+      })
+    }
+  },
+  MuiDialogActions: {
+    styleOverrides: {
+      root: ({ theme: { spacing } }) => ({
+        padding: spacing(3),
+        paddingTop: 0
+      })
+    }
   }
 });
 

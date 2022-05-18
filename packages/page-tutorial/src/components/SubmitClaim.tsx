@@ -1,43 +1,31 @@
-import type { FullDidDetails, LightDidDetails } from '@kiltprotocol/did';
+import type { LightDidDetails } from '@kiltprotocol/did';
 
 import { Did, Message } from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
 import { Alert, Portal, Snackbar } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
+import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
 import { credentialApi } from '@zkid/service';
 
 interface Props {
   keystore: Did.DemoKeystore;
   message?: Message | null;
   claimerLightDid?: LightDidDetails | null;
-  attesterFullDid?: FullDidDetails | null;
   onDone: () => Promise<void>;
 }
 
-const SubmitClaim: React.FC<Props> = ({
-  attesterFullDid,
-  claimerLightDid,
-  keystore,
-  message,
-  onDone
-}) => {
+const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, onDone }) => {
   const [loading, setLoading] = useState(false);
   const handleClick = useCallback(async () => {
-    if (
-      message &&
-      claimerLightDid &&
-      attesterFullDid &&
-      claimerLightDid.encryptionKey &&
-      attesterFullDid.encryptionKey
-    ) {
+    if (message && claimerLightDid && claimerLightDid.encryptionKey) {
       setLoading(true);
 
       const encryptedPresentationMessage = await message.encrypt(
         claimerLightDid.encryptionKey.id,
         claimerLightDid,
         keystore,
-        attesterFullDid.assembleKeyId(attesterFullDid.encryptionKey.id)
+        ATTESTER_ASSEMBLE_KEY_ID
       );
 
       const data = await credentialApi.submitClaim({
@@ -53,7 +41,7 @@ const SubmitClaim: React.FC<Props> = ({
 
       setLoading(false);
     }
-  }, [attesterFullDid, claimerLightDid, keystore, message, onDone]);
+  }, [claimerLightDid, keystore, message, onDone]);
 
   return (
     <>

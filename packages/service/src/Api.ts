@@ -36,7 +36,7 @@ export class CredentialApi extends Request {
     );
   }
 
-  getAttestation(params: { receiverKeyId: string }) {
+  getAttestation(params: { senderKeyId: string; receiverKeyId: string }) {
     return this.get<
       ServerResponse<
         {

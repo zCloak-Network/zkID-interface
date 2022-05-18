@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { ContractCall } from './types';
 
 import { Fragment, FunctionFragment, JsonFragment } from '@ethersproject/abi';
 import { utils } from 'ethers';

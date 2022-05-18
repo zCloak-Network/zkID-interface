@@ -44,6 +44,8 @@ const Step6: React.FC = () => {
         .then(({ data }) => {
           if (data) {
             setNftId(data.nftId);
+          } else {
+            setNftId(undefined);
           }
         })
         .finally(() => setReady(true));

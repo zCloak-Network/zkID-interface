@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useWallet } from '@zcloak/react-wallet';
 import { getRequestHash } from '@zcloak/zkid-core/utils';
 
-import { ADMIN_ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
+import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 
 import ZkGenerator from './components/ZkGenerator';
@@ -18,7 +18,7 @@ export const requestHash = getRequestHash({
   cType: CTYPE_HASH,
   programHash: ZK_PROGRAM.hash,
   fieldNames: ZK_PROGRAM.filed.split(',').map((it) => stringToHex(it)),
-  attester: u8aToHex(decodeAddress(ADMIN_ATTESTER_ADDRESS))
+  attester: u8aToHex(decodeAddress(ATTESTER_ADDRESS))
 });
 
 const Wrapper = styled(Container)`

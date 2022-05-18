@@ -5,7 +5,7 @@ import { deserializer, getCache, serializer } from './cache';
 export function useLocalStorage<T>(
   key: string,
   initialvalue?: T
-): [T | undefined, (value: T) => void] {
+): [T | undefined, (value: T) => void, () => void] {
   const [value, setValue] = useState<T | undefined>(getCache<T>(key) || initialvalue);
 
   const saveValue = useCallback(
@@ -18,6 +18,10 @@ export function useLocalStorage<T>(
     [key]
   );
 
+  const remove = useCallback(() => {
+    localStorage.removeItem(key);
+  }, [key]);
+
   useEffect(() => {
     const _value = localStorage.getItem(key);
 
@@ -26,5 +30,5 @@ export function useLocalStorage<T>(
     }
   }, [key]);
 
-  return [value, saveValue];
+  return [value, saveValue, remove];
 }

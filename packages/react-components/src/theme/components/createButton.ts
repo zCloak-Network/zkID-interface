@@ -49,7 +49,7 @@ export function createRoundedButton(): {
       },
       style: {
         ...baseStyle,
-        padding: '6px 20px',
+        padding: '8px 20px',
         fontSize: '16px'
       }
     }

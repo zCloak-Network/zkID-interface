@@ -102,7 +102,7 @@ export async function getGasEstimate(
           return new CallError(
             methodName,
             'Call threw error',
-            error?.error.data?.message ?? error?.reason
+            error?.error?.data?.message || 'Unknown error'
           );
         });
     });

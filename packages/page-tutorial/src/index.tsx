@@ -7,13 +7,12 @@ import React, { createContext, useCallback, useEffect, useMemo, useState } from 
 import { useWallet } from '@zcloak/react-wallet';
 import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/zkid-core';
 
-import { ADMIN_ATTESTER_ADDRESS } from '@zkid/app-config/constants';
 import {
   KiltProofsAdddress,
   PoapAdddress,
   SimpleAggregatorAddress
 } from '@zkid/app-config/constants/address';
-import { useFullDid, useLightDid, useLocalStorage } from '@zkid/react-hooks';
+import { useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { TUTORIAL_MNEMONIC } from './keys';
 import Step1 from './Step1';
@@ -37,7 +36,6 @@ interface TutorialState {
   mnemonic?: string;
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
-  attesterFullDid?: Did.FullDidDetails | null;
   kiltProofs: KiltProofs | null;
   poap: Poap | null;
   simpleAggregator: SimpleAggregator | null;
@@ -56,7 +54,6 @@ const Tutorial: React.FC = () => {
   const prevStep = useCallback(() => setStep(step - 1), [step]);
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
-  const attesterFullDid = useFullDid(ADMIN_ATTESTER_ADDRESS);
 
   const kiltProofs = useMemo(
     () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),
@@ -89,7 +86,6 @@ const Tutorial: React.FC = () => {
         poap,
         simpleAggregator,
         claimerLightDid,
-        attesterFullDid,
         nextStep,
         prevStep
       }}

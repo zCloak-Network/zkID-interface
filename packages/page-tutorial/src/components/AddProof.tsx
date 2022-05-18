@@ -4,7 +4,7 @@ import { Utils } from '@kiltprotocol/sdk-js';
 import { waitReady } from '@polkadot/wasm-crypto';
 import React, { useCallback, useContext, useState } from 'react';
 
-import { ADMIN_ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
+import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
 import { ButtonEnable, NotificationContext } from '@zkid/react-components';
@@ -33,7 +33,7 @@ const AddProof: React.FC<Props> = ({ children, proof }) => {
       kiltProofs
         .addProof(
           decodeSs58Address(localAddress),
-          decodeSs58Address(ADMIN_ATTESTER_ADDRESS),
+          decodeSs58Address(ATTESTER_ADDRESS),
           CTYPE_HASH,
           ZK_PROGRAM.filed.split(',').map((it) => stringToHex(it)),
           ZK_PROGRAM.hash,

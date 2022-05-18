@@ -4,5 +4,6 @@ export * from './useEndpoint';
 export * from './useFullDid';
 export * from './useLightDid';
 export * from './useLocalStorage';
+export * from './useAccountPoap';
 export * from './useRequestForAttestation';
 export * from './useToggle';

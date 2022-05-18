@@ -9,7 +9,11 @@ import { useToggle } from '@zkid/react-hooks';
 
 import WalletModal from './WalletModal';
 
-const ButtonEnable: React.FC<LoadingButtonProps> = ({ children, ...props }) => {
+interface Props extends LoadingButtonProps {
+  enableText?: string;
+}
+
+const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
   const { active, error } = useWallet();
   const [open, toggle] = useToggle();
   const onSwitchNetwork = useCallback(() => {
@@ -36,7 +40,7 @@ const ButtonEnable: React.FC<LoadingButtonProps> = ({ children, ...props }) => {
         </LoadingButton>
       ) : (
         <LoadingButton {...props} onClick={toggle}>
-          {'Connect wallet'}
+          {enableText ?? 'Connect wallet'}
         </LoadingButton>
       )}
       <WalletModal onClose={toggle} open={open} />
