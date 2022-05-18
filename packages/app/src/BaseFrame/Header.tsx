@@ -7,6 +7,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ButtonEnable } from '@zkid/react-components';
 
 import AccountInfo from '../AccountInfo';
+import NetworkCell from '../NetworkCell';
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -14,7 +15,7 @@ const Wrapper = styled(Box)`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100px;
+  height: 80px;
   padding: 0 30px;
 
   color: #fff;
@@ -63,6 +64,7 @@ const Header: React.FC = () => {
             variant="rounded"
           ></ButtonEnable>
         )}
+        <NetworkCell />
         {account && (
           <>
             <AccountInfo account={account} />

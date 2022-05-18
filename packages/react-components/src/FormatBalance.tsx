@@ -29,13 +29,23 @@ const FormatBalance: React.FC<Props> = ({ decimals, logo, symbol, unit = 3, valu
   }, [value, decimals, unit]);
 
   return (
-    <Box alignItems="center" display="inline-flex">
-      {logo && <Box component="img" height={6} mr={2} src={logo} width={6} />}
+    <Box alignItems="center" display="inline-flex" lineHeight={1}>
+      {logo && (
+        <Box
+          component="img"
+          src={logo}
+          sx={{
+            width: 20,
+            height: 20,
+            mr: 1
+          }}
+        />
+      )}
       <Box className="FormatBalance-text" component="span">
         {display}
       </Box>
       {symbol && (
-        <Box className="FormatBalance_symbol" component="span" ml={1}>
+        <Box className="FormatBalance_symbol" component="span" ml={0.5}>
           {symbol.toUpperCase()}
         </Box>
       )}
