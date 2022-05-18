@@ -1,0 +1,37 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
+  "contributors": [],
+  "description": "zkID react-components",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/react-components#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zkid/react-components",
+  "repository": {
+    "directory": "packages/react-components",
+    "type": "git",
+    "url": "https://github.com/zCloak/zkID-interface2.0.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.0",
+  "dependencies": {
+    "@date-io/date-fns": "^2.13.2",
+    "@date-io/moment": "^2.13.2",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/lab": "^5.0.0-alpha.81",
+    "@mui/material": "^5.6.4",
+    "@mui/x-date-pickers": "^5.0.0-alpha.2",
+    "@web3-react/core": "^6.1.9",
+    "@zcloak/react-wallet": "^0.0.0",
+    "@zcloak/zkid-core": "^0.0.0",
+    "@zkid/app-config": "^0.0.0",
+    "@zkid/react-hooks": "^0.0.0",
+    "ace-builds": "^1.5.0",
+    "ethers": "^5.6.6",
+    "react-ace": "^10.1.0",
+    "react-transition-group": "^4.4.2"
+  }
+}

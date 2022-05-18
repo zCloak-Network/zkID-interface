@@ -17,7 +17,7 @@ interface Props {
   supportedChainIds: number[];
 }
 
-const WalletContext = createContext<State>({} as State);
+export const WalletContext = createContext<State>({} as State);
 
 const WalletProvider: React.FC<Props> = ({ children, supportedChainIds }) => {
   const injected = useMemo(
