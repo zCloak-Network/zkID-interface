@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
