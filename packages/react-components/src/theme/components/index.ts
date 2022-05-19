@@ -123,7 +123,8 @@ const createComponents: Func = () => ({
     variants: [...createRoundedButton()],
     styleOverrides: {
       root: {
-        borderRadius: 10
+        borderRadius: 10,
+        textTransform: 'initial'
       },
       outlined: {
         borderRadius: 10,

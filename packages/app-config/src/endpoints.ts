@@ -2,7 +2,7 @@ import type { Endpoint } from './types';
 
 export const MOONBASE: Endpoint = {
   chainId: 1287,
-  name: 'Moonbase',
+  name: 'Moonbase Alpha',
   rpc: 'https://rpc.api.moonbase.moonbeam.network',
   rpcs: ['https://rpc.api.moonbase.moonbeam.network'],
   currencySymbol: 'GLMR',

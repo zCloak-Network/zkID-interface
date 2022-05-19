@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { useWallet } from '@zcloak/react-wallet';
 
 import { PoapCard, Slider } from '@zkid/react-components';
+import { getLow128 } from '@zkid/react-components/PoapCard';
 import { useAccountPoap } from '@zkid/react-hooks';
 
 const Poaps: React.FC = () => {
@@ -29,8 +30,8 @@ const Poaps: React.FC = () => {
             return BigNumber.from(poapId).shl(128);
           }
         })
-        .sort((l, r) => (l.lt(r) ? 1 : -1))
-        .map((nftId) => nftId.toString());
+        .sort((l, r) => (getLow128(l).lt(getLow128(r)) ? 1 : -1))
+        .map((nftId) => nftId.toHexString());
     } else {
       return [
         '40522552889507486262027357734207559572',
@@ -42,17 +43,20 @@ const Poaps: React.FC = () => {
         '202100964360959351678140981251573392558',
         '219435727696893656932292705285121930827'
       ].map((poapId) => {
-        return BigNumber.from(poapId).shl(128).toString();
+        return BigNumber.from(poapId).shl(128).toHexString();
       });
     }
   }, [nftId]);
 
   return (
-    <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
-      {nftIds.map((nftId) => (
-        <PoapCard key={nftId} nftId={nftId} />
-      ))}
-    </Slider>
+    <>
+      <h2>POAP</h2>
+      <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
+        {nftIds.map((nftId) => (
+          <PoapCard key={nftId} nftId={nftId} />
+        ))}
+      </Slider>
+    </>
   );
 };
 
