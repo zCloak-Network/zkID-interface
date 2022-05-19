@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { Box } from '@mui/material';
 import React, { useMemo } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
@@ -49,14 +50,14 @@ const Poaps: React.FC = () => {
   }, [nftId]);
 
   return (
-    <>
+    <Box sx={{ mb: 10 }}>
       <h2>POAP</h2>
       <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
         {nftIds.map((nftId) => (
           <PoapCard key={nftId} nftId={nftId} />
         ))}
       </Slider>
-    </>
+    </Box>
   );
 };
 

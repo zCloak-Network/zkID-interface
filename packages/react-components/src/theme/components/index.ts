@@ -218,6 +218,37 @@ const createComponents: Func = () => ({
         paddingTop: 0
       })
     }
+  },
+
+  MuiTableRow: {
+    styleOverrides: {
+      root: {
+        '&.MuiTableRow-hover:hover': {
+          backgroundColor: '#E5E7ED'
+        }
+      }
+    }
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      root: () => ({
+        '&:nth-of-type(1)': {
+          borderTopLeftRadius: '10px',
+          borderBottomLeftRadius: '10px'
+        },
+        '&:nth-last-of-type(1)': {
+          borderTopRightRadius: '10px',
+          borderBottomRightRadius: '10px'
+        },
+        borderBottom: 'none',
+        color: '#000',
+        fontWeight: 700
+      }),
+      head: ({ theme }) => ({
+        borderBottom: '1px solid #E5E7ED',
+        color: theme.palette.grey[700]
+      })
+    }
   }
 });
 
