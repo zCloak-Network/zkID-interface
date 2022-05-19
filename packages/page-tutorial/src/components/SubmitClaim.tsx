@@ -3,19 +3,22 @@ import type { LightDidDetails } from '@kiltprotocol/did';
 import { Did, Message } from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
 import { Alert, Portal, Snackbar } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
+import { CredentialContext } from '@zkid/react-components';
 import { credentialApi } from '@zkid/service';
+import { AttestationStatus } from '@zkid/service/types';
 
 interface Props {
   keystore: Did.DemoKeystore;
   message?: Message | null;
   claimerLightDid?: LightDidDetails | null;
-  onDone: () => Promise<void>;
 }
 
-const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, onDone }) => {
+const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) => {
+  const { attestationStatus, setAttestationStatus } = useContext(CredentialContext);
+
   const [loading, setLoading] = useState(false);
   const handleClick = useCallback(async () => {
     if (message && claimerLightDid && claimerLightDid.encryptionKey) {
@@ -36,12 +39,12 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, onDo
       });
 
       if (data.code === 200) {
-        await onDone();
+        setAttestationStatus(AttestationStatus.attesting);
       }
 
       setLoading(false);
     }
-  }, [claimerLightDid, keystore, message, onDone]);
+  }, [claimerLightDid, keystore, message, setAttestationStatus]);
 
   return (
     <>
@@ -49,7 +52,7 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, onDo
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           autoHideDuration={null}
-          open={loading}
+          open={loading || attestationStatus === AttestationStatus.attesting}
         >
           <Alert
             icon={<></>}
@@ -66,7 +69,12 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, onDo
           </Alert>
         </Snackbar>
       </Portal>
-      <LoadingButton disabled={!message} loading={loading} onClick={handleClick} variant="rounded">
+      <LoadingButton
+        disabled={!message}
+        loading={loading || attestationStatus === AttestationStatus.attesting}
+        onClick={handleClick}
+        variant="rounded"
+      >
         Submit
       </LoadingButton>
     </>

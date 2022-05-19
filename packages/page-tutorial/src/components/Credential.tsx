@@ -1,8 +1,10 @@
+import type { ICredential } from '@kiltprotocol/sdk-js';
+
 import { Box, styled } from '@mui/material';
 import React from 'react';
 
 interface Props {
-  credential?: any;
+  credential?: ICredential;
 }
 
 const Wrapper = styled(Box)`

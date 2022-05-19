@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useWallet } from '@zcloak/react-wallet';
 import { Web3Query } from '@zcloak/web3-query';
 
-export const useNativeBalance = (
+export const useNativeBalances = (
   accounts?: string[] | null,
   provider?: Provider
 ): BigNumber[] | undefined => {
@@ -36,4 +36,17 @@ export const useNativeBalance = (
   }, [accounts, web3Query]);
 
   return balances;
+};
+
+export const useNativeBalance = (account?: string | null, provider?: Provider) => {
+  const accounts = useMemo(() => (account ? [account] : null), [account]);
+  const balances = useNativeBalances(accounts, provider);
+
+  return useMemo(() => {
+    if (balances && balances.length > 0) {
+      return balances[0];
+    } else {
+      return null;
+    }
+  }, [balances]);
 };

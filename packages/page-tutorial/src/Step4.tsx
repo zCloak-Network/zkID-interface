@@ -1,13 +1,17 @@
-import { Box, Container, styled } from '@mui/material';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import type { ProofProcess } from '@zkid/service/types';
+
+import styled from '@emotion/styled';
+import { Box, Button, Container } from '@mui/material';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 
-import { Address, ButtonEnable } from '@zkid/react-components';
-import { credentialApi } from '@zkid/service';
-import { sleep } from '@zkid/service/utils';
+import { useInterval, useNativeBalance } from '@zkid/react-hooks';
+import { zkidApi } from '@zkid/service';
 
-import { TutorialContext } from '.';
+import Faucet from './components/Faucet';
+import ZkGenerator from './components/ZkGenerator';
+import { JudgeStepContext, requestHash } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -29,88 +33,76 @@ const Wrapper = styled(Container)`
   }
 `;
 
-const WalletContent = styled(Box)`
-  align-items: center;
-  background: hsla(0, 0%, 100%, 0.85);
-  border-radius: 20px;
-  box-shadow: 0 6px 58px rgb(121 127 173 / 20%);
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  font-family: Kanit;
-  font-size: 20px;
-  font-weight: 400;
-  height: 152px;
-  justify-content: space-between;
-  opacity: 1;
-  padding: 22px 30px;
-  margin: 44px 0 0;
-`;
+const ProofTrue: React.FC = () => {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '90%',
+        height: '149px',
+        margin: '0 auto',
+        marginY: '72px',
+        border: '1px solid rgba(255, 255, 255, 0.6)',
+        boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)',
+        borderRadius: '13px',
+        '>img': {
+          marginTop: '5px',
+          marginLeft: '-50px'
+        }
+      }}
+    >
+      <img src="/images/pic_true.webp" />
+      <span>Your proof is verified true, You can get an NFT</span>
+    </Box>
+  );
+};
 
 const Step4: React.FC = () => {
-  const { nextStep } = useContext(TutorialContext);
+  const { exists, finished, nextStep } = useContext(JudgeStepContext);
   const { account } = useWallet();
-  const [faucetSuccess, setFaucetSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (account) {
-      credentialApi.faucetStatus({ address: account }).then(({ data: { status } }) => {
-        if (status === 3) {
-          setFaucetSuccess(true);
-        } else {
-          setFaucetSuccess(false);
-        }
-      });
-    }
-  }, [account]);
+  const balance = useNativeBalance(account);
 
-  const getToken = useCallback(async () => {
-    if (account) {
-      setLoading(true);
-      const { code } = await credentialApi.faucet({ address: account });
+  const [proofProcess, setProofProcess] = useState<ProofProcess>();
 
-      if (code === 200) {
-        while (true) {
-          await sleep(6000);
-          const {
-            data: { status }
-          } = await credentialApi.faucetStatus({ address: account });
+  console.log(proofProcess);
 
-          if (status === 3) {
-            break;
+  const fetchProofProcess = useCallback(() => {
+    if (account && exists && !finished) {
+      zkidApi
+        .proofProcess({
+          dataOwner: account,
+          requestHash
+        })
+        .then(({ code, data }) => {
+          if (code === 200) {
+            setProofProcess(data);
           }
-        }
-      }
-
-      setFaucetSuccess(true);
-      setLoading(false);
+        });
     }
-  }, [account]);
+  }, [account, exists, finished]);
+
+  useInterval(fetchProofProcess, 6000);
 
   return (
     <Wrapper>
-      <h2>Connect Metamask</h2>
-      <p>BTW, get your fox friend ready. He will fetch your POAP for you.</p>
-      <WalletContent>
-        <img src={require('@zkid/app-config/assets/metamask.svg')} />
-        <span>MetaMask</span>
-      </WalletContent>
-      <Box sx={{ fontSize: '18px', color: '#fff', marginTop: '16px', marginBottom: '58px' }}>
-        {account && (
-          <>
-            <Address value={account} /> is connected.
-          </>
-        )}
-      </Box>
-      {faucetSuccess ? (
-        <ButtonEnable onClick={nextStep} variant="rounded">
-          Next
-        </ButtonEnable>
+      <h2>Generate And Upload Proof</h2>
+      <p>
+        To claim your POAP, you first need to generate a STARK proof based on your credential in
+        your zCloak ID Wallet then upload it.
+      </p>
+      {balance?.eq('0') ? (
+        <Faucet />
       ) : (
-        <ButtonEnable loading={loading} onClick={getToken} variant="rounded">
-          Get token
-        </ButtonEnable>
+        <>
+          {finished ? <ProofTrue /> : exists ? <>Wait for vote</> : <ZkGenerator />}
+          {finished && (
+            <Button onClick={nextStep} variant="rounded">
+              Next
+            </Button>
+          )}
+        </>
       )}
     </Wrapper>
   );

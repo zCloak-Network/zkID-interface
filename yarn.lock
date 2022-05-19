@@ -4962,6 +4962,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/zkid-core@workspace:packages/zkid-core"
   dependencies:
+    "@zcloak/web3-query": ^0.0.0
     ethers: ^5.6.6
     eventemitter3: ^4.0.7
   languageName: unknown

@@ -1,6 +1,6 @@
 import { Circle } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Address, FormatBalance } from '@zkid/react-components';
 import { useEndpoint, useNativeBalance } from '@zkid/react-hooks';
@@ -10,11 +10,8 @@ interface Props {
 }
 
 const AccountInfo: React.FC<Props> = ({ account }) => {
-  const accounst = useMemo(() => [account], [account]);
-  const balances = useNativeBalance(accounst);
+  const balance = useNativeBalance(account);
   const endpoint = useEndpoint();
-
-  const balance = useMemo(() => balances?.[0], [balances]);
 
   return (
     <Box

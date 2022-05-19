@@ -34,3 +34,37 @@ export type MintPoap = {
   __v: number;
   _id: string;
 };
+
+export type ProofProcess = {
+  _id: string;
+  blockNumber: number;
+  blockHash: string;
+  transactionHash: string;
+  dataOwner: string;
+  attester: string;
+  cType: string;
+  programHash: string;
+  fieldNames: string[];
+  proofCid: string;
+  requestHash: string;
+  rootHash: string;
+  expectResult: number[];
+  __v: number;
+  verifying: {
+    _id: string;
+    blockNumber: number;
+    blockHash: string;
+    transactionHash: string;
+    cOwner: string;
+    requestHash: string;
+    worker: string;
+    outputHash: string;
+    rootHash: string;
+    attester: string;
+    isPassed: true;
+    calcResult: number[];
+    __v: number;
+  }[];
+  finished: boolean;
+  verified: boolean;
+};

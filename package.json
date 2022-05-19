@@ -3,7 +3,7 @@
   "bugs": "https://github.com/zCloak-Network/zkID-interface2.0/issues",
   "homepage": "https://github.com/zCloak-Network/zkID-interface2.0#readme",
   "license": "Apache-2.0",
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.2.1",
   "private": true,
   "repository": {
     "type": "git",

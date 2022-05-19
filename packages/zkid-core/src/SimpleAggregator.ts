@@ -9,8 +9,26 @@ class SimpleAggregator extends BaseContract {
     super(address, provider, abis.SimpleAggregator, account);
   }
 
-  public isFinished(cOwner: string, requestHash: BytesLike): Promise<boolean> {
-    return this.contract.isFinished(cOwner, requestHash);
+  public isFinished(cOwner: string, requestHash: BytesLike): Promise<boolean>;
+  public isFinished(
+    cOwner: string,
+    requestHash: BytesLike,
+    callback: (exists: boolean) => void
+  ): Promise<() => void>;
+
+  public isFinished(
+    cOwner: string,
+    requestHash: BytesLike,
+    callback?: (exists: boolean) => void
+  ): Promise<boolean> | Promise<() => void> {
+    if (callback) {
+      return this.web3Query.one<boolean>(
+        this.multicallContract.isFinished(cOwner, requestHash),
+        callback
+      );
+    } else {
+      return this.web3Query.one<boolean>(this.multicallContract.isFinished(cOwner, requestHash));
+    }
   }
 }
 
