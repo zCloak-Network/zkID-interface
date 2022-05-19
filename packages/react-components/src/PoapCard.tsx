@@ -24,10 +24,12 @@ const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftI
     <Box
       sx={{
         position: 'relative',
+        width: '299px',
+        height: '414px',
+
         '>img': {
-          width: '248px',
-          height: '336px',
-          marginBottom: '20px',
+          display: 'block',
+          width: '100%',
           imageRendering: '-webkit-optimize-contrast',
           userSelect: 'none'
         },
@@ -38,8 +40,8 @@ const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftI
           lineHeight: '12px',
           color: '#000000',
           position: 'absolute',
-          bottom: '137px',
-          left: '70px',
+          bottom: '135px',
+          left: '82px',
           userSelect: 'none'
         }
       }}

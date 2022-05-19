@@ -1,4 +1,4 @@
-import { Circle } from '@mui/icons-material';
+import Circle from '@mui/icons-material/Circle';
 import { Box, Button } from '@mui/material';
 import React from 'react';
 
@@ -20,7 +20,6 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '40px',
         background: 'rgba(255, 255, 255, 0.5)',
         border: '1px solid rgba(255, 255, 255, 0.6)',
         borderRadius: '20px',
@@ -41,10 +40,8 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         size="large"
         sx={{
           background: 'rgba(255, 255, 255, 0.5)',
-          border: '1px solid rgba(255, 255, 255, 0.6)',
           ':hover': {
-            background: 'rgba(255, 255, 255, 0.5)',
-            border: '1px solid rgba(255, 255, 255, 0.6)'
+            background: 'rgba(255, 255, 255, 0.5)'
           }
         }}
         variant="rounded"

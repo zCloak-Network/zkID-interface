@@ -1,4 +1,4 @@
-import { CloseOutlined } from '@mui/icons-material';
+import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { DialogTitle, IconButton } from '@mui/material';
 import React from 'react';
 
