@@ -4,7 +4,7 @@ import React, { useCallback, useContext } from 'react';
 
 import { ZkidExtensionContext } from '@zkid/react-components/ZkidExtension';
 
-import { TutorialContext } from '.';
+import { JudgeStepContext } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -31,7 +31,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Step3: React.FC = () => {
-  const { nextStep } = useContext(TutorialContext);
+  const { nextStep } = useContext(JudgeStepContext);
   const { isImport, zkidExtension } = useContext(ZkidExtensionContext);
 
   const importCredential = useCallback(() => {

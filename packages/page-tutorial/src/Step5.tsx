@@ -7,7 +7,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ButtonEnable, NotificationContext, PoapCard } from '@zkid/react-components';
 import { zkidApi } from '@zkid/service';
 
-import { TutorialContext } from '.';
+import { JudgeStepContext } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -31,7 +31,7 @@ const Wrapper = styled(Container)`
 
 const Step5: React.FC = () => {
   const { account } = useWallet();
-  const { poap } = useContext(TutorialContext);
+  const { poap } = useContext(JudgeStepContext);
   const { notifyError } = useContext(NotificationContext);
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);

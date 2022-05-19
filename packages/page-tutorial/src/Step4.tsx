@@ -2,29 +2,16 @@ import type { ProofProcess } from '@zkid/service/types';
 
 import styled from '@emotion/styled';
 import { Box, Button, Container } from '@mui/material';
-import { decodeAddress } from '@polkadot/keyring';
-import { u8aToHex } from '@polkadot/util';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
-import { getRequestHash } from '@zcloak/zkid-core/utils';
 
-import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
-import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { useInterval, useNativeBalance } from '@zkid/react-hooks';
 import { zkidApi } from '@zkid/service';
 
 import Faucet from './components/Faucet';
 import ZkGenerator from './components/ZkGenerator';
-import { stringToHex } from './utils';
-import { TutorialContext } from '.';
-
-export const requestHash = getRequestHash({
-  cType: CTYPE_HASH,
-  programHash: ZK_PROGRAM.hash,
-  fieldNames: ZK_PROGRAM.filed.split(',').map((it) => stringToHex(it)),
-  attester: u8aToHex(decodeAddress(ATTESTER_ADDRESS))
-});
+import { JudgeStepContext, requestHash } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -72,27 +59,14 @@ const ProofTrue: React.FC = () => {
 };
 
 const Step4: React.FC = () => {
-  const { kiltProofs, nextStep, simpleAggregator } = useContext(TutorialContext);
+  const { exists, finished, nextStep } = useContext(JudgeStepContext);
   const { account } = useWallet();
 
   const balance = useNativeBalance(account);
 
-  const [exists, setExists] = useState(false);
-  const [finished, setFinished] = useState(false);
   const [proofProcess, setProofProcess] = useState<ProofProcess>();
 
   console.log(proofProcess);
-
-  useEffect(() => {
-    if (account && kiltProofs && simpleAggregator) {
-      kiltProofs.singleProofExists(account, requestHash, (exists) => {
-        setExists(exists);
-      });
-      simpleAggregator.isFinished(account, requestHash, (finished) => {
-        setFinished(finished);
-      });
-    }
-  }, [account, kiltProofs, simpleAggregator]);
 
   const fetchProofProcess = useCallback(() => {
     if (account && exists && !finished) {

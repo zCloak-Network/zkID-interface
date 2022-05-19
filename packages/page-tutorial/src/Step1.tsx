@@ -6,7 +6,7 @@ import { ZkidExtensionContext } from '@zkid/react-components';
 
 import Createpassword from './components/Createpassword';
 import InstallExtension from './components/InstallExtension';
-import { TutorialContext } from '.';
+import { JudgeStepContext } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -34,7 +34,7 @@ const Wrapper = styled(Container)`
 
 const Step1: React.FC = () => {
   const { hasPassword, isInstall } = useContext(ZkidExtensionContext);
-  const { nextStep } = useContext(TutorialContext);
+  const { nextStep } = useContext(JudgeStepContext);
 
   return (
     <Wrapper>

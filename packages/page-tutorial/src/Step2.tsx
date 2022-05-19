@@ -12,7 +12,7 @@ import { useClaim, useRequestForAttestation } from '@zkid/react-hooks';
 import Contents from './components/Contents';
 import Credential from './components/Credential';
 import SubmitClaim from './components/SubmitClaim';
-import { TutorialContext } from '.';
+import { JudgeStepContext } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -35,7 +35,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { nextStep } = useContext(TutorialContext);
+  const { nextStep } = useContext(JudgeStepContext);
   const { claimerLightDid, credential, keystore, ready } = useContext(CredentialContext);
   const [contents, setContents] = useState<any>();
 

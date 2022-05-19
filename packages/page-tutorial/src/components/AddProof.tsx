@@ -9,15 +9,15 @@ import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
 import { ButtonEnable, CredentialContext, NotificationContext } from '@zkid/react-components';
 
+import { JudgeStepContext } from '../JudgeStep';
 import { decodeSs58Address, stringToHex } from '../utils';
-import { TutorialContext } from '..';
 
 interface Props {
   proof?: Proof;
 }
 
 const AddProof: React.FC<Props> = ({ children, proof }) => {
-  const { kiltProofs } = useContext(TutorialContext);
+  const { kiltProofs } = useContext(JudgeStepContext);
   const { mnemonic } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
