@@ -21,7 +21,12 @@ const Actions: React.FC<{ account: string }> = ({ account }) => {
           credential ? (
             <>
               <Replay />
-              <Button size="large" sx={{ marginLeft: '28px' }} variant="rounded">
+              <Button
+                onClick={() => navigate('/dashboard')}
+                size="large"
+                sx={{ marginLeft: '28px' }}
+                variant="rounded"
+              >
                 Go To Dashboard
               </Button>
             </>
