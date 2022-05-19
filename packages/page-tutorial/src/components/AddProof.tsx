@@ -7,7 +7,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
-import { ButtonEnable, NotificationContext } from '@zkid/react-components';
+import { ButtonEnable, CredentialContext, NotificationContext } from '@zkid/react-components';
 
 import { decodeSs58Address, stringToHex } from '../utils';
 import { TutorialContext } from '..';
@@ -17,7 +17,8 @@ interface Props {
 }
 
 const AddProof: React.FC<Props> = ({ children, proof }) => {
-  const { kiltProofs, mnemonic } = useContext(TutorialContext);
+  const { kiltProofs } = useContext(TutorialContext);
+  const { mnemonic } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
 
@@ -41,8 +42,8 @@ const AddProof: React.FC<Props> = ({ children, proof }) => {
           proof.rootHash,
           [proof.expectResult]
         )
-        .catch(notifyError)
-        .finally(() => setLoading(false));
+        .then((tx) => tx.wait(1))
+        .catch(notifyError);
     }
   }, [kiltProofs, mnemonic, notifyError, proof]);
 

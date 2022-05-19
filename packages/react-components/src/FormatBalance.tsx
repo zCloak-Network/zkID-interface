@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 
 interface Props {
   decimals?: number;
-  value?: BigNumberish;
+  value?: BigNumberish | null;
   logo?: string;
   unit?: number;
   symbol?: string;
@@ -21,9 +21,9 @@ export const formatDisplay = (value: string, decimal = 3) => {
   }
 };
 
-const FormatBalance: React.FC<Props> = ({ decimals, logo, symbol, unit = 3, value = '0' }) => {
+const FormatBalance: React.FC<Props> = ({ decimals, logo, symbol, unit = 3, value }) => {
   const display = useMemo(() => {
-    const _display = formatUnits(value.toString(), decimals);
+    const _display = formatUnits((value ?? '0').toString(), decimals);
 
     return formatDisplay(_display, unit);
   }, [value, decimals, unit]);

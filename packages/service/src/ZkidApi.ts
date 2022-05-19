@@ -1,4 +1,4 @@
-import type { Config, MintPoap, ServerResponse } from './types';
+import type { Config, MintPoap, ProofProcess, ServerResponse } from './types';
 
 import { ZKIDHOSTPREFIX } from '@zkid/app-config/constants';
 
@@ -16,6 +16,10 @@ export class ZkidApi extends Request {
 
   getMintPoap(params: { who: string }) {
     return this.get<ServerResponse<MintPoap | null>>('/mint-poap', { params });
+  }
+
+  proofProcess(params: { dataOwner: string; requestHash: string }) {
+    return this.get<ServerResponse<ProofProcess>>('/proof/process', { params });
   }
 }
 

@@ -1,6 +1,6 @@
 import type { BigNumberish } from '@ethersproject/bignumber';
 import type { BytesLike } from '@ethersproject/bytes';
-import type { JsonRpcProvider } from '@ethersproject/providers';
+import type { JsonRpcProvider, TransactionResponse } from '@ethersproject/providers';
 
 import * as abis from './abis';
 import { BaseContract } from './base';
@@ -11,8 +11,28 @@ class KiltProofs extends BaseContract {
     super(address, provider, abis.KiltProofs, account);
   }
 
-  public singleProofExists(who: string, requestHash: BytesLike): Promise<boolean> {
-    return this.contract.single_proof_exists(who, requestHash);
+  public singleProofExists(who: string, requestHash: BytesLike): Promise<boolean>;
+  public singleProofExists(
+    who: string,
+    requestHash: BytesLike,
+    callback: (exists: boolean) => void
+  ): Promise<() => void>;
+
+  public singleProofExists(
+    who: string,
+    requestHash: BytesLike,
+    callback?: (exists: boolean) => void
+  ): Promise<boolean> | Promise<() => void> {
+    if (callback) {
+      return this.web3Query.one<boolean>(
+        this.multicallContract.single_proof_exists(who, requestHash),
+        callback
+      );
+    } else {
+      return this.web3Query.one<boolean>(
+        this.multicallContract.single_proof_exists(who, requestHash)
+      );
+    }
   }
 
   public addProof(
@@ -24,7 +44,7 @@ class KiltProofs extends BaseContract {
     proofCid: string,
     rootHash: BytesLike,
     expResult: BigNumberish[]
-  ) {
+  ): Promise<TransactionResponse> {
     return callMethod(this.contract, 'addProof', [
       kiltAccount,
       attester,

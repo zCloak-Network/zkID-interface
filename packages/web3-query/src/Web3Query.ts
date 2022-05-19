@@ -94,6 +94,38 @@ export class Web3Query {
 
     return results;
   }
+
+  public async one<TOne = any>(call: ContractCall): Promise<TOne>;
+  public async one<TOne = any>(
+    call: ContractCall,
+    callback: (results: TOne) => void
+  ): Promise<() => void>;
+
+  public async one<TOne = any>(
+    call: ContractCall,
+    callback?: (results: TOne) => void
+  ): Promise<TOne | (() => void)> {
+    const [result] = await all<[TOne]>([call], await getAddress(this._provider), this._provider);
+
+    if (callback) {
+      // eslint-disable-next-line node/no-callback-literal
+      callback(await this.one<TOne>(call));
+
+      const func = async () => {
+        const result = await this.one<TOne>(call);
+
+        callback(result);
+      };
+
+      this.#callbacks.push(func);
+
+      return () => {
+        this.#callbacks = this.#callbacks.filter((callback) => callback !== func);
+      };
+    }
+
+    return result;
+  }
 }
 
 const multicallAddresses: Record<number, string> = {

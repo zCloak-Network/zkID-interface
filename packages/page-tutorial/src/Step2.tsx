@@ -1,15 +1,13 @@
-import type { ICTypeSchema, IMessage, MessageBody } from '@kiltprotocol/sdk-js';
+import type { ICTypeSchema, MessageBody } from '@kiltprotocol/sdk-js';
 
 import { Message } from '@kiltprotocol/sdk-js';
 import { Box, Button, CircularProgress, Container, styled } from '@mui/material';
 import FileSaver from 'file-saver';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 
-import { ATTESTER_DID, ATTESTER_ENCRYPTION_KEY_ID, CTYPE } from '@zkid/app-config/constants';
+import { ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
+import { CredentialContext } from '@zkid/react-components';
 import { useClaim, useRequestForAttestation } from '@zkid/react-hooks';
-import { credentialApi } from '@zkid/service/Api';
-import { AttestationStatus } from '@zkid/service/types';
-import { sleep } from '@zkid/service/utils';
 
 import Contents from './components/Contents';
 import Credential from './components/Credential';
@@ -37,9 +35,8 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { claimerLightDid, keystore, nextStep } = useContext(TutorialContext);
-  const [ready, setReady] = useState(false);
-  const [originMessage, setOriginMessage] = useState<IMessage | null>(null);
+  const { nextStep } = useContext(TutorialContext);
+  const { claimerLightDid, credential, keystore, ready } = useContext(CredentialContext);
   const [contents, setContents] = useState<any>();
 
   const claim = useClaim(CTYPE as ICTypeSchema, contents, claimerLightDid?.did);
@@ -59,52 +56,14 @@ const Step2: React.FC = () => {
   }, [claimerLightDid, requestForAttestation]);
 
   const download = useCallback(() => {
-    if (originMessage) {
-      const blob = new Blob([JSON.stringify(originMessage.body.content)], {
+    if (credential) {
+      const blob = new Blob([JSON.stringify(credential)], {
         type: 'text/plain;charset=utf-8'
       });
 
       FileSaver.saveAs(blob, 'credential.json');
     }
-  }, [originMessage]);
-
-  const fetchAttestation = useCallback(async () => {
-    if (claimerLightDid?.did && claimerLightDid.encryptionKey?.id) {
-      while (true) {
-        const {
-          data: { attestationStatus }
-        } = await credentialApi.getAttestationStatus({
-          senderKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
-        });
-
-        if (attestationStatus === AttestationStatus.attested) {
-          break;
-        } else if (attestationStatus === AttestationStatus.notAttested) {
-          return;
-        }
-
-        await sleep(6000);
-      }
-
-      await credentialApi
-        .getAttestation({
-          senderKeyId: `${ATTESTER_DID}#${ATTESTER_ENCRYPTION_KEY_ID}`,
-          receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
-        })
-        .then(({ data }) => {
-          if (data.length > 0) {
-            return Message.decrypt(data[0], keystore, claimerLightDid);
-          } else {
-            return null;
-          }
-        })
-        .then((message) => setOriginMessage(message));
-    }
-  }, [keystore, claimerLightDid]);
-
-  useEffect(() => {
-    fetchAttestation().finally(() => setReady(true));
-  }, [fetchAttestation]);
+  }, [credential]);
 
   return (
     <Wrapper>
@@ -115,12 +74,12 @@ const Step2: React.FC = () => {
       </p>
       {ready ? (
         <>
-          {originMessage ? (
-            <Credential credential={originMessage.body.content} />
+          {credential ? (
+            <Credential credential={credential} />
           ) : (
             <Contents contentsChange={setContents} />
           )}
-          {originMessage ? (
+          {credential ? (
             <Box sx={{ display: 'flex' }}>
               <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
                 Download
@@ -135,7 +94,6 @@ const Step2: React.FC = () => {
                 claimerLightDid={claimerLightDid}
                 keystore={keystore}
                 message={message}
-                onDone={fetchAttestation}
               />
             </div>
           )}

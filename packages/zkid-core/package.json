@@ -16,6 +16,7 @@
   "type": "module",
   "version": "0.0.0",
   "dependencies": {
+    "@zcloak/web3-query": "^0.0.0",
     "ethers": "^5.6.6",
     "eventemitter3": "^4.0.7"
   }

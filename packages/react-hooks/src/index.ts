@@ -1,6 +1,7 @@
 export * from './useBalance';
 export * from './useClaim';
 export * from './useEndpoint';
+export * from './useInterval';
 export * from './useFullDid';
 export * from './useLightDid';
 export * from './useLocalStorage';
