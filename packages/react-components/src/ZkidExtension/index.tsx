@@ -26,7 +26,7 @@ const ZkidExtensionProvider: React.FC = ({ children }) => {
     zkidExtension.isReady.then(async () => {
       await zkidExtension.isInstall.then(setIsInstall);
       await zkidExtension.hasPassword.then(setHasPassword);
-      await zkidExtension.getCredentialByCHash(CTYPE_HASH).then(setIsImport);
+      await zkidExtension.getCredentialByCHash(CTYPE_HASH)?.then(setIsImport);
       setIsReady(true);
     });
   }, []);

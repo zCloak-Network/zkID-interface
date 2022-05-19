@@ -1,5 +1,5 @@
 interface Window {
-  zCloak: {
+  zCloak?: {
     zkID: {
       getIfCreatePassword: () => Promise<boolean>;
       getCredentialByCHash: (chash: string) => Promise<boolean>;
