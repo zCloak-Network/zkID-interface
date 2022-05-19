@@ -27,7 +27,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE}}
           source: ${{ github.workspace }}/packages/app/build
           target: "/usr/share/nginx/html2"
-          strip_components: 3
+          strip_components: 5
           rm: true
   prod-deploy:
     if: github.ref == 'refs/heads/master'
@@ -53,5 +53,5 @@ jobs:
           key: ${{ secrets.KEY }}
           source: ${{ github.workspace }}/packages/app/build
           target: "/home/ubuntu/credential-interface"
-          strip_components: 3
+          strip_components: 5
           rm: true
