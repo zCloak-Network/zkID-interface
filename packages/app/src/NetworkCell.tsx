@@ -8,6 +8,7 @@ const NetworkCell: React.FC = () => {
 
   return endpoint ? (
     <Box
+      className="ZkidNetworkCell"
       sx={{
         display: 'flex',
         alignItems: 'center',

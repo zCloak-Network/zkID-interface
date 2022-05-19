@@ -7,13 +7,11 @@ import Header from './Header';
 
 const Wrapper = styled(Box)`
   width: 100vw;
-  height: 100vh;
-  background: url('/images/tutorial-bg.webp') no-repeat;
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f4f5fc 0%, #fbfcfd 76%, #ffffff 100%);
 `;
 
-const BaseFrame: React.FC = () => {
+const DashboardFrame: React.FC = () => {
   return (
     <Wrapper>
       <Header />
@@ -22,4 +20,4 @@ const BaseFrame: React.FC = () => {
   );
 };
 
-export default React.memo(BaseFrame);
+export default React.memo(DashboardFrame);

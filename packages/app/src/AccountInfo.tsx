@@ -15,6 +15,7 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
 
   return (
     <Box
+      className="ZkidAccountInfo"
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -35,6 +36,7 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
       </Box>
       <Button
+        className="ZkidAccountInfo-address"
         endIcon={<Circle sx={{ width: '16px', height: '16px', ml: '14px' }} />}
         size="large"
         sx={{

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Box, CircularProgress, Container } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useWallet } from '@zcloak/react-wallet';
 
@@ -33,6 +34,7 @@ const Step5: React.FC = () => {
   const { account } = useWallet();
   const { poap } = useContext(JudgeStepContext);
   const { notifyError } = useContext(NotificationContext);
+  const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nftId, setNftId] = useState<string>();
@@ -92,7 +94,9 @@ const Step5: React.FC = () => {
             )}
           </Box>
           {nftId ? (
-            <ButtonEnable variant="rounded">Go to dashboard</ButtonEnable>
+            <ButtonEnable onClick={() => navigate('/dashboard')} variant="rounded">
+              Go to dashboard
+            </ButtonEnable>
           ) : (
             <ButtonEnable loading={loading} onClick={claim} variant="rounded">
               Claim POAP
