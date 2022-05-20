@@ -1,4 +1,4 @@
-import type { Config, MintPoap, Proof, ProofProcess, ServerResponse } from './types';
+import type { Activity, Config, MintPoap, Proof, ProofProcess, ServerResponse } from './types';
 
 import { ZKIDHOSTPREFIX } from '@zkid/app-config/constants';
 
@@ -24,6 +24,10 @@ export class ZkidApi extends Request {
 
   userProof(params: { dataOwner: string }) {
     return this.get<ServerResponse<Proof[]>>('/user/proof', { params });
+  }
+
+  userActivities(params: { dataOwner: string }) {
+    return this.get<ServerResponse<Activity[]>>('/user/activies', { params });
   }
 }
 

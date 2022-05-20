@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Activities from './Activities';
 import Poaps from './Poaps';
 import Proof from './Proof';
 
@@ -8,6 +9,7 @@ const Dashboard: React.FC = () => {
     <>
       <Poaps />
       <Proof />
+      <Activities />
     </>
   );
 };

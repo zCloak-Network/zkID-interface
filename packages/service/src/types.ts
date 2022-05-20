@@ -93,3 +93,13 @@ export type Proof = {
   };
   claimAlias: string;
 };
+
+export enum ActivityType {
+  AddProof = 'Add proof',
+  ClaimPOAP = 'Claim POAP'
+}
+export type Activity = {
+  operateType: ActivityType;
+  time: string;
+  transactionHash: string;
+};
