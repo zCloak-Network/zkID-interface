@@ -93,8 +93,20 @@ const CredentialProvider: React.FC = ({ children }) => {
   }, [originMessage]);
 
   useEffect(() => {
+    // Migration
     if (!mnemonic) {
-      setMnemonic(mnemonicGenerate());
+      const oldAccount = localStorage.getItem('zCloakGuideAccount');
+      let mnemonic: string | null = null;
+
+      if (oldAccount) {
+        try {
+          mnemonic = JSON.parse(oldAccount)?.mnemonic;
+        } catch {}
+      }
+
+      mnemonic = mnemonic || mnemonicGenerate();
+
+      setMnemonic(mnemonic);
     }
   }, [mnemonic, setMnemonic]);
 
