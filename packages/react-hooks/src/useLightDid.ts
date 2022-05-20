@@ -24,43 +24,36 @@ export function useLightDidFromAccount(
 }
 
 export function useLightDid(keystore: Did.DemoKeystore, mnemonic?: string) {
-  const [signing, setSigning] = useState<Keypair<VerificationKeyType.Sr25519>>();
-  const [encryption, setEncryption] = useState<Keypair<EncryptionKeyType.X25519>>();
+  const [creationDetails, setCreationDetails] = useState<{
+    authenticationKey: Keypair<VerificationKeyType.Sr25519>;
+    encryptionKey: Keypair<EncryptionKeyType.X25519>;
+  }>();
 
   useEffect(() => {
-    keystore
-      .generateKeypair({
-        alg: Did.SigningAlgorithms.Sr25519,
-        seed: mnemonic
-      })
-      .then(({ publicKey }) => {
-        setSigning({
-          publicKey,
-          type: VerificationKeyType.Sr25519
+    if (mnemonic) {
+      Promise.all([
+        keystore.generateKeypair({
+          alg: Did.SigningAlgorithms.Sr25519,
+          seed: mnemonic
+        }),
+        keystore.generateKeypair({
+          alg: Did.EncryptionAlgorithms.NaclBox,
+          seed: mnemonic
+        })
+      ]).then(([{ publicKey }, { publicKey: publicKeyEncryption }]) => {
+        setCreationDetails({
+          authenticationKey: {
+            publicKey,
+            type: VerificationKeyType.Sr25519
+          },
+          encryptionKey: {
+            publicKey: publicKeyEncryption,
+            type: EncryptionKeyType.X25519
+          }
         });
       });
-
-    keystore
-      .generateKeypair({
-        alg: Did.EncryptionAlgorithms.NaclBox,
-        seed: mnemonic
-      })
-      .then(({ publicKey }) => {
-        setEncryption({
-          publicKey,
-          type: EncryptionKeyType.X25519
-        });
-      });
+    }
   }, [keystore, mnemonic]);
-
-  const creationDetails = useMemo((): LightDidCreationDetails | undefined => {
-    return signing
-      ? {
-          authenticationKey: signing,
-          encryptionKey: encryption
-        }
-      : undefined;
-  }, [encryption, signing]);
 
   return useLightDidFromDetails(creationDetails);
 }

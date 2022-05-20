@@ -1,5 +1,13 @@
 import { CircularProgress } from '@mui/material';
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/zkid-core';
@@ -44,6 +52,7 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
   const [step, setStep] = useState(0);
   const [exists, setExists, existsInitial] = useIsInitialState<boolean>(false);
   const [finished, setFinished, finishedInitial] = useIsInitialState<boolean>(false);
+  const isMounted = useRef(true);
 
   const nextStep = useCallback(() => setStep(step + 1), [step]);
   const prevStep = useCallback(() => setStep(step - 1), [step]);
@@ -96,16 +105,18 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
   });
 
   useEffect(() => {
-    if (exists !== null && finished !== null && ready) {
+    if (existsInitial && finishedInitial && ready) {
       if (finished) {
-        setStep(4);
+        isMounted.current && setStep(4);
       } else if (exists) {
-        setStep(3);
+        isMounted.current && setStep(3);
       } else if (credential) {
-        setStep(1);
+        isMounted.current && setStep(1);
       }
+
+      isMounted.current = false;
     }
-  }, [credential, exists, finished, ready]);
+  }, [credential, exists, existsInitial, finished, finishedInitial, ready]);
 
   return existsInitial && finishedInitial && ready ? (
     <JudgeStepContext.Provider

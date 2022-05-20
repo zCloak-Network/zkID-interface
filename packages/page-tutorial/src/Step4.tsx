@@ -1,17 +1,15 @@
-import type { ProofProcess } from '@zkid/service/types';
-
 import styled from '@emotion/styled';
 import { Box, Button, Container } from '@mui/material';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 
-import { useInterval, useNativeBalance } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/service';
+import { useNativeBalance } from '@zkid/react-hooks';
 
 import Faucet from './components/Faucet';
+import Verifing from './components/Verifing';
 import ZkGenerator from './components/ZkGenerator';
-import { JudgeStepContext, requestHash } from './JudgeStep';
+import { JudgeStepContext } from './JudgeStep';
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -64,27 +62,6 @@ const Step4: React.FC = () => {
 
   const balance = useNativeBalance(account);
 
-  const [proofProcess, setProofProcess] = useState<ProofProcess>();
-
-  console.log(proofProcess);
-
-  const fetchProofProcess = useCallback(() => {
-    if (account && exists && !finished) {
-      zkidApi
-        .proofProcess({
-          dataOwner: account,
-          requestHash
-        })
-        .then(({ code, data }) => {
-          if (code === 200) {
-            setProofProcess(data);
-          }
-        });
-    }
-  }, [account, exists, finished]);
-
-  useInterval(fetchProofProcess, 6000);
-
   return (
     <Wrapper>
       <h2>Generate And Upload Proof</h2>
@@ -96,7 +73,7 @@ const Step4: React.FC = () => {
         <Faucet />
       ) : (
         <>
-          {finished ? <ProofTrue /> : exists ? <>Wait for vote</> : <ZkGenerator />}
+          {finished ? <ProofTrue /> : exists ? <Verifing /> : <ZkGenerator />}
           {finished && (
             <Button onClick={nextStep} variant="rounded">
               Next

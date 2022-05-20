@@ -14,8 +14,8 @@ export function useIsInitialState<T = any | undefined>(
   const [initial, setInitial] = useState(false);
 
   const _setValue = useCallback((value: T | undefined) => {
-    setInitial(true);
     setValue(value);
+    setInitial(true);
   }, []);
 
   return useMemo(() => [value, _setValue, initial], [_setValue, initial, value]);

@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useState } from 'react';
 
 import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
 import { CredentialContext } from '@zkid/react-components';
+import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service';
 import { AttestationStatus } from '@zkid/service/types';
 
@@ -17,9 +18,37 @@ interface Props {
 }
 
 const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) => {
-  const { attestationStatus, setAttestationStatus } = useContext(CredentialContext);
-
+  const { fetchCredential } = useContext(CredentialContext);
+  const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
+
+  const listenAttestationStatus = useCallback(() => {
+    if (
+      claimerLightDid &&
+      claimerLightDid.encryptionKey &&
+      (attestationStatus === AttestationStatus.attesting || !attestationStatus)
+    ) {
+      const senderKeyId = `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`;
+
+      credentialApi
+        .getAttestationStatus({
+          senderKeyId
+        })
+        .then(({ data: { attestationStatus } }) => {
+          setAttestationStatus(attestationStatus);
+
+          return attestationStatus;
+        })
+        .then((attestationStatus) => {
+          if (attestationStatus === AttestationStatus.attested) {
+            return fetchCredential();
+          }
+        });
+    }
+  }, [attestationStatus, claimerLightDid, fetchCredential]);
+
+  useInterval(listenAttestationStatus, 6000, true);
+
   const handleClick = useCallback(async () => {
     if (message && claimerLightDid && claimerLightDid.encryptionKey) {
       setLoading(true);

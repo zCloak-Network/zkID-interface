@@ -1,11 +1,10 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import React, { useContext } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useWallet } from '@zcloak/react-wallet';
 
 import Replay from '@zkid/page-home/Replay';
-import { CredentialContext } from '@zkid/react-components';
 import { useAccountPoap } from '@zkid/react-hooks';
 
 import Activities from './Activities';
@@ -15,7 +14,7 @@ import Proof from './Proof';
 const Dashboard: React.FC = () => {
   const { account } = useWallet();
   const navigate = useNavigate();
-  const { credential, ready } = useContext(CredentialContext);
+  const [flag, setFlag] = useState(false);
 
   const nftId = useAccountPoap(account);
 
@@ -37,24 +36,20 @@ const Dashboard: React.FC = () => {
             Wanna try the guide again ?
           </Typography>
           {nftId ? (
-            ready ? (
-              credential ? (
-                <>
-                  <Replay
-                    onDone={() => navigate('/')}
-                    sx={() => ({
-                      background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)'
-                    })}
-                    variant="contained"
-                  />
-                </>
-              ) : (
-                <Button size="large" variant="contained">
-                  Change account in MetaMask
-                </Button>
-              )
+            !flag ? (
+              <>
+                <Replay
+                  onDone={() => setFlag(true)}
+                  sx={() => ({
+                    background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)'
+                  })}
+                  variant="contained"
+                />
+              </>
             ) : (
-              <CircularProgress />
+              <Button size="large" variant="contained">
+                Change account in MetaMask
+              </Button>
             )
           ) : (
             <Button onClick={() => navigate('/tutorial')} size="large" variant="contained">
