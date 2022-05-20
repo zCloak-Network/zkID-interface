@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Link,
   Paper,
@@ -38,7 +39,7 @@ const Activities: React.FC = () => {
   }, [activities, activityType]);
 
   return (
-    <>
+    <Box sx={{ paddingBottom: '44px' }}>
       <h2>Activities</h2>
       <TableContainer
         component={Paper}
@@ -128,7 +129,7 @@ const Activities: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

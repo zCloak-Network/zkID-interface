@@ -1,17 +1,22 @@
 import { ReplaySharp as ReplayIcon } from '@mui/icons-material';
-import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { Button, ButtonProps, Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useCallback, useContext } from 'react';
 
 import { CredentialContext, DialogHeader } from '@zkid/react-components';
 import { useToggle } from '@zkid/react-hooks';
 
-const Replay: React.FC = () => {
+interface Props extends ButtonProps {
+  onDone?: () => void;
+}
+
+const Replay: React.FC<Props> = (props) => {
   const [open, toggle] = useToggle();
   const { reset } = useContext(CredentialContext);
 
   const toggleClick = useCallback(() => {
     reset();
     toggle();
+    onDone?.();
   }, [reset, toggle]);
 
   return (
@@ -44,6 +49,7 @@ const Replay: React.FC = () => {
         onClick={toggle}
         size="large"
         variant="rounded"
+        {...props}
       >
         Replay
       </Button>
