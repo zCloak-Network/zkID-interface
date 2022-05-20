@@ -7,7 +7,8 @@ import Header from './Header';
 
 const Wrapper = styled(Box)`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 44px;
   background: url('/images/tutorial-bg.webp') no-repeat;
   background-size: cover;
   background-position: center;

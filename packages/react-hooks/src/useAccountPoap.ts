@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { zkidApi } from '@zkid/service';
 
-export function useAccountPoap(account: string) {
+export function useAccountPoap(account?: string | null) {
   const [nftId, setNftId] = useState<string>();
 
   useEffect(() => {

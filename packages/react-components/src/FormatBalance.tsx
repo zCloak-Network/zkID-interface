@@ -46,6 +46,7 @@ const FormatBalance: React.FC<Props> = ({ decimals, logo, symbol, unit = 3, valu
       </Box>
       {symbol && (
         <Box className="FormatBalance_symbol" component="span" ml={0.5}>
+          &nbsp;
           {symbol.toUpperCase()}
         </Box>
       )}

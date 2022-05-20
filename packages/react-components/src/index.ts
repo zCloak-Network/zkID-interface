@@ -4,7 +4,10 @@ export { default as NotificationProvider, NotificationContext } from './Notifica
 export { default as ZkidExtensionProvider, ZkidExtensionContext } from './ZkidExtension';
 export { default as Address } from './Address';
 export { default as ButtonEnable } from './ButtonEnable';
+export { default as CircularProgressWithLabel } from './CircularProgressWithLabel';
+export { default as Ellipsis } from './Ellipsis';
 export { default as DialogHeader } from './DialogHeader';
 export { default as FormatBalance } from './FormatBalance';
+export { default as Slider } from './Slider';
 export { default as PoapCard } from './PoapCard';
 export { default as ZkRule } from './ZkRule';

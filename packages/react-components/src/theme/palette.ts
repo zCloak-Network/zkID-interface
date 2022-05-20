@@ -12,6 +12,12 @@ const createPalette = (mode: PaletteMode): PaletteOptions => ({
   primary: {
     main: '#6768ac'
   },
+  success: {
+    main: '#76AF92'
+  },
+  error: {
+    main: '#D56386'
+  },
   background: {
     default: mode === 'light' ? 'rgba(255, 255, 255 ,1)' : '#121212'
   }

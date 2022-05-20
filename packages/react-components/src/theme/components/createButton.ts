@@ -29,7 +29,7 @@ export function createRoundedButton(): {
       },
       style: {
         ...baseStyle,
-        padding: '2px 10px'
+        padding: '4px 10px'
       }
     },
     {
@@ -39,7 +39,7 @@ export function createRoundedButton(): {
       },
       style: {
         ...baseStyle,
-        padding: '4px 16px'
+        padding: '6px 16px'
       }
     },
     {
@@ -49,8 +49,8 @@ export function createRoundedButton(): {
       },
       style: {
         ...baseStyle,
-        padding: '8px 20px',
-        fontSize: '16px'
+        padding: '8px 22px',
+        fontSize: '0.9375rem'
       }
     }
   ];

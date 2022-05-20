@@ -68,3 +68,38 @@ export type ProofProcess = {
   finished: boolean;
   verified: boolean;
 };
+
+export enum ProofStatus {
+  True = 'Verified True',
+  False = 'Verified False',
+  Verifing = 'Verifing',
+  Null = ''
+}
+
+export type Proof = {
+  rootHash: string;
+  proofCid: string;
+  expectResult: number[];
+  cTypeHash: string;
+  fieldNames: string;
+  time: string;
+  percent: string;
+  status: ProofStatus;
+  programDetails: {
+    _id: string;
+    programHash: string;
+    programFieldName: string;
+    programName: string;
+  };
+  claimAlias: string;
+};
+
+export enum ActivityType {
+  AddProof = 'Add proof',
+  ClaimPOAP = 'Claim POAP'
+}
+export type Activity = {
+  operateType: ActivityType;
+  time: string;
+  transactionHash: string;
+};

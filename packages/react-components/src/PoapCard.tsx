@@ -9,25 +9,38 @@ interface Props {
   ext?: string;
 }
 
+export function getLow128(value: BigNumberish) {
+  return BigNumber.from(hexDataSlice(BigNumber.from(value).toHexString(), 16));
+}
+
 const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftId }) => {
   const poapId = useMemo(() => BigNumber.from(nftId).shr(128).toString(), [nftId]);
   const imgName = useMemo(() => BigNumber.from(poapId).toString(), [poapId]);
 
   const imgPath = useMemo(() => `${base}/${imgName}.${ext}`, [base, ext, imgName]);
 
-  const num = useMemo(
-    () => hexDataSlice(BigNumber.from(nftId).toHexString(), 16).slice(-6),
-    [nftId]
-  );
+  const num = useMemo(() => {
+    const _num = getLow128(nftId).toString();
+
+    if (_num.length < 6) {
+      return `${Array.from({ length: 6 - _num.length })
+        .map(() => '0')
+        .join('')}${_num}`;
+    } else {
+      return _num.slice(-6);
+    }
+  }, [nftId]);
 
   return (
     <Box
       sx={{
         position: 'relative',
+        width: '299px',
+        height: '414px',
+
         '>img': {
-          width: '248px',
-          height: '336px',
-          marginBottom: '20px',
+          display: 'block',
+          width: '100%',
           imageRendering: '-webkit-optimize-contrast',
           userSelect: 'none'
         },
@@ -38,8 +51,8 @@ const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftI
           lineHeight: '12px',
           color: '#000000',
           position: 'absolute',
-          bottom: '137px',
-          left: '70px',
+          bottom: '135px',
+          left: '82px',
           userSelect: 'none'
         }
       }}

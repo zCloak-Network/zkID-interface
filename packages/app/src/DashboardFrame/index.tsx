@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -15,7 +15,9 @@ const DashboardFrame: React.FC = () => {
   return (
     <Wrapper>
       <Header />
-      <Outlet />
+      <Container maxWidth="lg" sx={{ mx: 'auto' }}>
+        <Outlet />
+      </Container>
     </Wrapper>
   );
 };

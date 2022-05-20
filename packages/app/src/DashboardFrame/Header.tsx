@@ -49,7 +49,10 @@ const Header: React.FC = () => {
         spacing={2}
         sx={{
           '.ZkidNetworkCell': {
-            background: 'rgba(103, 104, 172, 0.2)'
+            background: 'rgba(103, 104, 172, 0.2)',
+            ':hover': {
+              background: 'rgba(103, 104, 172, 0.2)'
+            }
           },
           '.ZkidAccountInfo': {
             background: '#fff'
