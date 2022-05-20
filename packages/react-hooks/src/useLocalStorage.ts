@@ -20,6 +20,7 @@ export function useLocalStorage<T>(
 
   const remove = useCallback(() => {
     localStorage.removeItem(key);
+    setValue(undefined);
   }, [key]);
 
   useEffect(() => {

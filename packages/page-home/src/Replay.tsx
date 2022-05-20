@@ -9,7 +9,7 @@ interface Props extends ButtonProps {
   onDone?: () => void;
 }
 
-const Replay: React.FC<Props> = (props) => {
+const Replay: React.FC<Props> = ({ onDone, ...props }) => {
   const [open, toggle] = useToggle();
   const { reset } = useContext(CredentialContext);
 
@@ -17,7 +17,7 @@ const Replay: React.FC<Props> = (props) => {
     reset();
     toggle();
     onDone?.();
-  }, [reset, toggle]);
+  }, [onDone, reset, toggle]);
 
   return (
     <>

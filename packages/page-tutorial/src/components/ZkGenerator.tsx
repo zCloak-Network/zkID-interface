@@ -1,3 +1,4 @@
+import CallMadeIcon from '@mui/icons-material/CallMade';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, styled, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
@@ -103,7 +104,10 @@ const ZkGenerator: React.FC = () => {
               variant="text"
             >
               {ZK_PROGRAM.name}
-              <span style={{ fontFamily: 'iconfont', fontWeight: 700 }}>&nbsp;î£©</span>
+              <span style={{ fontFamily: 'iconfont', fontWeight: 700 }}>
+                &nbsp;
+                <CallMadeIcon sx={{ fontSize: '12px' }} />
+              </span>
             </Button>
           </span>
           <span className="value">{shortenHash(ZK_PROGRAM.hash)}</span>

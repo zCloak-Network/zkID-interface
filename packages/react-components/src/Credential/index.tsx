@@ -1,14 +1,13 @@
-import { Did, disconnect, ICredential, IMessage, init, Message } from '@kiltprotocol/sdk-js';
+import { Did, disconnect, ICredential, init, Message } from '@kiltprotocol/sdk-js';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
 import { KILT_ENDPOINT } from '@zkid/app-config/endpoints';
-import { useInterval, useLightDid, useLocalStorage } from '@zkid/react-hooks';
+import { useLightDid, useLocalStorage } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service';
-import { AttestationStatus } from '@zkid/service/types';
 
-import { CREDENTIAL_MNEMONIC } from './keys';
+import { CREDENTIAL, CREDENTIAL_MNEMONIC } from './keys';
 
 interface CredentialState {
   mnemonic?: string;
@@ -16,55 +15,30 @@ interface CredentialState {
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
   credential?: ICredential | null;
-  attestationStatus?: AttestationStatus;
+  fetchCredential: () => void;
   reset: () => void;
-  setAttestationStatus: (status: AttestationStatus) => void;
 }
-
-init({ address: KILT_ENDPOINT });
 
 export const CredentialContext = createContext<CredentialState>({} as CredentialState);
 
 const CredentialProvider: React.FC = ({ children }) => {
-  const [mnemonic, setMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
-  const [originMessage, setOriginMessage] = useState<IMessage | null>(null);
-  const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
+  const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
+  const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
   const [ready, setReady] = useState(false);
-
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
 
   useEffect(() => {
-    if (attestationStatus === AttestationStatus.notAttested) {
+    if (credential) {
       setReady(true);
     }
-  }, [attestationStatus]);
+  }, [credential]);
 
-  const listenAttestationStatus = useCallback(() => {
-    if (
-      claimerLightDid &&
-      claimerLightDid.encryptionKey &&
-      (attestationStatus === AttestationStatus.attesting || !attestationStatus)
-    ) {
-      const senderKeyId = `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`;
+  const fetchCredential = useCallback(async () => {
+    if (claimerLightDid && claimerLightDid.encryptionKey && !credential) {
+      init({ address: KILT_ENDPOINT });
 
-      credentialApi
-        .getAttestationStatus({
-          senderKeyId
-        })
-        .then(({ data: { attestationStatus } }) => setAttestationStatus(attestationStatus));
-    }
-  }, [attestationStatus, claimerLightDid]);
-
-  useInterval(listenAttestationStatus, 6000, true);
-
-  useEffect(() => {
-    if (
-      claimerLightDid &&
-      claimerLightDid.encryptionKey &&
-      attestationStatus === AttestationStatus.attested
-    ) {
-      credentialApi
+      await credentialApi
         .getAttestation({
           senderKeyId: ATTESTER_ASSEMBLE_KEY_ID,
           receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
@@ -76,21 +50,19 @@ const CredentialProvider: React.FC = ({ children }) => {
             return null;
           }
         })
-        .then((message) => setOriginMessage(message))
+        .then((message) => {
+          message && setCredential(message.body.content as ICredential);
+        })
         .finally(() => {
           setReady(true);
           disconnect();
         });
     }
-  }, [attestationStatus, claimerLightDid, keystore]);
+  }, [claimerLightDid, credential, keystore, setCredential]);
 
-  const credential = useMemo(() => {
-    if (originMessage) {
-      return originMessage.body.content as ICredential;
-    } else {
-      return null;
-    }
-  }, [originMessage]);
+  useEffect(() => {
+    fetchCredential();
+  }, [fetchCredential]);
 
   useEffect(() => {
     // Migration
@@ -101,6 +73,7 @@ const CredentialProvider: React.FC = ({ children }) => {
       if (oldAccount) {
         try {
           mnemonic = JSON.parse(oldAccount)?.mnemonic;
+          localStorage.removeItem('zCloakGuideAccount');
         } catch {}
       }
 
@@ -111,8 +84,9 @@ const CredentialProvider: React.FC = ({ children }) => {
   }, [mnemonic, setMnemonic]);
 
   const reset = useCallback(() => {
-    setMnemonic(mnemonicGenerate());
-  }, [setMnemonic]);
+    removeMnemonic();
+    removeCredential();
+  }, [removeCredential, removeMnemonic]);
 
   return (
     <CredentialContext.Provider
@@ -122,9 +96,8 @@ const CredentialProvider: React.FC = ({ children }) => {
         keystore,
         claimerLightDid,
         credential,
-        attestationStatus,
-        reset,
-        setAttestationStatus
+        fetchCredential,
+        reset
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 export * from './useBalance';
 export * from './useClaim';
+export * from './useDebounce';
 export * from './useEndpoint';
 export * from './useInterval';
 export * from './useFullDid';
