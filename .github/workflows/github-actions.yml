@@ -52,6 +52,6 @@ jobs:
           port: 22
           key: ${{ secrets.KEY }}
           source: ${{ github.workspace }}/packages/app/build
-          target: "/home/ubuntu/credential-interface"
+          target: "/home/ubuntu/zkID-interface-v2"
           strip_components: 5
           rm: true
