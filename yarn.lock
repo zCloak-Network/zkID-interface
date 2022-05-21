@@ -5068,6 +5068,7 @@ __metadata:
     ace-builds: ^1.5.0
     ethers: ^5.6.6
     react-ace: ^10.1.0
+    react-jazzicon: ^1.0.3
     react-slick: ^0.29.0
     react-transition-group: ^4.4.2
     slick-carousel: ^1.8.1
@@ -12389,6 +12390,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mersenne-twister@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "mersenne-twister@npm:1.1.0"
+  checksum: 7de1940ded117f2aad9320ae4d21d647b0ecf0667abbadcfe6a2835c669feb674ef46cb7a72da7af69a56d8b19e50e95e2fb7ef6d780efab7a6acd4d87f4cb2d
+  languageName: node
+  linkType: hard
+
 "methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
@@ -14227,6 +14235,17 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-jazzicon@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "react-jazzicon@npm:1.0.3"
+  dependencies:
+    mersenne-twister: ^1.1.0
+  peerDependencies:
+    react: ^17.0.0
+  checksum: cd6ef64ab2c46e0f800b9caa1bbfbc473d6855ff8aeaff7e613ba5d5807de1720cdddbe04264d4764c3f138578cbb23ef1d3f5b442ec2981183abf1790592b24
   languageName: node
   linkType: hard
 

@@ -1,8 +1,7 @@
-import Circle from '@mui/icons-material/Circle';
 import { Box, Button } from '@mui/material';
 import React from 'react';
 
-import { Address, FormatBalance } from '@zkid/react-components';
+import { Address, AddressIcon, FormatBalance } from '@zkid/react-components';
 import { useEndpoint, useNativeBalance } from '@zkid/react-hooks';
 
 interface Props {
@@ -36,7 +35,7 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
       </Box>
       <Button
         className="ZkidAccountInfo-address"
-        endIcon={<Circle sx={{ width: '16px', height: '16px', ml: '14px' }} />}
+        endIcon={<AddressIcon value={account} />}
         size="large"
         sx={{
           background: 'rgba(255, 255, 255, 0.5)',
