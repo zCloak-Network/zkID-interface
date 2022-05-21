@@ -106,9 +106,7 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
 
   useEffect(() => {
     if (existsInitial && finishedInitial && ready) {
-      if (finished) {
-        isMounted.current && setStep(4);
-      } else if (exists) {
+      if (exists) {
         isMounted.current && setStep(3);
       } else if (credential) {
         isMounted.current && setStep(1);

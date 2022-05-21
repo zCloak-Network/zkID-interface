@@ -23,7 +23,13 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
 
   return (
     <Card
-      onClick={() => window.open(transactionHash)}
+      onClick={() =>
+        endpoint &&
+        transactionhash &&
+        window.open(
+          getExplorerLink(endpoint.explorer, transactionHash, ExplorerDataType.TRANSACTION)
+        )
+      }
       sx={() => ({
         position: 'relative',
         display: 'flex',
@@ -116,11 +122,16 @@ const Verifing: React.FC = () => {
   useInterval(fetchProofProcess, 6000);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '100%',
+        marginBottom: '72px'
+      }}
+    >
       {process?.verifying.map(({ isPassed, transactionHash, worker }, index) => (
         <Cell address={worker} key={index} success={isPassed} transactionHash={transactionHash} />
       ))}
-      <Cell />
+      {!process?.finished && <Cell />}
     </Box>
   );
 };
