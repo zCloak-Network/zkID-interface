@@ -86,11 +86,11 @@ const createComponents: Func = () => ({
   MuiMenu: {
     styleOverrides: {
       paper: {
-        backgroundColor: 'red !important',
         borderRadius: '10px !important'
       },
       list: {
-        background: '#D4CAFE',
+        paddingLeft: 4,
+        paddingRight: 4,
         border: '1px solid rgba(255, 255, 255, 0.6)',
         borderRadius: '10px'
       }
@@ -102,9 +102,9 @@ const createComponents: Func = () => ({
       root: {
         borderRadius: '6px',
         ':hover, &.Mui-selected,&.Mui-focusVisible': {
-          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          backgroundColor: '#EAECF2',
           ':hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.6)'
+            backgroundColor: '#EAECF2'
           }
         }
       }

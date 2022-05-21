@@ -7,6 +7,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ButtonEnable } from '@zkid/react-components';
 
 import AccountInfo from '../AccountInfo';
+import MoreLinks from '../MoreLinks';
 import NetworkCell from '../NetworkCell';
 
 const Wrapper = styled(Box)`
@@ -82,6 +83,7 @@ const Header: React.FC = () => {
             <AccountInfo account={account} />
           </>
         )}
+        <MoreLinks />
       </Stack>
     </Wrapper>
   );
