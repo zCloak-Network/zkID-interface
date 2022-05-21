@@ -25,7 +25,7 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
     <Card
       onClick={() =>
         endpoint &&
-        transactionhash &&
+        transactionHash &&
         window.open(
           getExplorerLink(endpoint.explorer, transactionHash, ExplorerDataType.TRANSACTION)
         )
