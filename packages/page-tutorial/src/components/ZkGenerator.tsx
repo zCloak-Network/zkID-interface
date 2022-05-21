@@ -1,7 +1,7 @@
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, styled, useTheme } from '@mui/material';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Alert, Box, Button, Fade, Popper, styled, useTheme } from '@mui/material';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { Proof } from '@zcloak/zkid-core/types';
 import { shortenHash } from '@zcloak/zkid-core/utils';
@@ -9,6 +9,7 @@ import { shortenHash } from '@zcloak/zkid-core/utils';
 import { CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { ZkidExtensionContext, ZkRule } from '@zkid/react-components';
+import { useToggle } from '@zkid/react-hooks';
 
 import AddProof from './AddProof';
 
@@ -56,10 +57,18 @@ const ZkGenerator: React.FC = () => {
   const { zkidExtension } = useContext(ZkidExtensionContext);
   const [genLoading, setGenLoading] = useState(false);
   const [proof, setProof] = useState<Proof>();
-  const [open, setOpen] = useState(false);
+  const [open, toggle] = useToggle();
+  const [error, setError] = useState<Error>();
+  const [tooltip, setTooltip] = useState(false);
+  const anchorEl = useRef<HTMLButtonElement>(null);
 
-  const onClose = useCallback(() => setOpen(false), []);
-  const onOpen = useCallback(() => setOpen(true), []);
+  useEffect(() => {
+    if (error && !proof) {
+      setTooltip(true);
+    } else {
+      setTooltip(false);
+    }
+  }, [error, proof]);
 
   const generate = useCallback(() => {
     setGenLoading(true);
@@ -78,22 +87,37 @@ const ZkGenerator: React.FC = () => {
       setProof(value);
     };
 
+    const handleCLose = () => {
+      setGenLoading(false);
+    };
+
     zkidExtension.on('SEND_PROOF_TO_WEB', handleEvent);
+    zkidExtension.on('EXTENSION_CLOSED', handleCLose);
 
     return () => {
       zkidExtension.off('SEND_PROOF_TO_WEB', handleEvent);
+      zkidExtension.off('EXTENSION_CLOSED', handleCLose);
     };
   }, [zkidExtension]);
 
   return (
     <Wrapper>
-      <ZkRule onClose={onClose} open={open} />
+      <ZkRule onClose={toggle} open={open} />
+      <Popper anchorEl={anchorEl.current} open={tooltip} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Alert severity="error" variant="filled">
+              {error?.message}
+            </Alert>
+          </Fade>
+        )}
+      </Popper>
       <Item>
         <label>zk Program</label>
         <div className="content">
           <span className="title">
             <Button
-              onClick={onOpen}
+              onClick={toggle}
               sx={{
                 padding: 0,
                 color: 'inherit',
@@ -125,7 +149,7 @@ const ZkGenerator: React.FC = () => {
           <span className="title">{ZK_PROGRAM.filed}</span>
         </div>
       </Item>
-      <Item>
+      <Item sx={(theme) => ({ borderColor: error && !proof ? theme.palette.error.main : 'white' })}>
         <label>outputs,rootHash,proof cid</label>
         <div className="content">
           <span className="title">
@@ -137,7 +161,12 @@ const ZkGenerator: React.FC = () => {
           </span>
           <span className="value">
             {!proof && (
-              <LoadingButton loading={genLoading} onClick={generate} variant="contained">
+              <LoadingButton
+                loading={genLoading}
+                onClick={generate}
+                ref={anchorEl}
+                variant="contained"
+              >
                 Generate
               </LoadingButton>
             )}
@@ -145,7 +174,9 @@ const ZkGenerator: React.FC = () => {
         </div>
       </Item>
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <AddProof proof={proof}>Submit</AddProof>
+        <AddProof proof={proof} setError={setError}>
+          Submit
+        </AddProof>
       </Box>
     </Wrapper>
   );

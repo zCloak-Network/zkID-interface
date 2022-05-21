@@ -14,11 +14,16 @@ import { zkidApi } from '@zkid/service';
 
 import { requestHash } from '../JudgeStep';
 
-const Cell: React.FC<{ success?: boolean; address?: string }> = ({ address, success }) => {
+const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: string }> = ({
+  address,
+  success,
+  transactionHash
+}) => {
   const endpoint = useEndpoint();
 
   return (
     <Card
+      onClick={() => window.open(transactionHash)}
       sx={() => ({
         position: 'relative',
         display: 'flex',
@@ -30,7 +35,8 @@ const Cell: React.FC<{ success?: boolean; address?: string }> = ({ address, succ
         paddingX: '48px',
         background: 'rgba(255, 255, 255, 0.8)',
         borderRadius: '13px',
-        overflow: 'visible'
+        overflow: 'visible',
+        cursor: 'pointer'
       })}
     >
       <Card
@@ -111,8 +117,8 @@ const Verifing: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      {process?.verifying.map(({ isPassed, worker }, index) => (
-        <Cell address={worker} key={index} success={isPassed} />
+      {process?.verifying.map(({ isPassed, transactionHash, worker }, index) => (
+        <Cell address={worker} key={index} success={isPassed} transactionHash={transactionHash} />
       ))}
       <Cell />
     </Box>
