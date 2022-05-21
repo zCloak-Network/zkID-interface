@@ -14,15 +14,20 @@ import { decodeSs58Address, stringToHex } from '../utils';
 
 interface Props {
   proof?: Proof;
+  setError?: (error: Error) => void;
 }
 
-const AddProof: React.FC<Props> = ({ children, proof }) => {
+const AddProof: React.FC<Props> = ({ children, proof, setError }) => {
   const { kiltProofs } = useContext(JudgeStepContext);
   const { mnemonic } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
 
   const handleClick = useCallback(async () => {
+    if (!proof) {
+      setError?.(new Error('Proof should not be empty, please click to generate'));
+    }
+
     if (kiltProofs && mnemonic && proof) {
       setLoading(true);
       await waitReady();
@@ -45,7 +50,7 @@ const AddProof: React.FC<Props> = ({ children, proof }) => {
         .then((tx) => tx.wait(1))
         .catch(notifyError);
     }
-  }, [kiltProofs, mnemonic, notifyError, proof]);
+  }, [kiltProofs, mnemonic, notifyError, proof, setError]);
 
   return (
     <ButtonEnable loading={loading} onClick={handleClick} variant="rounded">

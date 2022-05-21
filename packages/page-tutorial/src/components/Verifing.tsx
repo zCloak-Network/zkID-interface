@@ -14,11 +14,22 @@ import { zkidApi } from '@zkid/service';
 
 import { requestHash } from '../JudgeStep';
 
-const Cell: React.FC<{ success?: boolean; address?: string }> = ({ address, success }) => {
+const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: string }> = ({
+  address,
+  success,
+  transactionHash
+}) => {
   const endpoint = useEndpoint();
 
   return (
     <Card
+      onClick={() =>
+        endpoint &&
+        transactionHash &&
+        window.open(
+          getExplorerLink(endpoint.explorer, transactionHash, ExplorerDataType.TRANSACTION)
+        )
+      }
       sx={() => ({
         position: 'relative',
         display: 'flex',
@@ -30,7 +41,8 @@ const Cell: React.FC<{ success?: boolean; address?: string }> = ({ address, succ
         paddingX: '48px',
         background: 'rgba(255, 255, 255, 0.8)',
         borderRadius: '13px',
-        overflow: 'visible'
+        overflow: 'visible',
+        cursor: 'pointer'
       })}
     >
       <Card
@@ -110,11 +122,16 @@ const Verifing: React.FC = () => {
   useInterval(fetchProofProcess, 6000);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      {process?.verifying.map(({ isPassed, worker }, index) => (
-        <Cell address={worker} key={index} success={isPassed} />
+    <Box
+      sx={{
+        width: '100%',
+        marginBottom: '72px'
+      }}
+    >
+      {process?.verifying.map(({ isPassed, transactionHash, worker }, index) => (
+        <Cell address={worker} key={index} success={isPassed} transactionHash={transactionHash} />
       ))}
-      <Cell />
+      {!process?.finished && <Cell />}
     </Box>
   );
 };

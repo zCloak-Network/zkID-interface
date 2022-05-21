@@ -11,6 +11,7 @@ import { useClaim, useRequestForAttestation } from '@zkid/react-hooks';
 
 import Contents from './components/Contents';
 import Credential from './components/Credential';
+import Readme from './components/Readme';
 import SubmitClaim from './components/SubmitClaim';
 import { JudgeStepContext } from './JudgeStep';
 
@@ -38,6 +39,7 @@ const Step2: React.FC = () => {
   const { nextStep } = useContext(JudgeStepContext);
   const { claimerLightDid, credential, keystore, ready } = useContext(CredentialContext);
   const [contents, setContents] = useState<any>();
+  const [hasDownload, setHasDownload] = useState(false);
 
   const claim = useClaim(CTYPE as ICTypeSchema, contents, claimerLightDid?.did);
   const requestForAttestation = useRequestForAttestation(keystore, claim, claimerLightDid);
@@ -62,11 +64,14 @@ const Step2: React.FC = () => {
       });
 
       FileSaver.saveAs(blob, 'credential.json');
+
+      setHasDownload(true);
     }
   }, [credential]);
 
   return (
     <Wrapper>
+      <Readme />
       <h2>Describe Yourself</h2>
       <p>
         We have prepared a gift POAP for you. The POAP style varies by your age, class and
@@ -84,7 +89,7 @@ const Step2: React.FC = () => {
               <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
                 Download
               </Button>
-              <Button onClick={nextStep} variant="rounded">
+              <Button disabled={!hasDownload} onClick={nextStep} variant="rounded">
                 Next
               </Button>
             </Box>

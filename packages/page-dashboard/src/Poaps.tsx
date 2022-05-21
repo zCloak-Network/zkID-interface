@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import LockIcon from '@mui/icons-material/Lock';
 import { Box } from '@mui/material';
 import React, { useMemo } from 'react';
 
@@ -53,8 +54,33 @@ const Poaps: React.FC = () => {
     <Box sx={{ mb: 10 }}>
       <h2>POAP</h2>
       <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
-        {nftIds.map((nftId) => (
-          <PoapCard key={nftId} nftId={nftId} />
+        {nftIds.map((_nftId) => (
+          <Box
+            key={_nftId}
+            sx={() => ({
+              position: 'relative',
+              filter: BigNumber.from(_nftId).eq(nftId || '0') ? undefined : 'blur(3px)'
+            })}
+          >
+            <PoapCard nftId={_nftId} />
+            {!BigNumber.from(_nftId).eq(nftId || '0') && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: '44px',
+                  height: '44px',
+                  margin: 'auto',
+                  color: 'white'
+                }}
+              >
+                <LockIcon />
+              </Box>
+            )}
+          </Box>
         ))}
       </Slider>
     </Box>
