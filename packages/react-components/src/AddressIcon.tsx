@@ -1,18 +1,39 @@
-import React from 'react';
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import jazzicon from '@metamask/jazzicon';
+import React, { useLayoutEffect, useMemo, useRef } from 'react';
 
 interface Props {
   value?: string | null;
   diameter?: number;
 }
 
-const AddressIcon: React.FC<Props> = ({ diameter = 20, value }) => {
-  return (
-    <Jazzicon
-      diameter={diameter}
-      seed={jsNumberForAddress(value || '0x0000000000000000000000000000000000000000')}
-    />
+const AddressIcon: React.FC<Props> = ({ diameter = 16, value }) => {
+  const icon = useMemo(
+    () => value && jazzicon(diameter, parseInt(value.slice(2, 10), 16)),
+    [diameter, value]
   );
+
+  console.log(value);
+  const iconRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const current = iconRef.current;
+
+    if (icon) {
+      current?.appendChild(icon);
+
+      return () => {
+        try {
+          current?.removeChild(icon);
+        } catch (e) {
+          console.error('Avatar icon not found');
+        }
+      };
+    }
+
+    return () => 0;
+  }, [icon, iconRef]);
+
+  return <span ref={iconRef} style={{ lineHeight: 1, fontSize: '12px' }} />;
 };
 
 export default React.memo(AddressIcon);
