@@ -1,22 +1,18 @@
 import { Box, Button, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useWallet } from '@zcloak/react-wallet';
-
 import Replay from '@zkid/page-home/Replay';
-import { useAccountPoap } from '@zkid/react-hooks';
+import { BalancesContext } from '@zkid/react-components';
 
 import Activities from './Activities';
 import Poaps from './Poaps';
 import Proof from './Proof';
 
 const Dashboard: React.FC = () => {
-  const { account } = useWallet();
+  const { poapId } = useContext(BalancesContext);
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
-
-  const nftId = useAccountPoap(account);
 
   return (
     <>
@@ -35,7 +31,7 @@ const Dashboard: React.FC = () => {
           >
             Wanna try the guide again ?
           </Typography>
-          {nftId ? (
+          {poapId ? (
             !flag ? (
               <>
                 <Replay

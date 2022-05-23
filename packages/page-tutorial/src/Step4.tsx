@@ -2,9 +2,7 @@ import styled from '@emotion/styled';
 import { Box, Button, Container } from '@mui/material';
 import React, { useContext, useState } from 'react';
 
-import { useWallet } from '@zcloak/react-wallet';
-
-import { useNativeBalance } from '@zkid/react-hooks';
+import { BalancesContext } from '@zkid/react-components';
 
 import Faucet from './components/Faucet';
 import Verifing from './components/Verifing';
@@ -57,11 +55,10 @@ const ProofTrue: React.FC = () => {
 };
 
 const Step4: React.FC = () => {
-  const { exists, finished, nextStep } = useContext(JudgeStepContext);
-  const { account } = useWallet();
+  const { balance } = useContext(BalancesContext);
+  const { exists, nextStep } = useContext(JudgeStepContext);
+  const [finished, setFinished] = useState(false);
   const [flag, setFlag] = useState(false);
-
-  const balance = useNativeBalance(account);
 
   return (
     <Wrapper>
@@ -74,7 +71,13 @@ const Step4: React.FC = () => {
         <Faucet />
       ) : (
         <>
-          {finished && flag ? <ProofTrue /> : exists ? <Verifing /> : <ZkGenerator />}
+          {finished && flag ? (
+            <ProofTrue />
+          ) : exists ? (
+            <Verifing setFinished={setFinished} />
+          ) : (
+            <ZkGenerator />
+          )}
           {finished && (
             <Button
               onClick={() => {

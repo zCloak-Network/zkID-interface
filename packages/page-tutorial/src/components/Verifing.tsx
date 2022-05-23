@@ -3,7 +3,7 @@ import type { ProofProcess } from '@zkid/service/types';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import { Box, Card, CircularProgress, Link } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 
@@ -92,22 +92,24 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
           ? 'Verified true'
           : 'Verified False'}
       </Box>
-      <Box>
-        By work&nbsp;
-        {endpoint && address && (
-          <Link
-            href={getExplorerLink(endpoint.explorer, address, ExplorerDataType.ADDRESS)}
-            target="_blank"
-          >
-            <Address value={address} />
-          </Link>
-        )}
-      </Box>
+      {transactionHash && (
+        <Box>
+          By worker&nbsp;
+          {endpoint && address && (
+            <Link
+              href={getExplorerLink(endpoint.explorer, address, ExplorerDataType.ADDRESS)}
+              target="_blank"
+            >
+              <Address value={address} />
+            </Link>
+          )}
+        </Box>
+      )}
     </Card>
   );
 };
 
-const Verifing: React.FC = () => {
+const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setFinished }) => {
   const { account } = useWallet();
   const [process, setProcess] = useState<ProofProcess>();
 
@@ -120,6 +122,14 @@ const Verifing: React.FC = () => {
   }, [account]);
 
   useInterval(fetchProofProcess, 6000);
+
+  useEffect(() => {
+    if (process?.finished) {
+      setFinished(true);
+    } else {
+      setFinished(false);
+    }
+  }, [process?.finished, setFinished]);
 
   return (
     <Box

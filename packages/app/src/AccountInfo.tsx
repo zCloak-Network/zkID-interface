@@ -1,16 +1,17 @@
-import Circle from '@mui/icons-material/Circle';
 import { Box, Button } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { Address, FormatBalance } from '@zkid/react-components';
-import { useEndpoint, useNativeBalance } from '@zkid/react-hooks';
+import { Address, AddressIcon, BalancesContext, FormatBalance } from '@zkid/react-components';
+import { useEndpoint } from '@zkid/react-hooks';
+
+import AccountDetails from './AccountDetails';
 
 interface Props {
   account: string;
 }
 
 const AccountInfo: React.FC<Props> = ({ account }) => {
-  const balance = useNativeBalance(account);
+  const { balance } = useContext(BalancesContext);
   const endpoint = useEndpoint();
 
   return (
@@ -22,7 +23,7 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         justifyContent: 'space-between',
         background: 'rgba(255, 255, 255, 0.5)',
         border: '1px solid rgba(255, 255, 255, 0.6)',
-        borderRadius: '20px',
+        borderRadius: '40px',
         color: '#333'
       }}
     >
@@ -34,20 +35,24 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
       >
         <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
       </Box>
-      <Button
-        className="ZkidAccountInfo-address"
-        endIcon={<Circle sx={{ width: '16px', height: '16px', ml: '14px' }} />}
-        size="large"
-        sx={{
-          background: 'rgba(255, 255, 255, 0.5)',
-          ':hover': {
-            background: 'rgba(255, 255, 255, 0.5)'
-          }
-        }}
-        variant="rounded"
-      >
-        <Address value={account} />
-      </Button>
+      <AccountDetails
+        ChildrenComponent={
+          <Button
+            className="ZkidAccountInfo-address"
+            endIcon={<AddressIcon value={account} />}
+            size="large"
+            sx={{
+              background: 'rgba(255, 255, 255, 0.5)',
+              ':hover': {
+                background: 'rgba(255, 255, 255, 0.5)'
+              }
+            }}
+            variant="rounded"
+          >
+            <Address value={account} />
+          </Button>
+        }
+      />
     </Box>
   );
 };
