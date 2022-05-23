@@ -6,6 +6,7 @@ export { default as Address } from './Address';
 export { default as AddressIcon } from './AddressIcon';
 export { default as ButtonEnable } from './ButtonEnable';
 export { default as CircularProgressWithLabel } from './CircularProgressWithLabel';
+export { default as Copy } from './Copy';
 export { default as Ellipsis } from './Ellipsis';
 export { default as DialogHeader } from './DialogHeader';
 export { default as FormatBalance } from './FormatBalance';

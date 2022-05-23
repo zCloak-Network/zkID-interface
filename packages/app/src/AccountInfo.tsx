@@ -4,6 +4,8 @@ import React from 'react';
 import { Address, AddressIcon, FormatBalance } from '@zkid/react-components';
 import { useEndpoint, useNativeBalance } from '@zkid/react-hooks';
 
+import AccountDetails from './AccountDetails';
+
 interface Props {
   account: string;
 }
@@ -21,7 +23,7 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         justifyContent: 'space-between',
         background: 'rgba(255, 255, 255, 0.5)',
         border: '1px solid rgba(255, 255, 255, 0.6)',
-        borderRadius: '20px',
+        borderRadius: '40px',
         color: '#333'
       }}
     >
@@ -33,20 +35,24 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
       >
         <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
       </Box>
-      <Button
-        className="ZkidAccountInfo-address"
-        endIcon={<AddressIcon value={account} />}
-        size="large"
-        sx={{
-          background: 'rgba(255, 255, 255, 0.5)',
-          ':hover': {
-            background: 'rgba(255, 255, 255, 0.5)'
-          }
-        }}
-        variant="rounded"
-      >
-        <Address value={account} />
-      </Button>
+      <AccountDetails
+        ChildrenComponent={
+          <Button
+            className="ZkidAccountInfo-address"
+            endIcon={<AddressIcon value={account} />}
+            size="large"
+            sx={{
+              background: 'rgba(255, 255, 255, 0.5)',
+              ':hover': {
+                background: 'rgba(255, 255, 255, 0.5)'
+              }
+            }}
+            variant="rounded"
+          >
+            <Address value={account} />
+          </Button>
+        }
+      />
     </Box>
   );
 };
