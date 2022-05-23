@@ -57,8 +57,9 @@ const ProofTrue: React.FC = () => {
 };
 
 const Step4: React.FC = () => {
-  const { exists, finished, nextStep } = useContext(JudgeStepContext);
+  const { exists, nextStep } = useContext(JudgeStepContext);
   const { account } = useWallet();
+  const [finished, setFinished] = useState(false);
   const [flag, setFlag] = useState(false);
 
   const balance = useNativeBalance(account);
@@ -74,7 +75,13 @@ const Step4: React.FC = () => {
         <Faucet />
       ) : (
         <>
-          {finished && flag ? <ProofTrue /> : exists ? <Verifing /> : <ZkGenerator />}
+          {finished && flag ? (
+            <ProofTrue />
+          ) : exists ? (
+            <Verifing setFinished={setFinished} />
+          ) : (
+            <ZkGenerator />
+          )}
           {finished && (
             <Button
               onClick={() => {
