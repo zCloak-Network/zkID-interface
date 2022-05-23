@@ -7,6 +7,7 @@ import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
 import {
+  BalancesProvider,
   CredentialProvider,
   NotificationProvider,
   ThemeProvider,
@@ -22,12 +23,14 @@ const Root: React.FC = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <NotificationProvider>
             <WalletProvider supportedChainIds={[MOONBASE.chainId]}>
-              <ZkidExtensionProvider>
-                <CredentialProvider>
-                  <CssBaseline />
-                  <App />
-                </CredentialProvider>
-              </ZkidExtensionProvider>
+              <BalancesProvider>
+                <ZkidExtensionProvider>
+                  <CredentialProvider>
+                    <CssBaseline />
+                    <App />
+                  </CredentialProvider>
+                </ZkidExtensionProvider>
+              </BalancesProvider>
             </WalletProvider>
           </NotificationProvider>
         </LocalizationProvider>

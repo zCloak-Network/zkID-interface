@@ -1,17 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box } from '@mui/material';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
-import { useWallet } from '@zcloak/react-wallet';
-
-import { PoapCard, Slider } from '@zkid/react-components';
+import { BalancesContext, PoapCard, Slider } from '@zkid/react-components';
 import { getLow128 } from '@zkid/react-components/PoapCard';
-import { useAccountPoap } from '@zkid/react-hooks';
 
 const Poaps: React.FC = () => {
-  const { account } = useWallet();
-  const nftId = useAccountPoap(account);
+  const { poapId: nftId } = useContext(BalancesContext);
 
   const nftIds = useMemo(() => {
     if (nftId) {

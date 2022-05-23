@@ -1,8 +1,8 @@
 import { Box, Button } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { Address, AddressIcon, FormatBalance } from '@zkid/react-components';
-import { useEndpoint, useNativeBalance } from '@zkid/react-hooks';
+import { Address, AddressIcon, BalancesContext, FormatBalance } from '@zkid/react-components';
+import { useEndpoint } from '@zkid/react-hooks';
 
 import AccountDetails from './AccountDetails';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const AccountInfo: React.FC<Props> = ({ account }) => {
-  const balance = useNativeBalance(account);
+  const { balance } = useContext(BalancesContext);
   const endpoint = useEndpoint();
 
   return (
