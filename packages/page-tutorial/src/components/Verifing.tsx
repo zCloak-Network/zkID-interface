@@ -117,7 +117,7 @@ const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setF
     if (account) {
       zkidApi
         .proofProcess({ dataOwner: account, requestHash })
-        .then(({ data }) => setProcess(data));
+        .then(({ data }) => data._id && setProcess(data));
     }
   }, [account]);
 

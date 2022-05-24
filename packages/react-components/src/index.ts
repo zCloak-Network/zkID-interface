@@ -6,6 +6,7 @@ export { default as ZkidExtensionProvider, ZkidExtensionContext } from './ZkidEx
 export { default as Address } from './Address';
 export { default as AddressIcon } from './AddressIcon';
 export { default as ButtonEnable } from './ButtonEnable';
+export { default as ButtonWithError } from './ButtonWithError';
 export { default as CircularProgressWithLabel } from './CircularProgressWithLabel';
 export { default as Copy } from './Copy';
 export { default as Ellipsis } from './Ellipsis';

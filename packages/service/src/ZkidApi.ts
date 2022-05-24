@@ -29,6 +29,10 @@ export class ZkidApi extends Request {
   userActivities(params: { dataOwner: string }) {
     return this.get<ServerResponse<Activity[]>>('/user/activies', { params });
   }
+
+  rootHashUser(rootHash: string) {
+    return this.get<ServerResponse<{ address: string | null }>>(`/credential/${rootHash}/user`);
+  }
 }
 
 export const zkidApi = new ZkidApi();

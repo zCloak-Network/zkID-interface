@@ -1,4 +1,3 @@
-import { LoadingButton, LoadingButtonProps } from '@mui/lab';
 import { UnsupportedChainIdError } from '@web3-react/core';
 import React, { useCallback } from 'react';
 
@@ -7,9 +6,10 @@ import { switchNetwork, useWallet } from '@zcloak/react-wallet';
 import { MOONBASE } from '@zkid/app-config/endpoints';
 import { useToggle } from '@zkid/react-hooks';
 
+import ButtonWithError, { Props as ButtonWithErrorProps } from './ButtonWithError';
 import WalletModal from './WalletModal';
 
-interface Props extends LoadingButtonProps {
+interface Props extends ButtonWithErrorProps {
   enableText?: string;
 }
 
@@ -33,15 +33,15 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
   return (
     <>
       {active ? (
-        <LoadingButton {...props}>{children}</LoadingButton>
+        <ButtonWithError {...props}>{children}</ButtonWithError>
       ) : error instanceof UnsupportedChainIdError ? (
-        <LoadingButton {...props} onClick={onSwitchNetwork}>
+        <ButtonWithError {...props} onClick={onSwitchNetwork}>
           Switch network
-        </LoadingButton>
+        </ButtonWithError>
       ) : (
-        <LoadingButton {...props} onClick={toggle}>
+        <ButtonWithError {...props} onClick={toggle}>
           {enableText ?? 'Connect wallet'}
-        </LoadingButton>
+        </ButtonWithError>
       )}
       <WalletModal onClose={toggle} open={open} />
     </>

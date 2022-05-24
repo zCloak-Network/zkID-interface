@@ -81,14 +81,16 @@ const Step4: React.FC = () => {
           ) : exists ? (
             <>
               <Verifing setFinished={setFinished} />
-              <Button
-                onClick={() => {
-                  setFlag(true);
-                }}
-                variant="rounded"
-              >
-                Next
-              </Button>
+              {finished && !flag && (
+                <Button
+                  onClick={() => {
+                    setFlag(true);
+                  }}
+                  variant="rounded"
+                >
+                  Next
+                </Button>
+              )}
             </>
           ) : (
             <ZkGenerator />
