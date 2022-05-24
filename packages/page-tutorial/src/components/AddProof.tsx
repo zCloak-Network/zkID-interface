@@ -48,7 +48,10 @@ const AddProof: React.FC<Props> = ({ children, proof, setError }) => {
           [proof.expectResult]
         )
         .then((tx) => tx.wait(1))
-        .catch(notifyError);
+        .catch((error) => {
+          setLoading(false);
+          notifyError(error);
+        });
     }
   }, [kiltProofs, mnemonic, notifyError, proof, setError]);
 
