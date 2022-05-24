@@ -16,7 +16,7 @@ export const ZkidExtensionContext = createContext<ZkidExtensionState>({} as Zkid
 
 const zkidExtension = new ZkidExtension();
 
-const ZkidExtensionProvider: React.FC = ({ children }) => {
+const ZkidExtensionProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
   const [hasPassword, setHasPassword] = useState(false);
   const [isImport, setIsImport] = useState(false);

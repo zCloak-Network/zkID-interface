@@ -19,7 +19,7 @@ interface Props {
   setError?: (error: Error) => void;
 }
 
-const AddProof: React.FC<Props> = ({ children, proof, setError }) => {
+const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, setError }) => {
   const { kiltProofs } = useContext(JudgeStepContext);
   const { mnemonic } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);

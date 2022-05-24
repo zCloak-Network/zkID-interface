@@ -7,7 +7,7 @@ const MoreLinks: React.FC = () => {
   const popupState = usePopupState({ variant: 'popper', popupId: 'MoreLinks-popup' });
 
   const handleItemClick = useCallback(
-    (href) => {
+    (href: string) => {
       popupState.close();
       window.open(href, '_blank');
     },

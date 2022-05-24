@@ -12,7 +12,7 @@ interface BalancesState {
 
 export const BalancesContext = createContext({} as BalancesState);
 
-const BalancesProvider: React.FC = ({ children }) => {
+const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const { account } = useWallet();
 
   const balance = useNativeBalance(account);

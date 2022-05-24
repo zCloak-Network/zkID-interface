@@ -18,7 +18,7 @@ const NotificationWrapper = styled(Box)`
 
 let id = 0;
 
-const NotificationProvider: React.FC = ({ children }) => {
+const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [messages, setMessages] = useState<{ id: number; title: string; message?: string }[]>([]);
   const messageRef = useRef(messages);
 

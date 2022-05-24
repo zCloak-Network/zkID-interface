@@ -37,7 +37,11 @@ const Logo = styled('div')`
   cursor: pointer;
 `;
 
-const ActiveLink: React.FC<{ to: string; active: string }> = ({ active, children, to }) => {
+const ActiveLink: React.FC<React.PropsWithChildren<{ to: string; active: string }>> = ({
+  active,
+  children,
+  to
+}) => {
   const [param] = useQueryParam<string>('anchor');
 
   return (

@@ -19,7 +19,10 @@ interface Props {
 
 export const WalletContext = createContext<State>({} as State);
 
-const WalletProvider: React.FC<Props> = ({ children, supportedChainIds }) => {
+const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
+  children,
+  supportedChainIds
+}) => {
   const injected = useMemo(
     () =>
       new InjectedConnector({

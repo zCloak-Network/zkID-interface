@@ -87,12 +87,12 @@ const Wrapper = styled(Box)`
 `;
 
 const Credential: React.FC<Props> = ({ credential }) => {
-  const name = credential?.request?.claim?.contents?.name;
-  const age = credential?.request?.claim?.contents?.age;
-  const clazz = credential?.request?.claim?.contents?.class;
-  const helmet = credential?.request?.claim?.contents?.helmet_rarity;
-  const weapon = credential?.request?.claim?.contents?.weapon_rarity;
-  const chest = credential?.request?.claim?.contents?.chest_rarity;
+  const name = credential?.request?.claim?.contents?.name as unknown as string;
+  const age = credential?.request?.claim?.contents?.age as unknown as string;
+  const clazz = credential?.request?.claim?.contents?.class as unknown as number;
+  const helmet = credential?.request?.claim?.contents?.helmet_rarity as unknown as string;
+  const weapon = credential?.request?.claim?.contents?.weapon_rarity as unknown as string;
+  const chest = credential?.request?.claim?.contents?.chest_rarity as unknown as string;
 
   const ClazzName: Record<number, string> = {
     1: 'Warrior',
@@ -116,7 +116,7 @@ const Credential: React.FC<Props> = ({ credential }) => {
         </div>
         <div className="detial-item">
           <span className="label">Class:</span>
-          <span className="value">{ClazzName[clazz as unknown as number]}</span>
+          <span className="value">{ClazzName[clazz]}</span>
         </div>
         <div className="detial-item">
           <span className="label">Helmet:</span>

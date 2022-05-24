@@ -21,7 +21,7 @@ interface CredentialState {
 
 export const CredentialContext = createContext<CredentialState>({} as CredentialState);
 
-const CredentialProvider: React.FC = ({ children }) => {
+const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
   const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
   const [ready, setReady] = useState(false);

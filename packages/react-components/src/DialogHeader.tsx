@@ -2,7 +2,10 @@ import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { DialogTitle, IconButton } from '@mui/material';
 import React from 'react';
 
-const DialogHeader: React.FC<{ onClose?: () => void }> = ({ children, onClose }) => {
+const DialogHeader: React.FC<React.PropsWithChildren<{ onClose?: () => void }>> = ({
+  children,
+  onClose
+}) => {
   return (
     <DialogTitle>
       {children}
