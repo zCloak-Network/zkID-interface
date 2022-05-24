@@ -5240,6 +5240,7 @@ __metadata:
     "@zkid/app-config": ^0.0.0
     copy-to-clipboard: ^3.3.1
     ethers: ^5.6.6
+    search-query-parser: ^1.6.0
   languageName: unknown
   linkType: soft
 
@@ -15235,6 +15236,13 @@ __metadata:
   version: 3.0.1
   resolution: "scrypt-js@npm:3.0.1"
   checksum: b7c7d1a68d6ca946f2fbb0778e0c4ec63c65501b54023b2af7d7e9f48fdb6c6580d6f7675cd53bda5944c5ebc057560d5a6365079752546865defb3b79dea454
+  languageName: node
+  linkType: hard
+
+"search-query-parser@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "search-query-parser@npm:1.6.0"
+  checksum: 6ce290e1d1602401ab5e4561f2a9744d1ffd75da5759cc8ead162153258d8470dd86757a3be577772e883d48673dec42b26843fc4aa5155f1ec902112ce92225
   languageName: node
   linkType: hard
 

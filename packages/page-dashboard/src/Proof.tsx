@@ -134,7 +134,7 @@ const Proof: React.FC = () => {
   }, [account]);
 
   return (
-    <>
+    <Box id="dashboard-proof">
       <h2>Proof</h2>
       <TableContainer
         component={Paper}
@@ -160,7 +160,7 @@ const Proof: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

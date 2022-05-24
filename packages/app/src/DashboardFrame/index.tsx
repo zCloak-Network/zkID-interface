@@ -8,6 +8,7 @@ import Header from './Header';
 const Wrapper = styled(Box)`
   width: 100vw;
   min-height: 100vh;
+  padding-top: 80px;
   background: linear-gradient(180deg, #f4f5fc 0%, #fbfcfd 76%, #ffffff 100%);
 `;
 
