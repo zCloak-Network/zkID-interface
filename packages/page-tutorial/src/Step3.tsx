@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button, Container } from '@mui/material';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { ZkidExtensionContext } from '@zkid/react-components/ZkidExtension';
 
@@ -32,10 +32,25 @@ const Wrapper = styled(Container)`
 
 const Step3: React.FC = () => {
   const { nextStep } = useContext(JudgeStepContext);
-  const { isImport, zkidExtension } = useContext(ZkidExtensionContext);
+  const { zkidExtension } = useContext(ZkidExtensionContext);
+  const [isImport, setIsImport] = useState(false);
+  const [isClick, setIsClick] = useState(false);
 
   const importCredential = useCallback(() => {
     zkidExtension.openzkIDPopup('OPEN_IMPORT_CREDENTIAL', undefined);
+    setIsClick(true);
+  }, [zkidExtension]);
+
+  useEffect(() => {
+    const handleImportEvent = () => {
+      setIsImport(true);
+    };
+
+    zkidExtension.on('SEND_IMPORT_CREDENTIAL_SUCCESS', handleImportEvent);
+
+    return () => {
+      zkidExtension.off('SEND_IMPORT_CREDENTIAL_SUCCESS', handleImportEvent);
+    };
   }, [zkidExtension]);
 
   return (
@@ -47,7 +62,7 @@ const Step3: React.FC = () => {
       </p>
       <img src="/images/pic_import.webp" />
 
-      {isImport ? (
+      {isClick && isImport ? (
         <Button onClick={nextStep} variant="rounded">
           Next
         </Button>
