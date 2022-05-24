@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ position: 'relative' }}>
+      <Box id="dashboard" sx={{ position: 'relative' }}>
         <Box component="img" src="/images/pic_banner.webp" sx={{ width: '100%' }} />
         <Box sx={{ position: 'absolute', left: '100px', top: '50px' }}>
           <Typography

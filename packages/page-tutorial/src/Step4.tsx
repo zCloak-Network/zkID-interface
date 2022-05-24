@@ -72,25 +72,26 @@ const Step4: React.FC = () => {
       ) : (
         <>
           {finished && flag ? (
-            <ProofTrue />
+            <>
+              <ProofTrue />
+              <Button onClick={nextStep} variant="rounded">
+                Next
+              </Button>
+            </>
           ) : exists ? (
-            <Verifing setFinished={setFinished} />
+            <>
+              <Verifing setFinished={setFinished} />
+              <Button
+                onClick={() => {
+                  setFlag(true);
+                }}
+                variant="rounded"
+              >
+                Next
+              </Button>
+            </>
           ) : (
             <ZkGenerator />
-          )}
-          {finished && (
-            <Button
-              onClick={() => {
-                if (!flag) {
-                  setFlag(true);
-                } else {
-                  nextStep();
-                }
-              }}
-              variant="rounded"
-            >
-              Next
-            </Button>
           )}
         </>
       )}

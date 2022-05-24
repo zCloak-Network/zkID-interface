@@ -47,7 +47,7 @@ const Poaps: React.FC = () => {
   }, [nftId]);
 
   return (
-    <Box sx={{ mb: 10 }}>
+    <Box id="dashboard-poap" sx={{ mb: 10 }}>
       <h2>POAP</h2>
       <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
         {nftIds.map((_nftId) => (

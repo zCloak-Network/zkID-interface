@@ -12,7 +12,6 @@ const AddressIcon: React.FC<Props> = ({ diameter = 16, value }) => {
     [diameter, value]
   );
 
-  console.log(value);
   const iconRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {

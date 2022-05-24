@@ -39,7 +39,7 @@ const Activities: React.FC = () => {
   }, [activities, activityType]);
 
   return (
-    <Box sx={{ marginY: '44px' }}>
+    <Box id="dashboard-activities" sx={{ marginY: '44px' }}>
       <h2>Activities</h2>
       <TableContainer
         component={Paper}

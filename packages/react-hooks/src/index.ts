@@ -8,6 +8,7 @@ export * from './useFullDid';
 export * from './useIsInitialState';
 export * from './useLightDid';
 export * from './useLocalStorage';
+export * from './useQueryParams';
 export * from './useAccountPoap';
 export * from './useRequestForAttestation';
 export * from './useToggle';

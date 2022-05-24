@@ -1,17 +1,20 @@
-import { Box, Stack, styled } from '@mui/material';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Link, Stack, styled } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 
 import { useWallet } from '@zcloak/react-wallet';
 
 import { ButtonEnable } from '@zkid/react-components';
+import { useQueryParam } from '@zkid/react-hooks';
 
 import AccountInfo from '../AccountInfo';
 import MoreLinks from '../MoreLinks';
 import NetworkCell from '../NetworkCell';
 
 const Wrapper = styled(Box)`
-  position: relative;
+  z-index: 1;
+  position: fixed;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,6 +22,7 @@ const Wrapper = styled(Box)`
   height: 80px;
   padding: 0 30px;
 
+  background-color: #f4f5fc;
   color: #fff;
 
   .ZkidHeader-right {
@@ -33,16 +37,64 @@ const Logo = styled('div')`
   cursor: pointer;
 `;
 
+const ActiveLink: React.FC<{ to: string; active: string }> = ({ active, children, to }) => {
+  const [param] = useQueryParam<string>('anchor');
+
+  return (
+    <Link
+      component={LinkRoute}
+      sx={(theme) => ({
+        textDecoration: active === param ? 'underline' : undefined,
+        color: active === param ? theme.palette.grey[600] : '#000'
+      })}
+      to={to}
+    >
+      {children}
+    </Link>
+  );
+};
+
 const Header: React.FC = () => {
   const { account } = useWallet();
   const navigate = useNavigate();
 
+  const [param] = useQueryParam<string>('anchor');
+
+  useEffect(() => {
+    if (param) {
+      document.getElementById(param)?.scrollIntoView();
+    }
+  }, [param]);
+
   return (
     <Wrapper>
-      <Stack>
+      <Stack alignItems="center" direction="row" spacing={10}>
         <Logo onClick={() => navigate('/')}>
           <img src={require('@zkid/app-config/assets/logo-black.svg')} />
         </Logo>
+        <Stack
+          alignItems="center"
+          direction="row"
+          spacing={4}
+          sx={{
+            '.MuiLink-root': {
+              textUnderlineOffset: 6
+            }
+          }}
+        >
+          <ActiveLink active="dashboard" to="/dashboard?anchor=dashboard">
+            Dashboard
+          </ActiveLink>
+          <ActiveLink active="dashboard-poap" to="/dashboard?anchor=dashboard-poap">
+            POAP
+          </ActiveLink>
+          <ActiveLink active="dashboard-proof" to="/dashboard?anchor=dashboard-proof">
+            Proof
+          </ActiveLink>
+          <ActiveLink active="dashboard-activities" to="/dashboard?anchor=dashboard-activities">
+            Activities
+          </ActiveLink>
+        </Stack>
       </Stack>
       <Stack
         className="ZkidHeader-right"
