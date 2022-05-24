@@ -21,7 +21,6 @@ export class CredentialApi extends Request {
     senderKeyId: string;
     receiverKeyId: string;
   }) {
-    // eslint-disable-next-line @typescript-eslint/ban-types
     return this.post<ServerResponse<{}>>('/admin-attester/submit-claim', {
       body: { ...body }
     });

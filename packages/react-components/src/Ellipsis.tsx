@@ -1,7 +1,10 @@
 import { Box } from '@mui/material';
 import React from 'react';
 
-const Ellipsis: React.FC<{ width?: string | number }> = ({ children, width }) => {
+const Ellipsis: React.FC<React.PropsWithChildren<{ width?: string | number }>> = ({
+  children,
+  width
+}) => {
   return (
     <Box
       className="ZkidEllipsis"
