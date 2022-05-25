@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
             )
           ) : (
             <Button onClick={() => navigate('/tutorial')} size="large" variant="contained">
-              Get start
+              Get Started
             </Button>
           )}
         </Box>

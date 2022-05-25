@@ -5,7 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useWallet } from '@zcloak/react-wallet';
 
-import { ButtonEnable, NotificationContext, PoapCard } from '@zkid/react-components';
+import {
+  BalancesContext,
+  ButtonEnable,
+  NotificationContext,
+  PoapCard
+} from '@zkid/react-components';
 import { zkidApi } from '@zkid/service';
 
 import { JudgeStepContext } from './JudgeStep';
@@ -34,6 +39,7 @@ const Step5: React.FC = () => {
   const { account } = useWallet();
   const { poap } = useContext(JudgeStepContext);
   const { notifyError } = useContext(NotificationContext);
+  const { setPoapId } = useContext(BalancesContext);
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,6 +70,7 @@ const Step5: React.FC = () => {
         .then((mintLog) => {
           if (mintLog) {
             setNftId(mintLog.nftId.toString());
+            setPoapId(mintLog.nftId.toString());
           }
 
           return mintLog;
@@ -71,7 +78,7 @@ const Step5: React.FC = () => {
         .catch(notifyError)
         .finally(() => setLoading(false));
     }
-  }, [notifyError, poap]);
+  }, [notifyError, poap, setPoapId]);
 
   return (
     <Wrapper>

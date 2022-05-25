@@ -49,7 +49,7 @@ const ProofTrue: React.FC = () => {
       }}
     >
       <img src="/images/pic_true.webp" />
-      <span>Your proof is verified true, You can get an NFT</span>
+      <span>Your proof has been verified. You can get your POAP.</span>
     </Box>
   );
 };
@@ -62,10 +62,19 @@ const Step4: React.FC = () => {
 
   return (
     <Wrapper>
-      <h2>Generate And Upload Proof</h2>
+      <h2>
+        {finished
+          ? 'Proof Verified'
+          : exists && !flag
+          ? 'Verifying Your Proof'
+          : 'Generate And Upload Proof'}
+      </h2>
       <p>
-        To claim your POAP, you first need to generate a STARK proof based on your credential in
-        your zCloak ID Wallet then upload it.
+        {finished
+          ? ''
+          : exists && !flag
+          ? 'Just a minute. Our scholars are checking your STARK proof.'
+          : 'To claim your POAP, you first need to generate a STARK proof based on your credential in your zCloak ID Wallet then upload it.'}
       </p>
       {balance?.eq('0') ? (
         <Faucet />

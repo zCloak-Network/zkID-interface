@@ -89,7 +89,7 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
         {success === undefined
           ? 'Loading...'
           : success === true
-          ? 'Verified true'
+          ? 'Proof Verified'
           : 'Verified False'}
       </Box>
       {transactionHash && (

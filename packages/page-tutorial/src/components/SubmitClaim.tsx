@@ -94,7 +94,7 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) =>
             }}
             variant="filled"
           >
-            We are checking your documents. The attestation takes 30-60s.
+            We are checking your documents. The attestation takes around 30s.
           </Alert>
         </Snackbar>
       </Portal>
