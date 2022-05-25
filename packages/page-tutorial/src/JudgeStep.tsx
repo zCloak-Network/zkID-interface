@@ -20,7 +20,7 @@ import {
   SimpleAggregatorAddress
 } from '@zkid/app-config/constants/address';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
-import { CredentialContext } from '@zkid/react-components';
+import { BalancesContext, CredentialContext } from '@zkid/react-components';
 import { useIsInitialState } from '@zkid/react-hooks';
 
 import { decodeSs58Address, stringToHex } from './utils';
@@ -49,6 +49,7 @@ export const JudgeStepContext = createContext<JudgeStepState>({} as JudgeStepSta
 const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ children }) => {
   const { account, library } = useWallet();
   const { credential, ready, reset } = useContext(CredentialContext);
+  const { getToken } = useContext(BalancesContext);
   const [step, setStep] = useState(0);
   const [exists, setExists, existsInitial] = useIsInitialState<boolean>(false);
   const [finished, setFinished, finishedInitial] = useIsInitialState<boolean>(false);
@@ -71,6 +72,10 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
     () => (library ? new SimpleAggregator(SimpleAggregatorAddress, library, account) : null),
     [account, library]
   );
+
+  useEffect(() => {
+    getToken();
+  }, [getToken]);
 
   useEffect(() => {
     let unsub: (() => void) | null = null;

@@ -1,31 +1,68 @@
 import { BigNumber } from 'ethers';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 
-import { useAccountPoap, useNativeBalance } from '@zkid/react-hooks';
+import { useAccountPoap, useInterval, useNativeBalance } from '@zkid/react-hooks';
+import { credentialApi } from '@zkid/service';
+import { FaucetStatus } from '@zkid/service/types';
+
+import { NotificationContext } from '../Notification';
 
 interface BalancesState {
   balance?: BigNumber | null;
   poapId?: string;
+  faucetStatus?: FaucetStatus;
   setPoapId: (poapId: string) => void;
+  getToken: (throwError?: boolean) => Promise<void>;
 }
 
 export const BalancesContext = createContext({} as BalancesState);
 
 const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+  const { notifyError } = useContext(NotificationContext);
   const { account } = useWallet();
   const [poapId, setPoapId] = useState<string>();
+  const [faucetStatus, setFaucetStatus] = useState<FaucetStatus>();
 
   const balance = useNativeBalance(account);
   const _poapId = useAccountPoap(account);
+
+  const listenFaucetStatus = useCallback(() => {
+    if (account && (faucetStatus === FaucetStatus.Fauceting || faucetStatus === undefined)) {
+      credentialApi.faucetStatus({ address: account }).then(({ data: { status } }) => {
+        setFaucetStatus(status);
+      });
+    }
+  }, [account, faucetStatus]);
+
+  useEffect(() => {
+    setFaucetStatus(undefined);
+  }, [account]);
+
+  useInterval(listenFaucetStatus, 6000);
+
+  const getToken = useCallback(
+    async (throwError = false) => {
+      if (account && faucetStatus === FaucetStatus.NotFaucet) {
+        const { code } = await credentialApi.faucet({ address: account });
+
+        if (code !== 200) {
+          throwError && notifyError(new Error('Faucet failed'));
+        } else {
+          setFaucetStatus(FaucetStatus.Fauceting);
+        }
+      }
+    },
+    [account, faucetStatus, notifyError]
+  );
 
   useEffect(() => {
     setPoapId(_poapId);
   }, [_poapId]);
 
   return (
-    <BalancesContext.Provider value={{ balance, poapId, setPoapId }}>
+    <BalancesContext.Provider value={{ balance, faucetStatus, poapId, setPoapId, getToken }}>
       {children}
     </BalancesContext.Provider>
   );

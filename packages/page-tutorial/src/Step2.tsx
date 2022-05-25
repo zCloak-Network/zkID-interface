@@ -42,7 +42,7 @@ const Step2: React.FC = () => {
   const [hasDownload, setHasDownload] = useState(false);
 
   const claim = useClaim(CTYPE as ICTypeSchema, contents, claimerLightDid?.did);
-  const requestForAttestation = useRequestForAttestation(keystore, claim, claimerLightDid);
+  const [requestForAttestation, retry] = useRequestForAttestation(keystore, claim, claimerLightDid);
 
   const message = useMemo(() => {
     if (requestForAttestation && claimerLightDid) {
@@ -99,6 +99,7 @@ const Step2: React.FC = () => {
                 claimerLightDid={claimerLightDid}
                 keystore={keystore}
                 message={message}
+                retry={retry}
               />
             </div>
           )}

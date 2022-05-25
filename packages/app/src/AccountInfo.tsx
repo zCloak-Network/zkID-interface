@@ -1,8 +1,15 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import React, { useContext } from 'react';
 
-import { Address, AddressIcon, BalancesContext, FormatBalance } from '@zkid/react-components';
+import {
+  Address,
+  AddressIcon,
+  BalancesContext,
+  CoinAnimation,
+  FormatBalance
+} from '@zkid/react-components';
 import { useEndpoint } from '@zkid/react-hooks';
+import { FaucetStatus } from '@zkid/service/types';
 
 import AccountDetails from './AccountDetails';
 
@@ -11,7 +18,7 @@ interface Props {
 }
 
 const AccountInfo: React.FC<Props> = ({ account }) => {
-  const { balance } = useContext(BalancesContext);
+  const { balance, faucetStatus } = useContext(BalancesContext);
   const endpoint = useEndpoint();
 
   return (
@@ -33,7 +40,14 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
           cursor: 'default'
         }}
       >
-        <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
+        {faucetStatus === FaucetStatus.Fauceting ? (
+          <Stack alignItems="center" direction="row" spacing={1}>
+            <CoinAnimation size="28px" />
+            Getting token
+          </Stack>
+        ) : (
+          <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
+        )}
       </Box>
       <AccountDetails
         ChildrenComponent={

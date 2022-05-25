@@ -42,7 +42,7 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, s
 
   const handleClick = useCallback(() => {
     if (!proof) {
-      setError?.(new Error('Proof should not be empty, please click to generate'));
+      setError?.(new Error('Proof should not be empty, please click to generate.'));
 
       return;
     }

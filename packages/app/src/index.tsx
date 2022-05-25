@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import Root from './Root';
 
@@ -10,4 +10,6 @@ if (!rootElement) {
   throw new Error(`Unable to find element with id '${rootId}'`);
 }
 
-ReactDOM.render(<Root />, rootElement);
+const root = createRoot(rootElement);
+
+root.render(<Root />);

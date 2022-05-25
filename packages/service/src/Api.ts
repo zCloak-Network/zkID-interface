@@ -1,4 +1,4 @@
-import type { AttestationStatus, Config, ServerResponse } from './types';
+import type { AttestationStatus, Config, FaucetStatus, ServerResponse } from './types';
 
 import { HOSTPREFIX } from '@zkid/app-config/constants';
 
@@ -55,7 +55,7 @@ export class CredentialApi extends Request {
   }
 
   faucetStatus(params: { address: string }) {
-    return this.get<ServerResponse<{ status: number }>>('/user/faucet-status', { params });
+    return this.get<ServerResponse<{ status: FaucetStatus }>>('/user/faucet-status', { params });
   }
 }
 

@@ -1,7 +1,7 @@
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Button, Fade, Popper, styled, useTheme } from '@mui/material';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { Alert, Box, Button, Portal, Snackbar, styled, useTheme } from '@mui/material';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { Proof } from '@zcloak/zkid-core/types';
 import { shortenHash } from '@zcloak/zkid-core/utils';
@@ -60,7 +60,6 @@ const ZkGenerator: React.FC = () => {
   const [open, toggle] = useToggle();
   const [error, setError] = useState<Error>();
   const [tooltip, setTooltip] = useState(false);
-  const anchorEl = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (error && !proof) {
@@ -103,15 +102,27 @@ const ZkGenerator: React.FC = () => {
   return (
     <Wrapper>
       <ZkRule onClose={toggle} open={open} />
-      <Popper anchorEl={anchorEl.current} open={tooltip} transition>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
-            <Alert severity="error" variant="filled">
-              {error?.message}
-            </Alert>
-          </Fade>
-        )}
-      </Popper>
+      <Portal>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          autoHideDuration={null}
+          open={tooltip}
+        >
+          <Alert
+            icon={<></>}
+            severity="error"
+            sx={{
+              alignItems: 'center',
+              padding: '0 16px',
+              background: 'linear-gradient(221deg, #F92A40 0%, #F1609B 100%, #6C59E0 100%)',
+              borderRadius: '16px'
+            }}
+            variant="filled"
+          >
+            {error?.message}
+          </Alert>
+        </Snackbar>
+      </Portal>
       <Item>
         <label>zk Program</label>
         <div className="content">
@@ -161,12 +172,7 @@ const ZkGenerator: React.FC = () => {
           </span>
           <span className="value">
             {!proof && (
-              <LoadingButton
-                loading={genLoading}
-                onClick={generate}
-                ref={anchorEl}
-                variant="contained"
-              >
+              <LoadingButton loading={genLoading} onClick={generate} variant="contained">
                 Generate
               </LoadingButton>
             )}
