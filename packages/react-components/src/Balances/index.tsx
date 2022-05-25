@@ -49,6 +49,8 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
 
         if (code !== 200) {
           throwError && notifyError(new Error('Faucet failed'));
+        } else {
+          setFaucetStatus(FaucetStatus.Fauceting);
         }
       }
     },

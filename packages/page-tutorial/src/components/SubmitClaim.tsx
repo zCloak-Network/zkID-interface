@@ -15,9 +15,10 @@ interface Props {
   keystore: Did.DemoKeystore;
   message?: Message | null;
   claimerLightDid?: LightDidDetails | null;
+  retry: () => void;
 }
 
-const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) => {
+const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, retry }) => {
   const { fetchCredential } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
@@ -41,6 +42,7 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) =>
           }
 
           if (attestationStatus === AttestationStatus.attestedFailed) {
+            retry();
             notifyError(new Error('Attestation failed, please resubmit.'));
           }
 
@@ -49,7 +51,7 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) =>
           return attestationStatus;
         });
     }
-  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError]);
+  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError, retry]);
 
   useInterval(listenAttestationStatus, 6000, true);
 
