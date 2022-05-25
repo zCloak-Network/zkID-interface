@@ -18,6 +18,7 @@ export type ServerResponse<T> = {
 };
 
 export enum AttestationStatus {
+  attestedFailed = -1,
   notAttested = 1,
   attesting = 2,
   attested = 3

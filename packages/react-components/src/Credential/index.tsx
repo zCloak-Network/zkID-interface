@@ -15,7 +15,7 @@ interface CredentialState {
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
   credential?: ICredential | null;
-  fetchCredential: () => void;
+  fetchCredential: () => Promise<void>;
   reset: () => void;
 }
 

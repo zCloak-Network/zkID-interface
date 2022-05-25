@@ -6,7 +6,7 @@ import { Alert, Portal, Snackbar } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 
 import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
-import { CredentialContext } from '@zkid/react-components';
+import { CredentialContext, NotificationContext } from '@zkid/react-components';
 import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service';
 import { AttestationStatus } from '@zkid/service/types';
@@ -19,6 +19,7 @@ interface Props {
 
 const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) => {
   const { fetchCredential } = useContext(CredentialContext);
+  const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
 
@@ -34,18 +35,21 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message }) =>
         .getAttestationStatus({
           senderKeyId
         })
-        .then(({ data: { attestationStatus } }) => {
+        .then(async ({ data: { attestationStatus } }) => {
+          if (attestationStatus === AttestationStatus.attested) {
+            await fetchCredential();
+          }
+
+          if (attestationStatus === AttestationStatus.attestedFailed) {
+            notifyError(new Error('Attestation failed, please resubmit.'));
+          }
+
           setAttestationStatus(attestationStatus);
 
           return attestationStatus;
-        })
-        .then((attestationStatus) => {
-          if (attestationStatus === AttestationStatus.attested) {
-            return fetchCredential();
-          }
         });
     }
-  }, [attestationStatus, claimerLightDid, fetchCredential]);
+  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError]);
 
   useInterval(listenAttestationStatus, 6000, true);
 
