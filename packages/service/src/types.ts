@@ -104,3 +104,9 @@ export type Activity = {
   time: string;
   transactionHash: string;
 };
+
+export enum FaucetStatus {
+  NotFaucet = 1,
+  Fauceting = 2,
+  Fauceted = 3
+}

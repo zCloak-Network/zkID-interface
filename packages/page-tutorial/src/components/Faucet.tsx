@@ -1,24 +1,21 @@
 import { Box } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
 
-import { ButtonEnable } from '@zkid/react-components';
-import { credentialApi } from '@zkid/service';
+import { BalancesContext, ButtonEnable } from '@zkid/react-components';
+import { FaucetStatus } from '@zkid/service/types';
 
 const Faucet: React.FC = () => {
   const { account } = useWallet();
+  const { faucetStatus, getToken } = useContext(BalancesContext);
   const [loading, setLoading] = useState(false);
-  const getToken = useCallback(async () => {
-    if (account) {
-      setLoading(true);
-      const { code } = await credentialApi.faucet({ address: account });
 
-      if (code !== 200) {
-        setLoading(false);
-      }
+  const _getToken = useCallback(() => {
+    if (account) {
+      getToken(true).finally(() => setLoading(false));
     }
-  }, [account]);
+  }, [account, getToken]);
 
   return (
     <>
@@ -41,7 +38,11 @@ const Faucet: React.FC = () => {
         <img src="/images/pic_fail.webp" />
         <span>Sorry, you don’t have token.</span>
       </Box>
-      <ButtonEnable loading={loading} onClick={getToken} variant="rounded">
+      <ButtonEnable
+        loading={loading || faucetStatus === FaucetStatus.Fauceting}
+        onClick={_getToken}
+        variant="rounded"
+      >
         Get token
       </ButtonEnable>
     </>
