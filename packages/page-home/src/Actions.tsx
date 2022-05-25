@@ -32,7 +32,7 @@ const Actions: React.FC<{ account: string }> = () => {
         )
       ) : (
         <Button onClick={() => navigate('/tutorial')} size="large" variant="rounded">
-          Get start
+          Get Started
         </Button>
       )}
     </Box>
