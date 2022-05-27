@@ -70,7 +70,11 @@ const Home: React.FC = () => {
         {account ? (
           <Actions account={account} />
         ) : (
-          <ButtonEnable enableText="Connect wallet and Get start" size="large" variant="rounded" />
+          <ButtonEnable
+            enableText="Connect Wallet and Get Started"
+            size="large"
+            variant="rounded"
+          />
         )}
       </Box>
       <Box component="img" src="/images/home.webp" width="395px" />

@@ -40,7 +40,7 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
         </ButtonWithError>
       ) : (
         <ButtonWithError {...props} onClick={toggle}>
-          {enableText ?? 'Connect wallet'}
+          {enableText ?? 'Connect Wallet'}
         </ButtonWithError>
       )}
       <WalletModal onClose={toggle} open={open} />

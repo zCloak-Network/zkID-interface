@@ -31,10 +31,14 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
   const listenFaucetStatus = useCallback(() => {
     if (account && (faucetStatus === FaucetStatus.Fauceting || faucetStatus === undefined)) {
       credentialApi.faucetStatus({ address: account }).then(({ data: { status } }) => {
-        setFaucetStatus(status);
+        if (status === FaucetStatus.Fauceted) {
+          balance?.gt('0') && setFaucetStatus(FaucetStatus.Fauceted);
+        } else {
+          setFaucetStatus(status);
+        }
       });
     }
-  }, [account, faucetStatus]);
+  }, [account, balance, faucetStatus]);
 
   useEffect(() => {
     setFaucetStatus(undefined);
@@ -44,7 +48,7 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
 
   const getToken = useCallback(
     async (throwError = false) => {
-      if (account && faucetStatus === FaucetStatus.NotFaucet) {
+      if (account && faucetStatus === FaucetStatus.NotFaucet && balance?.eq('0')) {
         const { code } = await credentialApi.faucet({ address: account });
 
         if (code !== 200) {
@@ -54,8 +58,12 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
         }
       }
     },
-    [account, faucetStatus, notifyError]
+    [account, balance, faucetStatus, notifyError]
   );
+
+  useEffect(() => {
+    getToken();
+  }, [getToken]);
 
   useEffect(() => {
     setPoapId(_poapId);
