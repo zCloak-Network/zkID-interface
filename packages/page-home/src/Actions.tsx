@@ -31,7 +31,7 @@ const Actions: React.FC<{ account: string }> = () => {
           <ChangeAccount />
         )
       ) : (
-        <Button onClick={() => navigate('/tutorial')} size="large" variant="rounded">
+        <Button onClick={() => navigate('/guide')} size="large" variant="rounded">
           Get Started
         </Button>
       )}
