@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogContent, styled } from '@mui/material';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { useConnectors } from '@zcloak/react-wallet';
 import useAuth from '@zcloak/react-wallet/useAuth';
@@ -22,7 +22,9 @@ const Cell = styled(Button)`
 `;
 
 const Metamask: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  return (
+  const isInstall = useMemo(() => typeof window.ethereum !== 'undefined', []);
+
+  return isInstall ? (
     <Cell
       fullWidth
       onClick={onClick}
@@ -30,6 +32,15 @@ const Metamask: React.FC<{ onClick: () => void }> = ({ onClick }) => {
       startIcon={<img src={require('@zkid/app-config/assets/metamask.svg')} />}
     >
       MetaMask
+    </Cell>
+  ) : (
+    <Cell
+      fullWidth
+      onClick={() => window.open('https://metamask.io/')}
+      size="large"
+      startIcon={<img src={require('@zkid/app-config/assets/metamask.svg')} />}
+    >
+      MetaMask not install, click to install
     </Cell>
   );
 };
