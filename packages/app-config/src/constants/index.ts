@@ -23,7 +23,4 @@ export const ATTESTER_ENCRYPTION_KEY_ID =
 export const ATTESTER_ASSEMBLE_KEY_ID =
   'did:kilt:4rdUX21mgJYGPpU3PmmjSMDkthg9yD2eFeRXyh84tD6ssvS4#0x30f19b670478c8ab06a660ebf3f430617b3bd5eec592a284a54d56b8169ae380';
 
-export const HOSTPREFIX = 'https://credential-service.zcloak.network';
-export const ZKIDHOSTPREFIX = 'https://zkid-service.zcloak.network';
-
 export const CTYPE_HASH = '0xe21c5f437332f33db0e6f9cef958f2ff3fedfbcdeb60d4ff24db978b487aad1a';
