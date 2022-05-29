@@ -22,8 +22,8 @@ interface Props {
 const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, setError }) => {
   const { kiltProofs } = useContext(JudgeStepContext);
   const { mnemonic } = useContext(CredentialContext);
-  const { notifyError } = useContext(NotificationContext);
-  const { account } = useWallet();
+  const { notifyError, notifyTx } = useContext(NotificationContext);
+  const { account, chainId } = useWallet();
   const [loading, setLoading] = useState(false);
 
   const errorsPromise = useMemo(() => {
@@ -65,13 +65,17 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, s
           proof.rootHash,
           [proof.expectResult]
         )
-        .then((tx) => tx.wait(1))
+        .then((tx) => {
+          chainId && notifyTx(tx, chainId);
+
+          return tx.wait(1);
+        })
         .catch((error) => {
           setLoading(false);
           notifyError(error);
         });
     }
-  }, [kiltProofs, mnemonic, notifyError, proof, setError]);
+  }, [chainId, kiltProofs, mnemonic, notifyError, notifyTx, proof, setError]);
 
   return (
     <ButtonEnable
