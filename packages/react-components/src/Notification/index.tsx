@@ -9,9 +9,17 @@ import { CallError, ContractError, OutOfGasError, UserRejectError } from '@zcloa
 import { endpoints } from '@zkid/app-config/endpoints';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 
+type Message = {
+  id: number;
+  title: string;
+  message?: React.ReactNode;
+  severity: 'success' | 'info' | 'warning' | 'error';
+};
+
 interface NotificationState {
   notifyError: (error: unknown, destroy?: number | null) => number;
   notifyTx: (transaction: TransactionResponse, chainId: number, destroy?: number | null) => number;
+  closeNotification: (id: number) => void;
 }
 
 export const NotificationContext = createContext<NotificationState>({} as NotificationState);
@@ -23,13 +31,6 @@ const NotificationWrapper = styled(Box)`
 `;
 
 let id = 0;
-
-type Message = {
-  id: number;
-  title: string;
-  message?: React.ReactNode;
-  severity: 'success' | 'info' | 'warning' | 'error';
-};
 
 function makeErrorMessage(error: unknown): Message {
   const theId = id++;
@@ -86,19 +87,25 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
     messageRef.current = messages;
   }, [messages]);
 
-  const notifyError = useCallback((error: unknown, destroy: number | null = 6000) => {
-    const message = makeErrorMessage(error);
-
-    setMessages([...messageRef.current, message]);
-
-    if (destroy) {
-      setTimeout(() => {
-        setMessages(messageRef.current.filter(({ id }) => id !== message.id));
-      }, destroy);
-    }
-
-    return message.id;
+  const closeNotification = useCallback((id: number) => {
+    setMessages(messageRef.current.filter(({ id: _id }) => _id !== id));
   }, []);
+  const notifyError = useCallback(
+    (error: unknown, destroy: number | null = 6000) => {
+      const message = makeErrorMessage(error);
+
+      setMessages([...messageRef.current, message]);
+
+      if (destroy) {
+        setTimeout(() => {
+          closeNotification(message.id);
+        }, destroy);
+      }
+
+      return message.id;
+    },
+    [closeNotification]
+  );
 
   const notifyTx = useCallback(
     (transaction: TransactionResponse, chainId: number, destroy: number | null = 6000) => {
@@ -114,7 +121,7 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
 
       if (destroy) {
         setTimeout(() => {
-          setMessages(messageRef.current.filter(({ id }) => id !== message.id));
+          closeNotification(message.id);
         }, destroy);
       }
 
@@ -144,18 +151,18 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
 
         if (destroy) {
           setTimeout(() => {
-            setMessages(messageRef.current.filter(({ id }) => id !== message.id));
+            closeNotification(message.id);
           }, destroy);
         }
       });
 
       return message.id;
     },
-    []
+    [closeNotification]
   );
 
   return (
-    <NotificationContext.Provider value={{ notifyError, notifyTx }}>
+    <NotificationContext.Provider value={{ notifyError, notifyTx, closeNotification }}>
       {children}
       <Portal>
         <NotificationWrapper>
@@ -163,9 +170,7 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
             {messages.map(({ id, message, severity, title }) => (
               <Collapse key={id} mountOnEnter unmountOnExit>
                 <Alert
-                  onClose={() =>
-                    setMessages(messageRef.current.filter(({ id: _id }) => id !== _id))
-                  }
+                  onClose={() => closeNotification(id)}
                   severity={severity}
                   sx={{ my: 1, mx: 2, width: '300px' }}
                   variant="filled"
