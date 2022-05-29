@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, Button, Container } from '@mui/material';
+import { parseEther } from 'ethers/lib/utils';
 import React, { useContext, useState } from 'react';
 
 import { BalancesContext } from '@zkid/react-components';
@@ -76,7 +77,7 @@ const Step4: React.FC = () => {
           ? 'Just a minute. Our scholars are checking your STARK proof.'
           : 'To claim your POAP, you first need to generate a STARK proof based on your credential in your zCloak ID Wallet then upload it.'}
       </p>
-      {balance?.eq('0') ? (
+      {balance?.lt(parseEther('0.001')) ? (
         <Faucet />
       ) : (
         <>
