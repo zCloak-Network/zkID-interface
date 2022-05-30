@@ -1,13 +1,13 @@
 import type { Activity, Config, MintPoap, Proof, ProofProcess, ServerResponse } from './types';
 
-import { ZKIDHOSTPREFIX } from '@zkid/app-config/constants';
+import { env } from '@zkid/app-config/constants/env';
 
 import { combineConfig, Request } from './request';
 
 export class ZkidApi extends Request {
   constructor(config: Config = {}) {
     super(
-      ZKIDHOSTPREFIX,
+      env.ZKID_SERVICE,
       combineConfig(config, {
         mode: 'cors'
       })

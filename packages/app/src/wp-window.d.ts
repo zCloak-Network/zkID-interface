@@ -8,4 +8,5 @@ interface Window {
     chainId: string;
   };
   web3?: Record<string, unknown>;
+  zkidEnv?: Record<string, unknown>;
 }

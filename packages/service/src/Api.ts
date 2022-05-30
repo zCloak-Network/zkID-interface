@@ -1,13 +1,13 @@
 import type { AttestationStatus, Config, FaucetStatus, ServerResponse } from './types';
 
-import { HOSTPREFIX } from '@zkid/app-config/constants';
+import { env } from '@zkid/app-config/constants/env';
 
 import { combineConfig, Request } from './request';
 
 export class CredentialApi extends Request {
   constructor(config: Config = {}) {
     super(
-      HOSTPREFIX,
+      env.CREDENTIAL_SERVICE,
       combineConfig(config, {
         mode: 'cors'
       })

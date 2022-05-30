@@ -21,7 +21,8 @@ const App: React.FC = () => {
     <HashRouter>
       <Routes>
         <Route element={<TutorialFrame />}>
-          <Route element={<Tutorial />} path="tutorial" />
+          <Route element={<NoMatch to="/guide" />} path="tutorial" />
+          <Route element={<Tutorial />} path="guide" />
           <Route element={<Home />} index />
         </Route>
         <Route element={<DashboardFrame />} path="dashboard">

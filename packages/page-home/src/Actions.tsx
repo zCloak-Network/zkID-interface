@@ -34,7 +34,7 @@ const Actions: React.FC<{ account: string }> = () => {
         <Button
           onClick={() => {
             getToken();
-            navigate('/tutorial');
+            navigate('/guide');
           }}
           size="large"
           variant="rounded"

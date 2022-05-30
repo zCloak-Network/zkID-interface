@@ -19,7 +19,7 @@ background-position: center;
 );
 
 const TurorialFrame: React.FC = () => {
-  const tutorialResolved = useResolvedPath('/tutorial');
+  const tutorialResolved = useResolvedPath('/guide');
   const match = useMatch({ path: tutorialResolved.pathname, end: true });
 
   return (
