@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,17 +13,12 @@ const Actions: React.FC<{ account: string }> = () => {
   const [flag, setFlag] = useState(false);
 
   return (
-    <Box>
+    <Stack direction="row" spacing={4}>
       {poapId ? (
         !flag ? (
           <>
             <Replay onDone={() => setFlag(true)} />
-            <Button
-              onClick={() => navigate('/dashboard')}
-              size="large"
-              sx={{ marginLeft: '28px' }}
-              variant="rounded"
-            >
+            <Button onClick={() => navigate('/dashboard')} size="large" variant="rounded">
               Go To Dashboard
             </Button>
           </>
@@ -35,7 +30,7 @@ const Actions: React.FC<{ account: string }> = () => {
           Get Started
         </Button>
       )}
-    </Box>
+    </Stack>
   );
 };
 

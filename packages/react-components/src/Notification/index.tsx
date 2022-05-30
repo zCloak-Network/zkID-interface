@@ -113,7 +113,7 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
       const message: Message = {
         id: id++,
         title: 'Transaction submited',
-        message: 'Wait for confirm',
+        message: 'Wait for confirming',
         severity: 'success'
       };
 

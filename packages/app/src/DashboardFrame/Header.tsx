@@ -103,7 +103,7 @@ const Header: React.FC = () => {
       <Stack
         className="ZkidHeader-right"
         direction="row"
-        spacing={2}
+        spacing={1}
         sx={{
           '.ZkidNetworkCell': {
             background: 'rgba(103, 104, 172, 0.2)',

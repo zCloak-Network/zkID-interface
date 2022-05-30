@@ -11,13 +11,14 @@ export function createRoundedButton(): {
   style: Interpolation<{ theme: Theme }>;
 }[] {
   const baseStyle: Interpolation<{ theme: Theme }> = {
+    minWidth: '128px',
     background: '#fff',
     boxShadow: '0px 3px 6px rgba(196, 203, 214, 0.1)',
-    color: '#000',
     borderRadius: 50,
     '&:hover': {
       background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
-      boxShadow: '0px 3px 6px rgba(51, 51, 51, 0.3)'
+      boxShadow: '0px 3px 6px rgba(51, 51, 51, 0.3)',
+      color: '#fff'
     }
   };
 
@@ -28,8 +29,7 @@ export function createRoundedButton(): {
         size: 'small'
       },
       style: {
-        ...baseStyle,
-        padding: '4px 10px'
+        ...baseStyle
       }
     },
     {
@@ -38,8 +38,7 @@ export function createRoundedButton(): {
         size: 'medium'
       },
       style: {
-        ...baseStyle,
-        padding: '6px 16px'
+        ...baseStyle
       }
     },
     {
@@ -48,9 +47,7 @@ export function createRoundedButton(): {
         size: 'large'
       },
       style: {
-        ...baseStyle,
-        padding: '8px 22px',
-        fontSize: '0.9375rem'
+        ...baseStyle
       }
     }
   ];

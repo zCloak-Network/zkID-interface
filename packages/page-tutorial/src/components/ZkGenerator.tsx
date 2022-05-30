@@ -21,10 +21,10 @@ const Wrapper = styled(Box)`
 
 const Item = styled(Box)`
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 24px;
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
+  border-radius: 12px;
   margin-top: 10px;
 
   > label {
@@ -60,8 +60,6 @@ const ZkGenerator: React.FC = () => {
   const [open, toggle] = useToggle();
   const [error, setError] = useState<Error | null>(null);
 
-  console.log(error?.message);
-
   const generate = useCallback(() => {
     setGenLoading(true);
     zkidExtension.openzkIDPopup('OPEN_GENERATE_PROOF', {
@@ -95,7 +93,7 @@ const ZkGenerator: React.FC = () => {
   return (
     <Wrapper>
       <ZkRule onClose={toggle} open={open} />
-      <StayAlert message={error?.message} open={!!error} severity="error" />
+      <StayAlert message={error?.message} open={!!error && !proof} severity="error" />
       <Item>
         <label>zk Program</label>
         <div className="content">
@@ -112,7 +110,7 @@ const ZkGenerator: React.FC = () => {
               variant="text"
             >
               {ZK_PROGRAM.name}
-              <span style={{ fontFamily: 'iconfont', fontWeight: 700 }}>
+              <span style={{ fontWeight: 700 }}>
                 &nbsp;
                 <CallMadeIcon sx={{ fontSize: '12px' }} />
               </span>
@@ -145,7 +143,19 @@ const ZkGenerator: React.FC = () => {
           </span>
           <span className="value">
             {!proof && (
-              <LoadingButton loading={genLoading} onClick={generate} variant="contained">
+              <LoadingButton
+                loading={genLoading}
+                onClick={generate}
+                sx={{
+                  background: '#4B45FF',
+                  color: '#fff',
+                  ':hover': {
+                    background: '#4B45FF',
+                    opacity: 0.8
+                  }
+                }}
+                variant="rounded"
+              >
                 Generate
               </LoadingButton>
             )}

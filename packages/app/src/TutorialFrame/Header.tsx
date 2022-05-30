@@ -50,7 +50,7 @@ const Header: React.FC = () => {
         <img src={require('@zkid/app-config/assets/logo.svg')} />
         zCloak Network
       </Logo>
-      <Stack className="ZkidHeader-right" direction="row" spacing={2}>
+      <Stack className="ZkidHeader-right" direction="row" spacing={1}>
         {!account && (
           <ButtonEnable
             sx={{
