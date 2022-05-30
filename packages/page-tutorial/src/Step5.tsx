@@ -36,9 +36,9 @@ const Wrapper = styled(Container)`
 `;
 
 const Step5: React.FC = () => {
-  const { account } = useWallet();
+  const { account, chainId } = useWallet();
   const { poap } = useContext(JudgeStepContext);
-  const { notifyError } = useContext(NotificationContext);
+  const { notifyError, notifyTx } = useContext(NotificationContext);
   const { setPoapId } = useContext(BalancesContext);
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
@@ -65,7 +65,11 @@ const Step5: React.FC = () => {
       setLoading(true);
       poap
         .claim()
-        .then((tx) => tx.wait())
+        .then((tx) => {
+          chainId && notifyTx(tx, chainId);
+
+          return tx.wait();
+        })
         .then((receipt) => poap.getMintLog(receipt))
         .then((mintLog) => {
           if (mintLog) {
@@ -78,7 +82,7 @@ const Step5: React.FC = () => {
         .catch(notifyError)
         .finally(() => setLoading(false));
     }
-  }, [notifyError, poap, setPoapId]);
+  }, [chainId, notifyError, notifyTx, poap, setPoapId]);
 
   return (
     <Wrapper>

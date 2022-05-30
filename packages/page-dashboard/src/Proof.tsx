@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
@@ -82,7 +83,7 @@ const Row: React.FC<{ proof: ProofType; index: number }> = ({
             color: theme.palette.grey[700]
           })}
         >
-          {time}
+          {moment(time).format('MM/DD/YYYY HH:mm:ss')}
         </TableCell>
       </TableRow>
       <TableRow>

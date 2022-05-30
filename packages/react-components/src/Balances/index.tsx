@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers';
+import { parseEther } from 'ethers/lib/utils';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
@@ -48,7 +49,7 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
 
   const getToken = useCallback(
     async (throwError = false) => {
-      if (account && faucetStatus === FaucetStatus.NotFaucet && balance?.eq('0')) {
+      if (account && faucetStatus === FaucetStatus.NotFaucet && balance?.lt(parseEther('0.001'))) {
         const { code } = await credentialApi.faucet({ address: account });
 
         if (code !== 200) {
@@ -60,10 +61,6 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
     },
     [account, balance, faucetStatus, notifyError]
   );
-
-  useEffect(() => {
-    getToken();
-  }, [getToken]);
 
   useEffect(() => {
     setPoapId(_poapId);
