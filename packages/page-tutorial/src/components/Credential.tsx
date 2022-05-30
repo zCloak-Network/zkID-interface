@@ -119,35 +119,37 @@ const Credential: React.FC<Props> = ({ credential }) => {
   }, [credential]);
 
   return (
-    <Wrapper>
-      <img src={require('./avatar.webp')} />
-      <img src={require('./attested.webp')} />
-      <div className="detail">
-        <div className="detial-item name-item">
-          <span className="label">Name:</span>
-          <span className="value">{name}</span>
+    <>
+      <Wrapper>
+        <img src={require('./avatar.webp')} />
+        <img src={require('./attested.webp')} />
+        <div className="detail">
+          <div className="detial-item name-item">
+            <span className="label">Name:</span>
+            <span className="value">{name}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Age:</span>
+            <span className="value">{age}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Class:</span>
+            <span className="value">{ClazzName[clazz]}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Helmet:</span>
+            <span className="value">{helmet}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Chest:</span>
+            <span className="value">{chest}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Weapon:</span>
+            <span className="value">{weapon}</span>
+          </div>
         </div>
-        <div className="detial-item">
-          <span className="label">Age:</span>
-          <span className="value">{age}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Class:</span>
-          <span className="value">{ClazzName[clazz]}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Helmet:</span>
-          <span className="value">{helmet}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Chest:</span>
-          <span className="value">{chest}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Weapon:</span>
-          <span className="value">{weapon}</span>
-        </div>
-      </div>
+      </Wrapper>
       <Box sx={{ display: 'flex' }}>
         <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
           Download
@@ -156,7 +158,7 @@ const Credential: React.FC<Props> = ({ credential }) => {
           Next
         </Button>
       </Box>
-    </Wrapper>
+    </>
   );
 };
 

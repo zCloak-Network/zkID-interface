@@ -1,6 +1,6 @@
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Button, Portal, Snackbar, styled, useTheme } from '@mui/material';
+import { Box, Button, styled, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { Proof } from '@zcloak/zkid-core/types';
@@ -8,7 +8,7 @@ import { shortenHash } from '@zcloak/zkid-core/utils';
 
 import { CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
-import { ZkidExtensionContext, ZkRule } from '@zkid/react-components';
+import { StayAlert, ZkidExtensionContext, ZkRule } from '@zkid/react-components';
 import { useToggle } from '@zkid/react-hooks';
 
 import AddProof from './AddProof';
@@ -58,16 +58,9 @@ const ZkGenerator: React.FC = () => {
   const [genLoading, setGenLoading] = useState(false);
   const [proof, setProof] = useState<Proof>();
   const [open, toggle] = useToggle();
-  const [error, setError] = useState<Error>();
-  const [tooltip, setTooltip] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    if (error && !proof) {
-      setTooltip(true);
-    } else {
-      setTooltip(false);
-    }
-  }, [error, proof]);
+  console.log(error?.message);
 
   const generate = useCallback(() => {
     setGenLoading(true);
@@ -102,27 +95,7 @@ const ZkGenerator: React.FC = () => {
   return (
     <Wrapper>
       <ZkRule onClose={toggle} open={open} />
-      <Portal>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          autoHideDuration={null}
-          open={tooltip}
-        >
-          <Alert
-            icon={<></>}
-            severity="error"
-            sx={{
-              alignItems: 'center',
-              padding: '0 16px',
-              background: 'linear-gradient(221deg, #F92A40 0%, #F1609B 100%, #6C59E0 100%)',
-              borderRadius: '16px'
-            }}
-            variant="filled"
-          >
-            {error?.message}
-          </Alert>
-        </Snackbar>
-      </Portal>
+      <StayAlert message={error?.message} open={!!error} severity="error" />
       <Item>
         <label>zk Program</label>
         <div className="content">
@@ -179,8 +152,14 @@ const ZkGenerator: React.FC = () => {
           </span>
         </div>
       </Item>
+      {error && !proof && (
+        <Box sx={(theme) => ({ fontSize: 12, color: theme.palette.error.main })}>
+          {error.message}
+        </Box>
+      )}
+
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <AddProof proof={proof} setError={setError}>
+        <AddProof proof={proof} reportError={setError}>
           Submit
         </AddProof>
       </Box>

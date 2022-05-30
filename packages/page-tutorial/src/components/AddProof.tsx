@@ -4,6 +4,7 @@ import { Utils } from '@kiltprotocol/sdk-js';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
+import { assert } from '@zcloak/zkid-core/utils';
 
 import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
@@ -16,10 +17,10 @@ import { decodeSs58Address, stringToHex } from '../utils';
 
 interface Props {
   proof?: Proof;
-  setError?: (error: Error) => void;
+  reportError: (error: Error | null) => void;
 }
 
-const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, setError }) => {
+const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, reportError }) => {
   const { kiltProofs } = useContext(JudgeStepContext);
   const { mnemonic } = useContext(CredentialContext);
   const { notifyError, notifyTx } = useContext(NotificationContext);
@@ -40,21 +41,21 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, s
     }
   }, [account, proof]);
 
-  const handleClick = useCallback(() => {
-    if (!proof) {
-      setError?.(new Error('Proof should not be empty, please click to generate.'));
+  const handleClick = useCallback(async () => {
+    try {
+      assert(proof, 'Proof should not be empty, please click to generate.');
+      assert(mnemonic, "Don't has address");
+      assert(kiltProofs, "Can't get KiltProofs contract, please check your network");
 
-      return;
-    }
+      reportError(null);
 
-    if (kiltProofs && mnemonic) {
       setLoading(true);
       const localAddress = new Utils.Keyring({
         ss58Format: KILT_SS58,
         type: 'sr25519'
       }).addFromMnemonic(mnemonic).address;
 
-      kiltProofs
+      await kiltProofs
         .addProof(
           decodeSs58Address(localAddress),
           decodeSs58Address(ATTESTER_ADDRESS),
@@ -74,8 +75,10 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, s
           setLoading(false);
           notifyError(error);
         });
+    } catch (error) {
+      reportError(error as Error);
     }
-  }, [chainId, kiltProofs, mnemonic, notifyError, notifyTx, proof, setError]);
+  }, [chainId, kiltProofs, mnemonic, notifyError, notifyTx, proof, reportError]);
 
   return (
     <ButtonEnable

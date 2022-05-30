@@ -2,13 +2,12 @@ import type { ICTypeSchema } from '@kiltprotocol/sdk-js';
 
 import { Claim, CType, Message, RequestForAttestation } from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
-import { Alert, Portal, Snackbar } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 
 import { assert } from '@zcloak/zkid-core/utils';
 
 import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
-import { CredentialContext, NotificationContext } from '@zkid/react-components';
+import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
 import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service';
 import { AttestationStatus } from '@zkid/service/types';
@@ -34,7 +33,12 @@ interface Props {
   reportError: (error: Error | null) => void;
 }
 
-function checkContents(contents?: Contents | null): Required<Contents> {
+function checkContents(contents?: Contents | null): {
+  name: string;
+  birthday: Date;
+  class: number;
+  rarity: [number, number, number];
+} {
   assert(contents, 'Contents is empty');
   assert(contents.name, () => new ContentsError(0, 'name is empty'));
   assert(contents.birthday, () => new ContentsError(1, 'birthday is empty'));
@@ -107,7 +111,14 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
 
       const claim = Claim.fromCTypeAndClaimContents(
         CType.fromSchema(CTYPE as ICTypeSchema),
-        _contents as Record<string, any>,
+        {
+          name: _contents.name,
+          class: _contents.class,
+          age: new Date().getFullYear() - _contents.birthday.getFullYear(),
+          helmet_rarity: _contents.rarity[0],
+          chest_rarity: _contents.rarity[1],
+          weapon_rarity: _contents.rarity[2]
+        },
         claimerLightDid.did
       );
 
@@ -156,27 +167,11 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
 
   return (
     <>
-      <Portal>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          autoHideDuration={null}
-          open={loading || attestationStatus === AttestationStatus.attesting}
-        >
-          <Alert
-            icon={<></>}
-            severity="warning"
-            sx={{
-              alignItems: 'center',
-              padding: '0 16px',
-              background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)',
-              borderRadius: '16px'
-            }}
-            variant="filled"
-          >
-            We are checking your documents. The attestation takes around 30s.
-          </Alert>
-        </Snackbar>
-      </Portal>
+      <StayAlert
+        message="We are checking your documents. The attestation takes around 30s."
+        open={loading || attestationStatus === AttestationStatus.attesting}
+        severity="warning"
+      />
       <LoadingButton
         loading={loading || attestationStatus === AttestationStatus.attesting}
         onClick={handleClick}
