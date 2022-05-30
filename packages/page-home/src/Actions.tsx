@@ -8,7 +8,7 @@ import ChangeAccount from './ChangeAccount';
 import Replay from './Replay';
 
 const Actions: React.FC<{ account: string }> = () => {
-  const { getToken, poapId } = useContext(BalancesContext);
+  const { poapId } = useContext(BalancesContext);
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
 
@@ -31,14 +31,7 @@ const Actions: React.FC<{ account: string }> = () => {
           <ChangeAccount />
         )
       ) : (
-        <Button
-          onClick={() => {
-            getToken();
-            navigate('/guide');
-          }}
-          size="large"
-          variant="rounded"
-        >
+        <Button onClick={() => navigate('/guide')} size="large" variant="rounded">
           Get Started
         </Button>
       )}

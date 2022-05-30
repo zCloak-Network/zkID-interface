@@ -12,7 +12,7 @@ import MoreLinks from '../MoreLinks';
 import NetworkCell from '../NetworkCell';
 
 const Wrapper = styled(Box)`
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   top: 0;
   display: flex;
