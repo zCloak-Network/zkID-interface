@@ -12,7 +12,7 @@ import MoreLinks from '../MoreLinks';
 import NetworkCell from '../NetworkCell';
 
 const Wrapper = styled(Box)`
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   top: 0;
   display: flex;
@@ -103,7 +103,7 @@ const Header: React.FC = () => {
       <Stack
         className="ZkidHeader-right"
         direction="row"
-        spacing={2}
+        spacing={1}
         sx={{
           '.ZkidNetworkCell': {
             background: 'rgba(103, 104, 172, 0.2)',

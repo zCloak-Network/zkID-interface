@@ -46,7 +46,6 @@ const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftI
         },
         '>span': {
           fontSize: '12px',
-          fontFamily: 'Kanit',
           fontWeight: '600',
           lineHeight: '12px',
           color: '#000000',

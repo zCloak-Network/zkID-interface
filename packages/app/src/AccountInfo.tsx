@@ -58,7 +58,8 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
             sx={{
               background: 'rgba(255, 255, 255, 0.5)',
               ':hover': {
-                background: 'rgba(255, 255, 255, 0.5)'
+                background: 'rgba(255, 255, 255, 0.5)',
+                color: '#000'
               }
             }}
             variant="rounded"

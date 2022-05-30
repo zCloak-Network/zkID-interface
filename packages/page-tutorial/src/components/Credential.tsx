@@ -1,7 +1,10 @@
 import type { ICredential } from '@kiltprotocol/sdk-js';
 
-import { Box, styled } from '@mui/material';
-import React from 'react';
+import { Box, Button, styled } from '@mui/material';
+import FileSaver from 'file-saver';
+import React, { useCallback, useContext, useState } from 'react';
+
+import { JudgeStepContext } from '../JudgeStep';
 
 interface Props {
   credential?: ICredential;
@@ -87,6 +90,8 @@ const Wrapper = styled(Box)`
 `;
 
 const Credential: React.FC<Props> = ({ credential }) => {
+  const { nextStep } = useContext(JudgeStepContext);
+  const [hasDownload, setHasDownload] = useState(false);
   const name = credential?.request?.claim?.contents?.name as unknown as string;
   const age = credential?.request?.claim?.contents?.age as unknown as string;
   const clazz = credential?.request?.claim?.contents?.class as unknown as number;
@@ -101,37 +106,59 @@ const Credential: React.FC<Props> = ({ credential }) => {
     4: 'Mage'
   };
 
+  const download = useCallback(() => {
+    if (credential) {
+      const blob = new Blob([JSON.stringify(credential)], {
+        type: 'text/plain;charset=utf-8'
+      });
+
+      FileSaver.saveAs(blob, 'credential.json');
+
+      setHasDownload(true);
+    }
+  }, [credential]);
+
   return (
-    <Wrapper>
-      <img src={require('./avatar.webp')} />
-      <img src={require('./attested.webp')} />
-      <div className="detail">
-        <div className="detial-item name-item">
-          <span className="label">Name:</span>
-          <span className="value">{name}</span>
+    <>
+      <Wrapper>
+        <img src={require('./avatar.webp')} />
+        <img src={require('./attested.webp')} />
+        <div className="detail">
+          <div className="detial-item name-item">
+            <span className="label">Name:</span>
+            <span className="value">{name}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Age:</span>
+            <span className="value">{age}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Class:</span>
+            <span className="value">{ClazzName[clazz]}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Helmet:</span>
+            <span className="value">{helmet}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Chest:</span>
+            <span className="value">{chest}</span>
+          </div>
+          <div className="detial-item">
+            <span className="label">Weapon:</span>
+            <span className="value">{weapon}</span>
+          </div>
         </div>
-        <div className="detial-item">
-          <span className="label">Age:</span>
-          <span className="value">{age}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Class:</span>
-          <span className="value">{ClazzName[clazz]}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Helmet:</span>
-          <span className="value">{helmet}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Chest:</span>
-          <span className="value">{chest}</span>
-        </div>
-        <div className="detial-item">
-          <span className="label">Weapon:</span>
-          <span className="value">{weapon}</span>
-        </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+      <Box sx={{ display: 'flex' }}>
+        <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
+          Download
+        </Button>
+        <Button disabled={!hasDownload} onClick={nextStep} variant="rounded">
+          Next
+        </Button>
+      </Box>
+    </>
   );
 };
 

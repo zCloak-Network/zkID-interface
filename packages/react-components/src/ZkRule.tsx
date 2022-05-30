@@ -20,7 +20,6 @@ const Content = styled(DialogContent)`
   text-align: left;
   .content-title {
     font-size: 16px;
-    font-family: Kanit;
     font-weight: 400;
     line-height: 24px;
     color: #333333;
@@ -34,7 +33,6 @@ const Content = styled(DialogContent)`
   .table {
     width: 100%;
     font-size: 12px;
-    font-family: Kanit;
     font-weight: 300;
     color: #000000;
     text-align: center;
@@ -80,7 +78,6 @@ const Content = styled(DialogContent)`
     border-radius: 20px;
     overflow-y: auto;
     font-size: 14px !important;
-    font-family: Kanit;
     font-weight: 300;
     color: #ffffff;
     padding: 18px 32px;

@@ -66,6 +66,10 @@ const BalancesProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) =
     setPoapId(_poapId);
   }, [_poapId]);
 
+  useEffect(() => {
+    getToken();
+  }, [getToken]);
+
   return (
     <BalancesContext.Provider value={{ balance, faucetStatus, poapId, setPoapId, getToken }}>
       {children}

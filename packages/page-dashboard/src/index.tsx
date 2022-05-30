@@ -37,7 +37,11 @@ const Dashboard: React.FC = () => {
                 <Replay
                   onDone={() => setFlag(true)}
                   sx={() => ({
-                    background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)'
+                    background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
+                    color: '#fff',
+                    ':hover': {
+                      background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)'
+                    }
                   })}
                   variant="contained"
                 />

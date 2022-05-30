@@ -16,7 +16,7 @@ const createPalette = (mode: PaletteMode): PaletteOptions => ({
     main: '#76AF92'
   },
   error: {
-    main: '#D56386'
+    main: '#D30009'
   },
   background: {
     default: mode === 'light' ? 'rgba(255, 255, 255 ,1)' : '#121212'

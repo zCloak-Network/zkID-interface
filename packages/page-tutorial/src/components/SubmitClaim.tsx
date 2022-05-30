@@ -1,25 +1,72 @@
-import type { LightDidDetails } from '@kiltprotocol/did';
+import type { ICTypeSchema } from '@kiltprotocol/sdk-js';
 
-import { Did, Message } from '@kiltprotocol/sdk-js';
+import { Claim, CType, Message, RequestForAttestation } from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
-import { Alert, Portal, Snackbar } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 
-import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
-import { CredentialContext, NotificationContext } from '@zkid/react-components';
+import { assert } from '@zcloak/zkid-core/utils';
+
+import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
+import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
 import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/service';
 import { AttestationStatus } from '@zkid/service/types';
 
-interface Props {
-  keystore: Did.DemoKeystore;
-  message?: Message | null;
-  claimerLightDid?: LightDidDetails | null;
-  retry: () => void;
+type Contents = {
+  name?: string;
+  birthday?: Date | null;
+  class?: number;
+  rarity?: [number, number, number];
+};
+
+export class ContentsError extends Error {
+  public position: 0 | 1 | 2 | 3;
+
+  constructor(position: 0 | 1 | 2 | 3, message?: string) {
+    super(message);
+    this.position = position;
+  }
 }
 
-const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, retry }) => {
-  const { fetchCredential } = useContext(CredentialContext);
+interface Props {
+  contents: Contents | null;
+  reportError: (error: Error | null) => void;
+}
+
+function checkContents(contents?: Contents | null): {
+  name: string;
+  birthday: Date;
+  class: number;
+  rarity: [number, number, number];
+} {
+  assert(contents, 'Contents is empty');
+  assert(contents.name, () => new ContentsError(0, 'name is empty'));
+  assert(contents.birthday, () => new ContentsError(1, 'birthday is empty'));
+  assert(contents.class, () => new ContentsError(2, 'class is empty'));
+  assert(contents.rarity, () => new ContentsError(3, 'rarity is empty'));
+
+  if (!contents.birthday.getTime()) {
+    throw new ContentsError(1, 'Invalid birthday date');
+  }
+
+  if (contents.birthday.getTime() > Date.now()) {
+    throw new ContentsError(1, 'Birthday birthday date');
+  }
+
+  if (contents.rarity.length !== 3) {
+    throw new ContentsError(3, 'Rarity format error');
+  }
+
+  return {
+    name: contents.name,
+    birthday: contents.birthday,
+    class: contents.class,
+    rarity: contents.rarity
+  };
+}
+
+const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
+  const { claimerLightDid, fetchCredential, keystore } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
@@ -42,7 +89,6 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, retr
           }
 
           if (attestationStatus === AttestationStatus.attestedFailed) {
-            retry();
             notifyError(new Error('Attestation failed, please resubmit.'));
           }
 
@@ -51,12 +97,48 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, retr
           return attestationStatus;
         });
     }
-  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError, retry]);
+  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError]);
 
   useInterval(listenAttestationStatus, 6000, true);
 
   const handleClick = useCallback(async () => {
-    if (message && claimerLightDid && claimerLightDid.encryptionKey) {
+    try {
+      assert(claimerLightDid, 'claimerLightDid is null');
+      assert(claimerLightDid.encryptionKey, 'claimerLightDid is null');
+      const _contents = checkContents(contents);
+
+      reportError(null);
+
+      const claim = Claim.fromCTypeAndClaimContents(
+        CType.fromSchema(CTYPE as ICTypeSchema),
+        {
+          name: _contents.name,
+          class: _contents.class,
+          age: new Date().getFullYear() - _contents.birthday.getFullYear(),
+          helmet_rarity: _contents.rarity[0],
+          chest_rarity: _contents.rarity[1],
+          weapon_rarity: _contents.rarity[2]
+        },
+        claimerLightDid.did
+      );
+
+      const requestForAttestation = await RequestForAttestation.fromClaim(claim).signWithDidKey(
+        keystore,
+        claimerLightDid,
+        claimerLightDid.authenticationKey.id
+      );
+
+      const message = new Message(
+        {
+          content: {
+            requestForAttestation
+          },
+          type: Message.BodyType.REQUEST_ATTESTATION
+        },
+        claimerLightDid.did,
+        ATTESTER_DID
+      );
+
       setLoading(true);
 
       const encryptedPresentationMessage = await message.encrypt(
@@ -76,36 +158,21 @@ const SubmitClaim: React.FC<Props> = ({ claimerLightDid, keystore, message, retr
       if (data.code === 200) {
         setAttestationStatus(AttestationStatus.attesting);
       }
-
+    } catch (error) {
+      reportError(error as Error);
+    } finally {
       setLoading(false);
     }
-  }, [claimerLightDid, keystore, message, setAttestationStatus]);
+  }, [claimerLightDid, contents, keystore, reportError]);
 
   return (
     <>
-      <Portal>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          autoHideDuration={null}
-          open={loading || attestationStatus === AttestationStatus.attesting}
-        >
-          <Alert
-            icon={<></>}
-            severity="warning"
-            sx={{
-              alignItems: 'center',
-              padding: '0 16px',
-              background: 'linear-gradient(221deg, #E2702A 0%, #EBAD58 100%, #6C59E0 100%)',
-              borderRadius: '16px'
-            }}
-            variant="filled"
-          >
-            We are checking your documents. The attestation takes around 30s.
-          </Alert>
-        </Snackbar>
-      </Portal>
+      <StayAlert
+        message="We are checking your documents. The attestation takes around 30s."
+        open={loading || attestationStatus === AttestationStatus.attesting}
+        severity="warning"
+      />
       <LoadingButton
-        disabled={!message}
         loading={loading || attestationStatus === AttestationStatus.attesting}
         onClick={handleClick}
         variant="rounded"

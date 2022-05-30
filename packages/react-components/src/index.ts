@@ -15,4 +15,5 @@ export { default as DialogHeader } from './DialogHeader';
 export { default as FormatBalance } from './FormatBalance';
 export { default as Slider } from './Slider';
 export { default as PoapCard } from './PoapCard';
+export { default as StayAlert } from './StayAlert';
 export { default as ZkRule } from './ZkRule';

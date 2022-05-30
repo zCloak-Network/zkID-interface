@@ -1,8 +1,11 @@
 import { type PaletteMode } from '@mui/material';
 import { type ThemeOptions } from '@mui/material/styles';
 
-import { createRoundedButton } from './createButton';
-
+declare module '@mui/material/Button/Button' {
+  interface ButtonPropsVariantOverrides {
+    rounded: true;
+  }
+}
 type Func = (mode: PaletteMode) => NonNullable<ThemeOptions['components']>;
 
 /**
@@ -20,8 +23,127 @@ const createComponents: Func = () => ({
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
+      font-weight: 100;
+      src: url("/fonts/Kanit-Thin.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 100;
+      src: url("/fonts/Kanit-ThinItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 200;
+      src: url("/fonts/Kanit-ExtraLight.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 200;
+      src: url("/fonts/Kanit-ExtraLightItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 300;
+      src: url("/fonts/Kanit-Light.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 300;
+      src: url("/fonts/Kanit-LightItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
       font-weight: 400;
       src: url("/fonts/Kanit-Regular.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 400;
+      src: url("/fonts/Kanit-Italic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 500;
+      src: url("/fonts/Kanit-Medium.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 500;
+      src: url("/fonts/Kanit-MediumItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 600;
+      src: url("/fonts/Kanit-SemiBold.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 600;
+      src: url("/fonts/Kanit-SemiBoldItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 700;
+      src: url("/fonts/Kanit-Bold.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 700;
+      src: url("/fonts/Kanit-BoldItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 800;
+      src: url("/fonts/Kanit-ExtraBold.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 800;
+      src: url("/fonts/Kanit-ExtraBoldItalic.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 900;
+      src: url("/fonts/Kanit-Black.ttf");
+    }
+    @font-face {
+      font-family: "Kanit";
+      font-style: italic;
+      font-display: swap;
+      font-weight: 900;
+      src: url("/fonts/Kanit-BlackItalic.ttf");
     }
     @font-face {
       font-family: "RobotoSlab";
@@ -38,11 +160,11 @@ const createComponents: Func = () => ({
       src: url("/fonts/Roboto-Regular.ttf");
     }
     @font-face {
-      font-family: "iconfont";
+      font-family: "Papyrus";
       font-style: normal;
       font-display: swap;
       font-weight: 400;
-      src: url("/fonts/iconfont.ttf");
+      src: url("/fonts/PapyrusStd.OTF");
     }
   `
   },
@@ -120,29 +242,57 @@ const createComponents: Func = () => ({
   },
 
   MuiButton: {
-    variants: [...createRoundedButton()],
+    variants: [
+      {
+        props: {
+          variant: 'rounded'
+        },
+        style: {
+          minWidth: '128px',
+          background: '#fff',
+          boxShadow: '0px 3px 6px rgba(196, 203, 214, 0.1)',
+          borderRadius: 50,
+          color: '#000',
+          ':hover': {
+            background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
+            boxShadow: '0px 3px 6px rgba(51, 51, 51, 0.3)',
+            color: '#fff'
+          }
+        }
+      }
+    ],
     styleOverrides: {
       root: {
         borderRadius: 10,
-        textTransform: 'initial'
+        textTransform: 'initial',
+        transition:
+          'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
       },
       outlined: {
         borderRadius: 10,
         border: '1px solid #ba60f2',
+        boxShadow: '0px 3px 6px rgba(102, 102, 102, 0.4)',
+        background: 'rgba(255, 255, 255, 0.3)',
+        color: '#BA60F2',
         ':hover': {
-          background: 'hsla(0,0%,100%,.7)'
+          background: 'rgba(255, 255, 255, 0.7)'
         }
       },
-      contained: {
-        boxShadow: 'none',
-        '&:hover': {
-          boxShadow: 'none'
-        }
-      },
-      text: {
+      contained: ({ theme }) => ({
+        color: '#fff',
         ':hover': {
-          background: '#F4F6FD'
+          background: `${theme.palette.primary.main}`
         }
+      }),
+      sizeSmall: {
+        padding: '4px 10px'
+      },
+      sizeMedium: {
+        padding: '6px 16px'
+      },
+      sizeLarge: {
+        padding: '8px 22px',
+        fontSize: '0.9375rem'
       }
     }
   },

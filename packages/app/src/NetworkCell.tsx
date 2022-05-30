@@ -17,7 +17,8 @@ const NetworkCell: React.FC = () => {
         color: '#6768AC',
         cursor: 'pointer',
         ':hover': {
-          background: 'rgba(255, 255, 255, 0.5)'
+          background: 'rgba(255, 255, 255, 0.5)',
+          color: '#000'
         }
       }}
       variant="rounded"
