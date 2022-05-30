@@ -1,7 +1,10 @@
 import type { ICredential } from '@kiltprotocol/sdk-js';
 
-import { Box, styled } from '@mui/material';
-import React from 'react';
+import { Box, Button, styled } from '@mui/material';
+import FileSaver from 'file-saver';
+import React, { useCallback, useContext, useState } from 'react';
+
+import { JudgeStepContext } from '../JudgeStep';
 
 interface Props {
   credential?: ICredential;
@@ -87,6 +90,8 @@ const Wrapper = styled(Box)`
 `;
 
 const Credential: React.FC<Props> = ({ credential }) => {
+  const { nextStep } = useContext(JudgeStepContext);
+  const [hasDownload, setHasDownload] = useState(false);
   const name = credential?.request?.claim?.contents?.name as unknown as string;
   const age = credential?.request?.claim?.contents?.age as unknown as string;
   const clazz = credential?.request?.claim?.contents?.class as unknown as number;
@@ -100,6 +105,18 @@ const Credential: React.FC<Props> = ({ credential }) => {
     3: 'Priest',
     4: 'Mage'
   };
+
+  const download = useCallback(() => {
+    if (credential) {
+      const blob = new Blob([JSON.stringify(credential)], {
+        type: 'text/plain;charset=utf-8'
+      });
+
+      FileSaver.saveAs(blob, 'credential.json');
+
+      setHasDownload(true);
+    }
+  }, [credential]);
 
   return (
     <Wrapper>
@@ -131,6 +148,14 @@ const Credential: React.FC<Props> = ({ credential }) => {
           <span className="value">{weapon}</span>
         </div>
       </div>
+      <Box sx={{ display: 'flex' }}>
+        <Button onClick={download} sx={{ mr: '44px' }} variant="rounded">
+          Download
+        </Button>
+        <Button disabled={!hasDownload} onClick={nextStep} variant="rounded">
+          Next
+        </Button>
+      </Box>
     </Wrapper>
   );
 };

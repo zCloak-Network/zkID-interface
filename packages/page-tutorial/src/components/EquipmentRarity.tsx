@@ -1,8 +1,7 @@
 import { Box, Button, styled } from '@mui/material';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 interface Props {
-  value?: [number, number, number];
   onChange?: (value: [number, number, number]) => void;
 }
 
@@ -36,9 +35,13 @@ function random(min = 1, max = 10): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const EquipmentRarity: React.FC<Props> = ({ onChange, value }) => {
+const EquipmentRarity: React.FC<Props> = ({ onChange }) => {
+  const [value, setValue] = useState<[number, number, number]>();
   const toggleRandom = useCallback(() => {
-    onChange?.([random(), random(), random()]);
+    const v: [number, number, number] = [random(), random(), random()];
+
+    setValue(v);
+    onChange?.(v);
   }, [onChange]);
 
   return (

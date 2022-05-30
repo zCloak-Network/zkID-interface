@@ -13,9 +13,9 @@ export const Wrapper = styled(Container)`
   padding: 52px 122px;
   margin-top: 12px;
 
-  backdrop-filter: blur(8px) brightness(120%);
+  backdrop-filter: blur(50px) brightness(130%);
   border-radius: 12px;
-  box-shadow: 0 0 20px rgb(34 13 13 / 42%);
+  box-shadow: 0px 0px 20px rgba(34, 13, 13, 0.42);
 `;
 
 const Tutorial: React.FC = () => {
