@@ -83,7 +83,7 @@ const Row: React.FC<{ proof: ProofType; index: number }> = ({
             color: theme.palette.grey[700]
           })}
         >
-          {moment(time).format('YYYY-MM-DD HH:mm:ss')}
+          {moment(time).format('MM/DD/YYYY HH:mm:ss')}
         </TableCell>
       </TableRow>
       <TableRow>

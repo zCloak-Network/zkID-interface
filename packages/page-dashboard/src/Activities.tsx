@@ -123,7 +123,7 @@ const Activities: React.FC = () => {
                     color: theme.palette.grey[700]
                   })}
                 >
-                  {moment(activity.time).format('YYYY-MM-DD HH:mm:ss')}
+                  {moment(activity.time).format('MM/DD/YYYY HH:mm:ss')}
                 </TableCell>
               </TableRow>
             ))}

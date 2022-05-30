@@ -8,6 +8,8 @@ interface Props {
   contentsChange?: (contents: any) => void;
 }
 
+const MAX_DATE = new Date();
+
 const Contents: React.FC<Props> = ({ contentsChange }) => {
   const [name, setName] = useState<string>();
   const [birthday, setBirthday] = useState<Date | null>(null);
@@ -54,6 +56,7 @@ const Contents: React.FC<Props> = ({ contentsChange }) => {
         />
       </FormControl>
       <DatePicker
+        maxDate={MAX_DATE}
         onChange={setBirthday}
         renderInput={(params) => (
           <FormControl fullWidth variant="outlined">
