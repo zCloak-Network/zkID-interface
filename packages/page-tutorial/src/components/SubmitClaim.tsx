@@ -1,6 +1,13 @@
 import type { ICTypeSchema } from '@kiltprotocol/sdk-js';
 
-import { Claim, CType, Message, RequestForAttestation } from '@kiltprotocol/sdk-js';
+import {
+  Attestation,
+  Claim,
+  Credential,
+  CType,
+  Message,
+  RequestForAttestation
+} from '@kiltprotocol/sdk-js';
 import { LoadingButton } from '@mui/lab';
 import React, { useCallback, useContext, useState } from 'react';
 
@@ -66,7 +73,7 @@ function checkContents(contents?: Contents | null): {
 }
 
 const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
-  const { claimerLightDid, fetchCredential, keystore } = useContext(CredentialContext);
+  const { claimerLightDid, keystore, setCredential } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
@@ -83,11 +90,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         .getAttestationStatus({
           senderKeyId
         })
-        .then(async ({ data: { attestationStatus } }) => {
-          if (attestationStatus === AttestationStatus.attested) {
-            await fetchCredential();
-          }
-
+        .then(({ data: { attestationStatus } }) => {
           if (attestationStatus === AttestationStatus.attestedFailed) {
             notifyError(new Error('Attestation failed, please resubmit.'));
           }
@@ -97,7 +100,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
           return attestationStatus;
         });
     }
-  }, [attestationStatus, claimerLightDid, fetchCredential, notifyError]);
+  }, [attestationStatus, claimerLightDid, notifyError]);
 
   useInterval(listenAttestationStatus, 6000, true);
 
@@ -126,6 +129,13 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         keystore,
         claimerLightDid,
         claimerLightDid.authenticationKey.id
+      );
+
+      setCredential(
+        Credential.fromRequestAndAttestation(
+          requestForAttestation,
+          Attestation.fromRequestAndDid(requestForAttestation, ATTESTER_DID)
+        )
       );
 
       const message = new Message(
@@ -163,7 +173,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
     } finally {
       setLoading(false);
     }
-  }, [claimerLightDid, contents, keystore, reportError]);
+  }, [claimerLightDid, contents, keystore, reportError, setCredential]);
 
   return (
     <>

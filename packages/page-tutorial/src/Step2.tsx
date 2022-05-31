@@ -28,7 +28,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { credential, ready } = useContext(CredentialContext);
+  const { credential, ready, verified } = useContext(CredentialContext);
 
   return (
     <Wrapper>
@@ -39,7 +39,7 @@ const Step2: React.FC = () => {
         equipment. To claim it, first describe yourself. Then submit.
       </p>
       {ready ? (
-        credential ? (
+        credential && verified ? (
           <Credential credential={credential} />
         ) : (
           <Contents />

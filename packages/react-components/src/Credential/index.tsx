@@ -1,21 +1,20 @@
-import { Did, disconnect, ICredential, init, Message } from '@kiltprotocol/sdk-js';
+import { connect, Credential, Did, disconnect, ICredential, init } from '@kiltprotocol/sdk-js';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { ATTESTER_ASSEMBLE_KEY_ID } from '@zkid/app-config/constants';
 import { KILT_ENDPOINT } from '@zkid/app-config/endpoints';
-import { useLightDid, useLocalStorage } from '@zkid/react-hooks';
-import { credentialApi } from '@zkid/service';
+import { useInterval, useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { CREDENTIAL, CREDENTIAL_MNEMONIC } from './keys';
 
 interface CredentialState {
   mnemonic?: string;
   ready: boolean;
+  verified: boolean;
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
   credential?: ICredential | null;
-  fetchCredential: () => Promise<void>;
+  setCredential: (credential: ICredential) => void;
   reset: () => void;
 }
 
@@ -25,44 +24,27 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
   const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
   const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
   const [ready, setReady] = useState(false);
+  const [verified, setVerified] = useState(false);
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
 
-  useEffect(() => {
-    if (credential) {
-      setReady(true);
+  const getVerify = useCallback(() => {
+    if (credential && !verified) {
+      Credential.verify(credential).then(setVerified);
     }
-  }, [credential]);
+  }, [credential, verified]);
 
-  const fetchCredential = useCallback(async () => {
-    if (claimerLightDid && claimerLightDid.encryptionKey && !credential) {
-      init({ address: KILT_ENDPOINT });
-
-      await credentialApi
-        .getAttestation({
-          senderKeyId: ATTESTER_ASSEMBLE_KEY_ID,
-          receiverKeyId: `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`
-        })
-        .then(({ data }) => {
-          if (data.length > 0) {
-            return Message.decrypt(data[0], keystore, claimerLightDid);
-          } else {
-            return null;
-          }
-        })
-        .then((message) => {
-          message && setCredential(message.body.content as ICredential);
-        })
-        .finally(() => {
-          setReady(true);
-          disconnect();
-        });
-    }
-  }, [claimerLightDid, credential, keystore, setCredential]);
+  useInterval(getVerify, 6000);
 
   useEffect(() => {
-    fetchCredential();
-  }, [fetchCredential]);
+    init({ address: KILT_ENDPOINT })
+      .then(connect)
+      .then(() => setReady(true));
+
+    return () => {
+      disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // Migration
@@ -93,10 +75,11 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
       value={{
         mnemonic,
         ready,
+        verified,
         keystore,
         claimerLightDid,
         credential,
-        fetchCredential,
+        setCredential,
         reset
       }}
     >
