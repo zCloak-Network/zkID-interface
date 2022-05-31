@@ -20,6 +20,8 @@ interface CredentialState {
 
 export const CredentialContext = createContext<CredentialState>({} as CredentialState);
 
+init({ address: KILT_ENDPOINT });
+
 const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
   const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
@@ -31,15 +33,15 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
   const getVerify = useCallback(() => {
     if (credential && !verified) {
       Credential.verify(credential).then(setVerified);
+    } else if (!credential) {
+      setVerified(false);
     }
   }, [credential, verified]);
 
   useInterval(getVerify, 6000);
 
   useEffect(() => {
-    init({ address: KILT_ENDPOINT })
-      .then(connect)
-      .then(() => setReady(true));
+    connect().then(() => setReady(true));
 
     return () => {
       disconnect();
