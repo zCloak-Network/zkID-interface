@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, styled } from '@mui/material';
+import { Container, styled } from '@mui/material';
 import React, { useContext } from 'react';
 
 import { CredentialContext } from '@zkid/react-components';
@@ -28,7 +28,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Step2: React.FC = () => {
-  const { credential, ready, verified } = useContext(CredentialContext);
+  const { credential, verified } = useContext(CredentialContext);
 
   return (
     <Wrapper>
@@ -38,17 +38,7 @@ const Step2: React.FC = () => {
         We have prepared a gift POAP for you. The POAP style varies by your age, class and
         equipment. To claim it, first describe yourself. Then submit.
       </p>
-      {ready ? (
-        credential && verified ? (
-          <Credential credential={credential} />
-        ) : (
-          <Contents />
-        )
-      ) : (
-        <Box sx={{ display: 'flex' }}>
-          <CircularProgress color="inherit" />
-        </Box>
-      )}
+      {credential && verified ? <Credential credential={credential} /> : <Contents />}
     </Wrapper>
   );
 };
