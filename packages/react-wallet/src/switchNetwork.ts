@@ -27,7 +27,7 @@ export async function switchNetwork(
 
     return true;
   } catch (error: any) {
-    if (error.code === 4902 && params) {
+    if (params) {
       await addNetwork(params);
       switchNetwork(chainId);
 
