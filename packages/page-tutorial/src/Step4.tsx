@@ -23,6 +23,7 @@ const Wrapper = styled(Container)`
   > h2 {
     margin-bottom: 12px;
     font-size: 30px;
+    font-weight: 500;
   }
 
   > p {
@@ -50,7 +51,11 @@ const ProofTrue: React.FC = () => {
       }}
     >
       <img src="/images/pic_true.webp" />
-      <span>Your proof has been verified. You can get your POAP.</span>
+      <span>
+        Congratulations! Your STARK proof has been verified.
+        <br />
+        You can get a POAP now.
+      </span>
     </Box>
   );
 };

@@ -25,16 +25,6 @@ type Contents = {
   class?: number;
   rarity?: [number, number, number];
 };
-
-export class ContentsError extends Error {
-  public position: 0 | 1 | 2 | 3;
-
-  constructor(position: 0 | 1 | 2 | 3, message?: string) {
-    super(message);
-    this.position = position;
-  }
-}
-
 interface Props {
   contents: Contents | null;
   reportError: (error: Error | null) => void;
@@ -47,22 +37,10 @@ function checkContents(contents?: Contents | null): {
   rarity: [number, number, number];
 } {
   assert(contents, 'Contents is empty');
-  assert(contents.name, () => new ContentsError(0, 'name is empty'));
-  assert(contents.birthday, () => new ContentsError(1, 'birthday is empty'));
-  assert(contents.class, () => new ContentsError(2, 'class is empty'));
-  assert(contents.rarity, () => new ContentsError(3, 'rarity is empty'));
-
-  if (!contents.birthday.getTime()) {
-    throw new ContentsError(1, 'Invalid birthday date');
-  }
-
-  if (contents.birthday.getTime() > Date.now()) {
-    throw new ContentsError(1, 'Birthday birthday date');
-  }
-
-  if (contents.rarity.length !== 3) {
-    throw new ContentsError(3, 'Rarity format error');
-  }
+  assert(contents.name, () => new Error('name is empty'));
+  assert(contents.birthday, () => new Error('birthday is empty'));
+  assert(contents.class, () => new Error('class is empty'));
+  assert(contents.rarity, () => new Error('rarity is empty'));
 
   return {
     name: contents.name,

@@ -21,6 +21,7 @@ const Wrapper = styled(Container)`
   > h2 {
     margin-bottom: 12px;
     font-size: 30px;
+    font-weight: 500;
   }
 
   > p {
@@ -40,8 +41,8 @@ const Step1: React.FC = () => {
     <Wrapper>
       <h2>Install extension</h2>
       <p>
-        Your wallet is used to derive private keys, which are used to encrypt your data and sign
-        private transactions.
+        Please install the zCloak ID Wallet to start your ZK adventure. The wallet performs some
+        magic tricks — the STARK alchemy—to help you use your data and keep your secrets.
       </p>
       <img src="/images/pic_install.webp" />
       {isInstall && hasPassword ? (

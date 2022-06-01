@@ -19,6 +19,7 @@ const Wrapper = styled(Container)`
   > h2 {
     margin-bottom: 12px;
     font-size: 30px;
+    font-weight: 500;
   }
 
   > p {
