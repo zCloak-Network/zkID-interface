@@ -13,9 +13,18 @@ import React, { useMemo, useState } from 'react';
 import { StayAlert } from '@zkid/react-components';
 
 import EquipmentRarity from './EquipmentRarity';
-import SubmitClaim, { ContentsError } from './SubmitClaim';
+import SubmitClaim from './SubmitClaim';
 
 const MAX_DATE = new Date();
+
+class FormError extends Error {
+  public position: 0 | 1 | 2 | 3;
+
+  constructor(position: 0 | 1 | 2 | 3, message?: string) {
+    super(message);
+    this.position = position;
+  }
+}
 
 const Contents: React.FC = () => {
   const [name, setName] = useState<string>();
@@ -23,11 +32,21 @@ const Contents: React.FC = () => {
   const [clazz, setClazz] = useState<number>();
   const [rarity, setRarity] = useState<[number, number, number]>();
   const [error, setError] = useState<Error | null>(null);
-  const formError = useMemo(() => (error instanceof ContentsError ? error : null), [error]);
+  const formError = useMemo(() => {
+    if (birthday && (!birthday.getTime() || birthday.getTime() > Date.now())) {
+      return new FormError(1, 'Invalid birthday date');
+    }
+
+    return null;
+  }, [birthday]);
 
   return (
     <>
-      <StayAlert message={error?.message} open={!!error} severity="error" />
+      <StayAlert
+        message={formError?.message ?? error?.message}
+        open={!!formError || !!error}
+        severity="error"
+      />
       <Box
         autoComplete="off"
         component="form"
