@@ -92,7 +92,9 @@ const Poaps: React.FC = () => {
             key={_nftId}
             sx={() => ({
               position: 'relative',
-              filter: BigNumber.from(_nftId).eq(nftId || '0') ? undefined : 'blur(3px)'
+              filter: BigNumber.from(_nftId).eq(nftId || '0') ? undefined : 'blur(3px)',
+              display: 'inline-flex !important',
+              justifyContent: 'center'
             })}
           >
             <PoapCard nftId={_nftId} />
