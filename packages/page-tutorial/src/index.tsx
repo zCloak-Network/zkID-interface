@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Container, Step, StepLabel, Stepper } from '@mui/material';
+import { Container, Step, StepLabel, Stepper, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 
 import JudgeStep from './JudgeStep';
@@ -9,20 +9,26 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 
-export const Wrapper = styled(Container)`
-  padding: 52px 122px;
-  margin-top: 12px;
+export const Wrapper = styled(Container)<{ downSm?: boolean; downMd?: boolean }>(
+  ({ downMd, downSm }) => `
+  padding: ${downSm ? 0 : downMd ? '44px 16px' : '52px 122px'};
+  margin-top: ${downSm ? '64px' : '44px'};
 
-  backdrop-filter: blur(50px) brightness(130%);
-  border-radius: 12px;
-  box-shadow: 0px 0px 20px rgba(34, 13, 13, 0.42);
-`;
+  backdrop-filter: ${downSm ? 'none' : 'blur(50px) brightness(130%)'};
+  border-radius: ${downSm ? 0 : '12px'};
+  box-shadow: ${downSm ? 'none' : '0px 0px 20px rgba(34, 13, 13, 0.42)'};
+`
+);
 
 const Tutorial: React.FC = () => {
+  const theme = useTheme();
+  const downSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const downMd = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <JudgeStep>
       {(step) => (
-        <Wrapper disableGutters maxWidth="md">
+        <Wrapper disableGutters downMd={downMd} downSm={downSm} maxWidth={downMd ? 'sm' : 'md'}>
           <Stepper activeStep={step} alternativeLabel>
             <Step key={0}>
               <StepLabel />

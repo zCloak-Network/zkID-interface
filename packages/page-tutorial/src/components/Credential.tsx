@@ -1,6 +1,6 @@
 import type { ICredential } from '@kiltprotocol/sdk-js';
 
-import { Box, Button, styled } from '@mui/material';
+import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material';
 import FileSaver from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 
@@ -10,19 +10,21 @@ interface Props {
   credential?: ICredential;
 }
 
-const Wrapper = styled(Box)`
+const Wrapper = styled(Box)<{ downSm?: boolean }>(
+  ({ downSm }) => `
   position: relative;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 476px;
+  max-width: 100%;
   height: 254px;
   padding: 28px;
   margin-bottom: 44px;
 
   background: url('/images/bg_credential.webp') no-repeat;
-  background-size: cover;
+  background-size: ${downSm ? 'contain' : 'cover'};
   background-position: center;
 
   text-align: left;
@@ -39,8 +41,8 @@ const Wrapper = styled(Box)`
 
   > img:nth-of-type(2) {
     position: absolute;
-    left: 170px;
-    bottom: 26px;
+    left: ${downSm ? '153px' : '170px'};
+    bottom: ${downSm ? '34px' : '26px'};
     width: 106px;
     height: 106px;
   }
@@ -50,7 +52,7 @@ const Wrapper = styled(Box)`
   }
 
   .detial-item + .detial-item {
-    margin-top: 14px;
+    margin-top: ${downSm ? '8px' : '14px'};
   }
 
   .detial-item {
@@ -77,7 +79,7 @@ const Wrapper = styled(Box)`
   .name-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: ${downSm ? '12px' : '20px'};
     .value {
       font-size: 22px;
       font-family: Roboto;
@@ -87,11 +89,15 @@ const Wrapper = styled(Box)`
       font-weight: bold;
     }
   }
-`;
+`
+);
 
 const Credential: React.FC<Props> = ({ credential }) => {
   const { nextStep } = useContext(JudgeStepContext);
   const [hasDownload, setHasDownload] = useState(false);
+  const theme = useTheme();
+  const downSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   const name = credential?.request?.claim?.contents?.name as unknown as string;
   const age = credential?.request?.claim?.contents?.age as unknown as string;
   const clazz = credential?.request?.claim?.contents?.class as unknown as number;
@@ -120,7 +126,7 @@ const Credential: React.FC<Props> = ({ credential }) => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper downSm={downSm}>
         <img src={require('./avatar.webp')} />
         <img src={require('./attested.webp')} />
         <div className="detail">
