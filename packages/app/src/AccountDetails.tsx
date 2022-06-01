@@ -19,9 +19,9 @@ const AccountDetails: React.FC<Props> = ({ ChildrenComponent }) => {
 
   return (
     <>
-      <Dialog maxWidth="lg" onClose={toggle} open={open}>
+      <Dialog maxWidth="md" onClose={toggle} open={open}>
         <DialogHeader onClose={toggle}>Account</DialogHeader>
-        <DialogContent sx={{ width: '400px' }}>
+        <DialogContent sx={{ width: '400px', maxWidth: '100%' }}>
           <Stack spacing={1}>
             <Typography>Connect with MetaMask</Typography>
             <Stack alignItems="center" direction="row" spacing={1}>

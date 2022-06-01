@@ -1,4 +1,4 @@
-import { Container, styled } from '@mui/material';
+import { Container, styled, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 
 import { CredentialContext } from '@zkid/react-components';
@@ -17,10 +17,8 @@ const Wrapper = styled(Container)`
   color: #fff;
   text-align: center;
 
-  > h2 {
-    margin-bottom: 12px;
-    font-size: 30px;
-    font-weight: 500;
+  > h3 {
+    margin-bottom: 16px;
   }
 
   > p {
@@ -36,16 +34,18 @@ const Step2: React.FC = () => {
       <Readme />
       {credential && verified ? (
         <>
-          <h2>Describe Yourself</h2>
-          <p>
+          <Typography variant="h3">Describe Yourself</Typography>
+          <Typography variant="inherit">
             We have prepared a gift POAP for you. The POAP style varies by your age, class and
             equipment. To claim it, first describe yourself. Then submit.
-          </p>
+          </Typography>
         </>
       ) : (
         <>
-          <h2>Receive Your Credential</h2>
-          <p>Your data is good. Please download your credential and save it properly.</p>
+          <Typography variant="h3">Receive Your Credential</Typography>
+          <Typography variant="inherit">
+            Your data is good. Please download your credential and save it properly.
+          </Typography>
         </>
       )}
       {credential && verified ? <Credential credential={credential} /> : <Contents />}

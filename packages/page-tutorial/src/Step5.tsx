@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, CircularProgress, Container } from '@mui/material';
+import { Box, CircularProgress, Container, Typography } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,10 +25,8 @@ const Wrapper = styled(Container)`
   color: #fff;
   text-align: center;
 
-  > h2 {
-    margin-bottom: 12px;
-    font-size: 30px;
-    font-weight: 500;
+  > h3 {
+    margin-bottom: 16px;
   }
 
   > p {
@@ -87,8 +85,10 @@ const Step5: React.FC = () => {
 
   return (
     <Wrapper>
-      <h2>Claim Your POAP</h2>
-      <p>Claim your POAP and enjoy your stay in zCloak Kingdom.</p>
+      <Typography variant="h3">Claim Your POAP</Typography>
+      <Typography variant="inherit">
+        Claim your POAP and enjoy your stay in zCloak Kingdom.
+      </Typography>
       {ready ? (
         <>
           <Box

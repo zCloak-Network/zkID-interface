@@ -55,9 +55,9 @@ const WalletModal: React.FC<Props> = ({ onClose, open }) => {
   }, [injected, login, onClose]);
 
   return (
-    <Dialog maxWidth="sm" onClose={onClose} open={open}>
+    <Dialog maxWidth="md" onClose={onClose} open={open}>
       <DialogHeader onClose={onClose}>Connect to a wallet</DialogHeader>
-      <DialogContent sx={{ width: '424px', paddingX: '5px' }}>
+      <DialogContent sx={{ width: '424px', maxWidth: '100%' }}>
         <Metamask onClick={toggleMetamask} />
       </DialogContent>
     </Dialog>

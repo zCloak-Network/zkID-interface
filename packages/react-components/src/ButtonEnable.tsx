@@ -39,7 +39,20 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
           Switch network
         </ButtonWithError>
       ) : (
-        <ButtonWithError {...props} onClick={toggle}>
+        <ButtonWithError
+          {...props}
+          onClick={toggle}
+          sx={{
+            background: 'linear-gradient(221deg, #D7ADF8 0%, #A29CF3 100%, #6C59E0 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.6)',
+            color: '#000',
+            '&:hover': {
+              background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
+              color: '#fff',
+              borderColor: 'transparent'
+            }
+          }}
+        >
           {enableText ?? 'Connect Wallet'}
         </ButtonWithError>
       )}

@@ -29,7 +29,7 @@ const Item = styled(Box)`
 
   > label {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 1.5;
     color: #666;
     margin-bottom: 4px;
   }

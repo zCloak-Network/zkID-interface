@@ -1,4 +1,4 @@
-import { Box, Stack, styled } from '@mui/material';
+import { Box, Stack, styled, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const Logo = styled('div')`
   cursor: pointer;
 
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
 
   > img {
     margin-right: 14px;
@@ -43,29 +43,26 @@ const Logo = styled('div')`
 const Header: React.FC = () => {
   const { account } = useWallet();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const upMd = useMediaQuery(theme.breakpoints.up('md'));
+  const upSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Wrapper>
+    <Wrapper
+      sx={{
+        justifyContent: 'space-between',
+        [theme.breakpoints.up('lg')]: {
+          justifyContent: 'center'
+        }
+      }}
+    >
       <Logo onClick={() => navigate('/')}>
         <img src={require('@zkid/app-config/assets/logo.svg')} />
-        zCloak Network
+        {upMd && 'zCloak Network'}
       </Logo>
       <Stack className="ZkidHeader-right" direction="row" spacing={1}>
-        {!account && (
-          <ButtonEnable
-            sx={{
-              background: 'linear-gradient(221deg, #D7ADF8 0%, #A29CF3 100%, #6C59E0 100%)',
-              border: '1px solid rgba(255, 255, 255, 0.6)',
-              color: '#000',
-              '&:hover': {
-                background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
-                color: '#fff'
-              }
-            }}
-            variant="rounded"
-          ></ButtonEnable>
-        )}
-        <NetworkCell />
+        {!account && <ButtonEnable variant="rounded"></ButtonEnable>}
+        {upSm && <NetworkCell />}
         {account && (
           <>
             <AccountInfo account={account} />
