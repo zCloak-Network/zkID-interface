@@ -11,7 +11,7 @@ import {
   NotificationContext,
   PoapCard
 } from '@zkid/react-components';
-import { zkidApi } from '@zkid/service';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 import { JudgeStepContext } from './JudgeStep';
 

@@ -1,4 +1,4 @@
-import type { ProofProcess } from '@zkid/service/types';
+import type { ProofProcess } from '@zcloak/service/types';
 
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
@@ -10,7 +10,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Address } from '@zkid/react-components';
 import { useEndpoint, useInterval } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/service';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 import { requestHash } from '../JudgeStep';
 

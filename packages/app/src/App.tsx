@@ -1,8 +1,6 @@
 import React from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { useEagerConnect } from '@zcloak/react-wallet';
-
 import Dashboard from '@zkid/page-dashboard';
 import Home from '@zkid/page-home';
 import Tutorial from '@zkid/page-tutorial';
@@ -15,8 +13,6 @@ const NoMatch: React.FC<{ to: string }> = ({ to }) => {
 };
 
 const App: React.FC = () => {
-  useEagerConnect();
-
   return (
     <HashRouter>
       <Routes>

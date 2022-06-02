@@ -1,7 +1,7 @@
 import { UnsupportedChainIdError } from '@web3-react/core';
 import React, { useCallback } from 'react';
 
-import { switchNetwork, useWallet } from '@zcloak/react-wallet';
+import { useWallet } from '@zcloak/react-wallet';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
 import { useToggle } from '@zkid/react-hooks';

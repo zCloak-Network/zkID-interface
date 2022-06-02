@@ -1,4 +1,4 @@
-import type { Endpoint } from './types';
+import { Endpoint } from '@zcloak/react-wallet/types';
 
 export const MOONBASE: Endpoint = {
   chainId: 1287,

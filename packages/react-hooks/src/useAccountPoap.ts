@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { zkidApi } from '@zkid/service';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 export function useAccountPoap(account?: string | null) {
   const [nftId, setNftId] = useState<string>();

@@ -14,12 +14,12 @@ import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
+import { Activity, ActivityType } from '@zcloak/service/types';
 
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Ellipsis } from '@zkid/react-components';
 import { useEndpoint } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/service';
-import { Activity, ActivityType } from '@zkid/service/types';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 const Activities: React.FC = () => {
   const { account } = useWallet();

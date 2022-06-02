@@ -1,4 +1,4 @@
-import type { Proof as ProofType } from '@zkid/service/types';
+import type { Proof as ProofType } from '@zcloak/service/types';
 
 import {
   alpha,
@@ -15,13 +15,13 @@ import {
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
+import { shortenHash } from '@zcloak/contracts-core/utils';
 import { useWallet } from '@zcloak/react-wallet';
-import { shortenHash } from '@zcloak/zkid-core/utils';
+import { ProofStatus } from '@zcloak/service/types';
 
 import { CircularProgressWithLabel, Ellipsis } from '@zkid/react-components';
 import { useToggle } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/service';
-import { ProofStatus } from '@zkid/service/types';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 const Progress: React.FC<{ progress: number; status: ProofStatus }> = ({ progress, status }) => {
   return status === ProofStatus.True ? (

@@ -2,7 +2,6 @@ import { Button, Dialog, DialogContent, styled } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
 
 import { useConnectors } from '@zcloak/react-wallet';
-import useAuth from '@zcloak/react-wallet/useAuth';
 
 import DialogHeader from './DialogHeader';
 

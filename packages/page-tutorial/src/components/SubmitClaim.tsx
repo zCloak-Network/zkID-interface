@@ -11,13 +11,13 @@ import {
 import { LoadingButton } from '@mui/lab';
 import React, { useCallback, useContext, useState } from 'react';
 
-import { assert } from '@zcloak/zkid-core/utils';
+import { assert } from '@zcloak/contracts-core/utils';
+import { AttestationStatus } from '@zcloak/service/types';
 
 import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
 import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
 import { useInterval } from '@zkid/react-hooks';
-import { credentialApi } from '@zkid/service';
-import { AttestationStatus } from '@zkid/service/types';
+import { credentialApi } from '@zkid/react-hooks/api';
 
 type Contents = {
   name?: string;
