@@ -158,7 +158,9 @@ function createWebpack(context, mode = 'production') {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(mode),
-          VERSION: JSON.stringify(pkgJson.version)
+          VERSION: JSON.stringify(pkgJson.version),
+          CREDENTIAL_SERVICE: JSON.stringify(process.env.CREDENTIAL_SERVICE),
+          ZKID_SERVICE: JSON.stringify(process.env.ZKID_SERVICE)
         }
       }),
       new webpack.optimize.SplitChunksPlugin(),
