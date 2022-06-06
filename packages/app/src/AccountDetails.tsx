@@ -1,8 +1,8 @@
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Box, Button, Dialog, DialogContent, Link, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { useWallet } from '@zcloak/react-wallet';
+import { useWallet, WalletConnectWallet } from '@zcloak/react-wallet';
 
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Address, AddressIcon, Copy, DialogHeader } from '@zkid/react-components';
@@ -13,9 +13,15 @@ interface Props {
 }
 
 const AccountDetails: React.FC<Props> = ({ ChildrenComponent }) => {
-  const { account, wallet } = useWallet();
+  const { account, disconnect, wallet } = useWallet();
   const endpoint = useEndpoint();
   const [open, toggle] = useToggle();
+
+  const connectText = useMemo(() => {
+    return wallet instanceof WalletConnectWallet
+      ? 'Connect with WalletConnect'
+      : 'Connect with MetaMask';
+  }, [wallet]);
 
   return (
     <>
@@ -23,9 +29,9 @@ const AccountDetails: React.FC<Props> = ({ ChildrenComponent }) => {
         <DialogHeader onClose={toggle}>Account</DialogHeader>
         <DialogContent sx={{ width: '400px', maxWidth: '100%' }}>
           <Stack spacing={1}>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography>Connect with MetaMask</Typography>
-              <Button onClick={() => wallet?.disconnect()}>Disconnect</Button>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Typography>{connectText}</Typography>
+              <Button onClick={disconnect}>Disconnect</Button>
             </Stack>
             <Stack alignItems="center" direction="row" spacing={1}>
               <Box component={AddressIcon} value={account} />
