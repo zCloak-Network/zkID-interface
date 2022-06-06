@@ -1,4 +1,4 @@
-import { Box, Link, Stack, styled } from '@mui/material';
+import { Box, Link, Stack, styled, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
 
@@ -61,8 +61,10 @@ const ActiveLink: React.FC<React.PropsWithChildren<{ to: string; active: string 
 const Header: React.FC = () => {
   const { account } = useWallet();
   const navigate = useNavigate();
-
   const [param] = useQueryParam<string>('anchor');
+  const theme = useTheme();
+  const upLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const upSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     if (param) {
@@ -76,29 +78,31 @@ const Header: React.FC = () => {
         <Logo onClick={() => navigate('/')}>
           <img src={require('@zkid/app-config/assets/logo-black.svg')} />
         </Logo>
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={4}
-          sx={{
-            '.MuiLink-root': {
-              textUnderlineOffset: 6
-            }
-          }}
-        >
-          <ActiveLink active="dashboard" to="/dashboard?anchor=dashboard">
-            Dashboard
-          </ActiveLink>
-          <ActiveLink active="dashboard-poap" to="/dashboard?anchor=dashboard-poap">
-            POAP
-          </ActiveLink>
-          <ActiveLink active="dashboard-proof" to="/dashboard?anchor=dashboard-proof">
-            Proof
-          </ActiveLink>
-          <ActiveLink active="dashboard-activities" to="/dashboard?anchor=dashboard-activities">
-            Activities
-          </ActiveLink>
-        </Stack>
+        {upLg && (
+          <Stack
+            alignItems="center"
+            direction="row"
+            spacing={4}
+            sx={{
+              '.MuiLink-root': {
+                textUnderlineOffset: 6
+              }
+            }}
+          >
+            <ActiveLink active="dashboard" to="/dashboard?anchor=dashboard">
+              Dashboard
+            </ActiveLink>
+            <ActiveLink active="dashboard-poap" to="/dashboard?anchor=dashboard-poap">
+              POAP
+            </ActiveLink>
+            <ActiveLink active="dashboard-proof" to="/dashboard?anchor=dashboard-proof">
+              Proof
+            </ActiveLink>
+            <ActiveLink active="dashboard-activities" to="/dashboard?anchor=dashboard-activities">
+              Activities
+            </ActiveLink>
+          </Stack>
+        )}
       </Stack>
       <Stack
         className="ZkidHeader-right"
@@ -133,7 +137,7 @@ const Header: React.FC = () => {
             variant="rounded"
           ></ButtonEnable>
         )}
-        <NetworkCell />
+        {upSm && <NetworkCell />}
         {account && (
           <>
             <AccountInfo account={account} />

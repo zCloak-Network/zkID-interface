@@ -1,12 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import LockIcon from '@mui/icons-material/Lock';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React, { useContext, useMemo } from 'react';
 
 import { BalancesContext, PoapCard, Slider } from '@zkid/react-components';
 import { getLow128 } from '@zkid/react-components/PoapCard';
 
 const Poaps: React.FC = () => {
+  const theme = useTheme();
   const { poapId: nftId } = useContext(BalancesContext);
 
   const nftIds = useMemo(() => {
@@ -49,13 +50,51 @@ const Poaps: React.FC = () => {
   return (
     <Box id="dashboard-poap" sx={{ mb: 10 }}>
       <h2>POAP</h2>
-      <Slider dots={true} infinite={true} slidesToScroll={1} slidesToShow={4} speed={500}>
+      <Slider
+        dots={true}
+        infinite={true}
+        responsive={[
+          {
+            breakpoint: theme.breakpoints.values.xl,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: theme.breakpoints.values.lg,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: theme.breakpoints.values.md,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: theme.breakpoints.values.sm,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]}
+        slidesToScroll={1}
+        slidesToShow={4}
+        speed={500}
+      >
         {nftIds.map((_nftId) => (
           <Box
             key={_nftId}
             sx={() => ({
               position: 'relative',
-              filter: BigNumber.from(_nftId).eq(nftId || '0') ? undefined : 'blur(3px)'
+              filter: BigNumber.from(_nftId).eq(nftId || '0') ? undefined : 'blur(3px)',
+              display: 'inline-flex !important',
+              justifyContent: 'center'
             })}
           >
             <PoapCard nftId={_nftId} />

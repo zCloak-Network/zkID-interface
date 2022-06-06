@@ -1,8 +1,8 @@
-import type { ProofProcess } from '@zkid/service/types';
+import type { ProofProcess } from '@zcloak/service/types';
 
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import { Box, Card, CircularProgress, Link } from '@mui/material';
+import { Box, Card, CircularProgress, Link, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
@@ -10,7 +10,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Address } from '@zkid/react-components';
 import { useEndpoint, useInterval } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/service';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 import { requestHash } from '../JudgeStep';
 
@@ -20,6 +20,8 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
   transactionHash
 }) => {
   const endpoint = useEndpoint();
+  const theme = useTheme();
+  const upSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Card
@@ -38,7 +40,7 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
         width: '100%',
         height: '48px',
         marginTop: '36px',
-        paddingX: '48px',
+        paddingX: upSm ? 6 : 3,
         background: 'rgba(255, 255, 255, 0.8)',
         borderRadius: '13px',
         overflow: 'visible',

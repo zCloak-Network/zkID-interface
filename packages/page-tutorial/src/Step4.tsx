@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Button, Container } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { parseEther } from 'ethers/lib/utils';
 import React, { useContext, useState } from 'react';
 
@@ -20,10 +20,8 @@ const Wrapper = styled(Container)`
   color: #fff;
   text-align: center;
 
-  > h2 {
-    margin-bottom: 12px;
-    font-size: 30px;
-    font-weight: 500;
+  > h3 {
+    margin-bottom: 16px;
   }
 
   > p {
@@ -68,20 +66,20 @@ const Step4: React.FC = () => {
 
   return (
     <Wrapper>
-      <h2>
+      <Typography variant="h3">
         {finished
           ? 'Proof Verified'
           : exists && !flag
           ? 'Verifying Your Proof'
           : 'Generate And Upload Proof'}
-      </h2>
-      <p>
+      </Typography>
+      <Typography variant="inherit">
         {finished
           ? ''
           : exists && !flag
           ? 'Just a minute. Our scholars are checking your STARK proof.'
           : 'To claim your POAP, you first need to generate a STARK proof based on your credential in your zCloak ID Wallet then upload it.'}
-      </p>
+      </Typography>
       {balance?.lt(parseEther('0.001')) ? (
         <Faucet />
       ) : (

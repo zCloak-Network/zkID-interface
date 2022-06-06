@@ -4,7 +4,12 @@ import { Alert, AlertTitle, Box, Collapse, Link, Portal, styled } from '@mui/mat
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
-import { CallError, ContractError, OutOfGasError, UserRejectError } from '@zcloak/zkid-core/errors';
+import {
+  CallError,
+  ContractError,
+  OutOfGasError,
+  UserRejectError
+} from '@zcloak/contracts-core/errors';
 
 import { endpoints } from '@zkid/app-config/endpoints';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
@@ -113,7 +118,7 @@ const NotificationProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
       const message: Message = {
         id: id++,
         title: 'Transaction submited',
-        message: 'Wait for confirming',
+        message: 'Confirming...',
         severity: 'success'
       };
 

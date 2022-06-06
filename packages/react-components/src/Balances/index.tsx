@@ -3,10 +3,10 @@ import { parseEther } from 'ethers/lib/utils';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
+import { FaucetStatus } from '@zcloak/service/types';
 
 import { useAccountPoap, useInterval, useNativeBalance } from '@zkid/react-hooks';
-import { credentialApi } from '@zkid/service';
-import { FaucetStatus } from '@zkid/service/types';
+import { credentialApi } from '@zkid/react-hooks/api';
 
 import { NotificationContext } from '../Notification';
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { ZkidExtensionContext } from '@zkid/react-components/ZkidExtension';
@@ -16,10 +16,8 @@ const Wrapper = styled(Container)`
   color: #fff;
   text-align: center;
 
-  > h2 {
-    margin-bottom: 12px;
-    font-size: 30px;
-    font-weight: 500;
+  > h3 {
+    margin-bottom: 16px;
   }
 
   > p {
@@ -56,11 +54,12 @@ const Step3: React.FC = () => {
 
   return (
     <Wrapper>
-      <h2>Import Your Credential</h2>
-      <p>
+      <Typography variant="h3">Import Your Credential</Typography>
+      <Typography variant="inherit">
         Import your credential into your zCloak ID Wallet. To protect your privacy, data in your
         credential never needs to leave your wallet.
-      </p>
+      </Typography>
+
       <img src="/images/pic_import.webp" />
 
       {isClick && isImport ? (

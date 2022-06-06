@@ -1,7 +1,7 @@
-import { UnsupportedChainIdError } from '@web3-react/core';
 import React, { useCallback } from 'react';
 
-import { switchNetwork, useWallet } from '@zcloak/react-wallet';
+import { useWallet } from '@zcloak/react-wallet';
+import { UnsupportedChainIdError } from '@zcloak/react-wallet/errors';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
 import { useToggle } from '@zkid/react-hooks';
@@ -14,10 +14,10 @@ interface Props extends ButtonWithErrorProps {
 }
 
 const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
-  const { active, error } = useWallet();
+  const { active, error, wallet } = useWallet();
   const [open, toggle] = useToggle();
   const onSwitchNetwork = useCallback(() => {
-    switchNetwork(MOONBASE.chainId, {
+    wallet?.switchNetwork(MOONBASE.chainId, {
       chainId: MOONBASE.chainId,
       chainName: MOONBASE.name,
       nativeCurrency: {
@@ -28,7 +28,7 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
       rpcUrls: MOONBASE.rpcs,
       blockExplorerUrls: [MOONBASE.explorer]
     });
-  }, []);
+  }, [wallet]);
 
   return (
     <>
@@ -39,7 +39,20 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
           Switch network
         </ButtonWithError>
       ) : (
-        <ButtonWithError {...props} onClick={toggle}>
+        <ButtonWithError
+          {...props}
+          onClick={toggle}
+          sx={{
+            background: 'linear-gradient(221deg, #D7ADF8 0%, #A29CF3 100%, #6C59E0 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.6)',
+            color: '#000',
+            '&:hover': {
+              background: 'linear-gradient(221deg, #BA60F2 0%, #3434E6 100%, #6C59E0 100%)',
+              color: '#fff',
+              borderColor: 'transparent'
+            }
+          }}
+        >
           {enableText ?? 'Connect Wallet'}
         </ButtonWithError>
       )}

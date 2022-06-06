@@ -1,5 +1,7 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import React, { useContext } from 'react';
+
+import { FaucetStatus } from '@zcloak/service/types';
 
 import {
   Address,
@@ -9,7 +11,6 @@ import {
   FormatBalance
 } from '@zkid/react-components';
 import { useEndpoint } from '@zkid/react-hooks';
-import { FaucetStatus } from '@zkid/service/types';
 
 import AccountDetails from './AccountDetails';
 
@@ -20,6 +21,8 @@ interface Props {
 const AccountInfo: React.FC<Props> = ({ account }) => {
   const { balance, faucetStatus } = useContext(BalancesContext);
   const endpoint = useEndpoint();
+  const theme = useTheme();
+  const upSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Box
@@ -34,21 +37,24 @@ const AccountInfo: React.FC<Props> = ({ account }) => {
         color: '#333'
       }}
     >
-      <Box
-        sx={{
-          padding: '0 10px 0 24px',
-          cursor: 'default'
-        }}
-      >
-        {faucetStatus === FaucetStatus.Fauceting ? (
-          <Stack alignItems="center" direction="row" spacing={1}>
-            <CoinAnimation size="28px" />
-            Getting token
-          </Stack>
-        ) : (
-          <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
-        )}
-      </Box>
+      {upSm && (
+        <Box
+          sx={{
+            padding: '0 10px 0 24px',
+            cursor: 'default',
+            fontSize: '0.9375rem'
+          }}
+        >
+          {faucetStatus === FaucetStatus.Fauceting ? (
+            <Stack alignItems="center" direction="row" spacing={1}>
+              <CoinAnimation size="28px" />
+              Getting token
+            </Stack>
+          ) : (
+            <FormatBalance symbol={endpoint?.currencySymbol} value={balance} />
+          )}
+        </Box>
+      )}
       <AccountDetails
         ChildrenComponent={
           <Button

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 
 import { ZkidExtensionContext } from '@zkid/react-components';
@@ -18,10 +18,8 @@ const Wrapper = styled(Container)`
   color: #fff;
   text-align: center;
 
-  > h2 {
-    margin-bottom: 12px;
-    font-size: 30px;
-    font-weight: 500;
+  > h3 {
+    margin-bottom: 16px;
   }
 
   > p {
@@ -39,11 +37,11 @@ const Step1: React.FC = () => {
 
   return (
     <Wrapper>
-      <h2>Install extension</h2>
-      <p>
+      <Typography variant="h3">Install extension</Typography>
+      <Typography variant="inherit">
         Please install the zCloak ID Wallet to start your ZK adventure. The wallet performs some
         magic tricks — the STARK alchemy—to help you use your data and keep your secrets.
-      </p>
+      </Typography>
       <img src="/images/pic_install.webp" />
       {isInstall && hasPassword ? (
         <Button onClick={nextStep} variant="rounded">

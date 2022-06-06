@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
+import { FaucetStatus } from '@zcloak/service/types';
 
 import { BalancesContext, ButtonEnable } from '@zkid/react-components';
-import { FaucetStatus } from '@zkid/service/types';
 
 const Faucet: React.FC = () => {
   const { account } = useWallet();

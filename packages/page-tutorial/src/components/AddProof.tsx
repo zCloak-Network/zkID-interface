@@ -1,16 +1,16 @@
-import type { Proof } from '@zcloak/zkid-core/types';
+import type { Proof } from '@zkid/extension-core/types';
 
 import { Utils } from '@kiltprotocol/sdk-js';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import { assert } from '@zcloak/contracts-core/utils';
 import { useWallet } from '@zcloak/react-wallet';
-import { assert } from '@zcloak/zkid-core/utils';
 
 import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
 import { ButtonEnable, CredentialContext, NotificationContext } from '@zkid/react-components';
-import { zkidApi } from '@zkid/service';
+import { zkidApi } from '@zkid/react-hooks/api';
 
 import { JudgeStepContext } from '../JudgeStep';
 import { decodeSs58Address, stringToHex } from '../utils';

@@ -3,11 +3,11 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, styled, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import { Proof } from '@zcloak/zkid-core/types';
-import { shortenHash } from '@zcloak/zkid-core/utils';
+import { shortenHash } from '@zcloak/contracts-core/utils';
 
 import { CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
+import { Proof } from '@zkid/extension-core/types';
 import { StayAlert, ZkidExtensionContext, ZkRule } from '@zkid/react-components';
 import { useToggle } from '@zkid/react-hooks';
 
@@ -29,7 +29,7 @@ const Item = styled(Box)`
 
   > label {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 1.5;
     color: #666;
     margin-bottom: 4px;
   }
@@ -103,6 +103,7 @@ const ZkGenerator: React.FC = () => {
               sx={{
                 padding: 0,
                 color: 'inherit',
+                fontSize: '12px',
                 ':hover': {
                   color: palette.primary.main
                 }

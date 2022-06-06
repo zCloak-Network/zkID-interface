@@ -13,17 +13,20 @@ interface Props {
 }
 
 const AccountDetails: React.FC<Props> = ({ ChildrenComponent }) => {
-  const { account } = useWallet();
+  const { account, wallet } = useWallet();
   const endpoint = useEndpoint();
   const [open, toggle] = useToggle();
 
   return (
     <>
-      <Dialog maxWidth="lg" onClose={toggle} open={open}>
+      <Dialog maxWidth="md" onClose={toggle} open={open}>
         <DialogHeader onClose={toggle}>Account</DialogHeader>
-        <DialogContent sx={{ width: '400px' }}>
+        <DialogContent sx={{ width: '400px', maxWidth: '100%' }}>
           <Stack spacing={1}>
-            <Typography>Connect with MetaMask</Typography>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography>Connect with MetaMask</Typography>
+              <Button onClick={() => wallet?.disconnect()}>Disconnect</Button>
+            </Stack>
             <Stack alignItems="center" direction="row" spacing={1}>
               <Box component={AddressIcon} value={account} />
               <Box sx={{ fontSize: '18px' }}>
