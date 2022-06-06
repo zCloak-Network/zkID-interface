@@ -1,16 +1,16 @@
 {
   "author": "zCloak",
-  "bugs": "https://github.com/zCloak-Network/zkID-interface/issues",
+  "bugs": "https://github.com/zCloak/zkID-interface2.0/issues",
   "contributors": [],
   "description": "zCloak extension-core",
-  "homepage": "https://github.com/zCloak-Network/zkID-interface/tree/master/packages/extension-core#readme",
+  "homepage": "https://github.com/zCloak/zkID-interface2.0/tree/master/packages/extension-core#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zkid/extension-core",
   "repository": {
     "directory": "packages/extension-core",
     "type": "git",
-    "url": "https://github.com/zCloak-Network/zkID-interface.git"
+    "url": "https://github.com/zCloak/zkID-interface2.0.git"
   },
   "sideEffects": false,
   "type": "module",
