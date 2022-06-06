@@ -1,4 +1,4 @@
-import { Endpoint } from '@zcloak/react-wallet/types';
+import type { Endpoint } from './types';
 
 export const MOONBASE: Endpoint = {
   chainId: 1287,
@@ -11,6 +11,7 @@ export const MOONBASE: Endpoint = {
 };
 
 export const endpoints: Endpoint[] = [MOONBASE];
+export const supportedChinId: number[] = endpoints.map(({ chainId }) => chainId);
 
 export const KILT_ENDPOINT = 'wss://peregrine.kilt.io/parachain-public-ws/';
 export const KILT_SS58 = 38;

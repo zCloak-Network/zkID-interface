@@ -2050,7 +2050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/address@npm:^5, @ethersproject/address@npm:^5.6.1":
+"@ethersproject/address@npm:^5.6.1":
   version: 5.6.1
   resolution: "@ethersproject/address@npm:5.6.1"
   dependencies:
@@ -2272,7 +2272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/keccak256@npm:5.6.0, @ethersproject/keccak256@npm:^5.0.0-beta.130, @ethersproject/keccak256@npm:^5.6.0":
+"@ethersproject/keccak256@npm:5.6.0, @ethersproject/keccak256@npm:^5.6.0":
   version: 5.6.0
   resolution: "@ethersproject/keccak256@npm:5.6.0"
   dependencies:
@@ -2364,7 +2364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:^5":
+"@ethersproject/providers@npm:^5.6.8":
   version: 5.6.8
   resolution: "@ethersproject/providers@npm:5.6.8"
   dependencies:
@@ -5165,96 +5165,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-react/abstract-connector@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "@web3-react/abstract-connector@npm:6.0.7"
-  dependencies:
-    "@web3-react/types": ^6.0.7
-  checksum: fa8b0ea3586e248da84756979dd5c5f6ddc2d1657a1698de63a6d0e38035c4b122841bd0e6b00f1a6f1825614b22f6552a584cafec3470ca6fbc2e127ab30b2a
-  languageName: node
-  linkType: hard
-
-"@web3-react/core@npm:^6.1.9":
-  version: 6.1.9
-  resolution: "@web3-react/core@npm:6.1.9"
-  dependencies:
-    "@ethersproject/keccak256": ^5.0.0-beta.130
-    "@web3-react/abstract-connector": ^6.0.7
-    "@web3-react/types": ^6.0.7
-    tiny-invariant: ^1.0.6
-    tiny-warning: ^1.0.3
-  peerDependencies:
-    react: ">=16.8"
-  checksum: b7f3ad62812fb0d000c50447f5b22329ce03942cc681cf01038a450872f79252445083a7fb325c7daf2b4de1f6f89e0298a7a54e0cea0b05872c37d64492af8b
-  languageName: node
-  linkType: hard
-
-"@web3-react/core@npm:^8.0.30-beta.0":
-  version: 8.0.30-beta.0
-  resolution: "@web3-react/core@npm:8.0.30-beta.0"
-  dependencies:
-    "@ethersproject/providers": ^5
-    "@web3-react/store": ^8.0.22-beta.0
-    "@web3-react/types": ^8.0.17-beta.0
-    zustand: ^4.0.0-rc.0
-  peerDependencies:
-    react: ">=16.8"
-  dependenciesMeta:
-    "@ethersproject/providers":
-      optional: true
-  checksum: c20366c8f8f37f116a700620b17d11ca477ceb2cd1c929dafabad95457219459d335e0626328c8da791a5af91c080c551be2388792c0843d72a8024f96233c0d
-  languageName: node
-  linkType: hard
-
-"@web3-react/metamask@npm:^8.0.24-beta.0":
-  version: 8.0.24-beta.0
-  resolution: "@web3-react/metamask@npm:8.0.24-beta.0"
-  dependencies:
-    "@metamask/detect-provider": ^1.2.0
-    "@web3-react/types": ^8.0.17-beta.0
-  checksum: 6f92d1ef3a618cee956cf398651fcdf1f85095790918b326bf595916dae590223eabeed8c6d111974869bad3f1031bee2bebea9fbdccb7d37352c582add963f0
-  languageName: node
-  linkType: hard
-
-"@web3-react/store@npm:^8.0.22-beta.0":
-  version: 8.0.22-beta.0
-  resolution: "@web3-react/store@npm:8.0.22-beta.0"
-  dependencies:
-    "@ethersproject/address": ^5
-    "@web3-react/types": ^8.0.17-beta.0
-    zustand: ^4.0.0-rc.0
-  checksum: 779b3b5debeb6f36e738635b4fc9eea9a690d1849d0aa566927e58cbf9e53981e32249ad79fcfaff747de1eb64d20a2102ad6ece7590fa66eb940a12e530cb25
-  languageName: node
-  linkType: hard
-
-"@web3-react/types@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "@web3-react/types@npm:6.0.7"
-  checksum: 29ae264ae4a126e520a64a4b466ea712ee09b934f3fe13b957e09269249ffc882712cf11fff12c1c19dd66e38503075b4adf5e9d5f588ea0dd31bbedf6fa9a42
-  languageName: node
-  linkType: hard
-
-"@web3-react/types@npm:^8.0.17-beta.0":
-  version: 8.0.17-beta.0
-  resolution: "@web3-react/types@npm:8.0.17-beta.0"
-  dependencies:
-    zustand: ^4.0.0-rc.0
-  checksum: e467ba7f2276c1316e61c51426db8d985de1695b92bc2b1dd1527ef8beb1404d2d5759ca038b7ea6803341bdb9db03ba0bb721f3b13ba213a221e2acbac1e03a
-  languageName: node
-  linkType: hard
-
-"@web3-react/walletconnect@npm:^8.0.31-beta.0":
-  version: 8.0.31-beta.0
-  resolution: "@web3-react/walletconnect@npm:8.0.31-beta.0"
-  dependencies:
-    "@web3-react/types": ^8.0.17-beta.0
-    eventemitter3: ^4.0.7
-  peerDependencies:
-    "@walletconnect/ethereum-provider": ^1.7.5
-  checksum: d843a1a8e9e89fb3e0cef9ca2761d8832eb84c2b0e245a99b2cb9668ecc4a625477a5864c6119ee56d5406d5525495c11e9ee44203d71d640104c7e2b008bcda
-  languageName: node
-  linkType: hard
-
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
   resolution: "@webassemblyjs/ast@npm:1.11.1"
@@ -5453,14 +5363,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/contracts-core@npm:^0.0.2-1":
-  version: 0.0.2-1
-  resolution: "@zcloak/contracts-core@npm:0.0.2-1"
+"@zcloak/contracts-core@npm:^0.0.2-3":
+  version: 0.0.2-3
+  resolution: "@zcloak/contracts-core@npm:0.0.2-3"
   dependencies:
-    "@zcloak/web3-query": ^0.0.2-1
-    ethers: ^5.6.7
+    "@zcloak/web3-query": ^0.0.2-3
+    ethers: ^5.6.8
     eventemitter3: ^4.0.7
-  checksum: 8adaa39f057ce8eebfe995303d1b9bb8bdf8453fbe3609da06c9bab4e06a8318e990e0512d7b44e3b03c53a7d3c4debe396cde6d3dd8697451d001f9be5d7e41
+  checksum: 1630380ef0ffb9d30f4b23e49534684d8c6d9d61d4238271b0cdcca376734914bf9886b848c1f69774de2e676e9990c1e381d1811066a5bd4dea110ba6cb426d
   languageName: node
   linkType: hard
 
@@ -5552,42 +5462,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/react-wallet@npm:^0.0.2-1":
-  version: 0.0.2-1
-  resolution: "@zcloak/react-wallet@npm:0.0.2-1"
+"@zcloak/react-wallet@npm:^0.0.2-3":
+  version: 0.0.2-3
+  resolution: "@zcloak/react-wallet@npm:0.0.2-3"
   dependencies:
+    "@ethersproject/providers": ^5.6.8
+    "@metamask/detect-provider": ^1.2.0
     "@walletconnect/ethereum-provider": ^1.7.8
-    "@web3-react/core": ^8.0.30-beta.0
-    "@web3-react/metamask": ^8.0.24-beta.0
-    "@web3-react/store": ^8.0.22-beta.0
-    "@web3-react/types": ^8.0.17-beta.0
-    "@web3-react/walletconnect": ^8.0.31-beta.0
+    eventemitter3: ^4.0.7
   peerDependencies:
     react: "*"
     react-dom: "*"
-  checksum: f6f837eb08efbb313981892ccf6751123bbac3daea624f3e57854736ccc7812d5b9b42eabca6e57679975cb23808d346a4f8be4a5bfa304750c688d2272c4614
+  checksum: adc7fd8efe430a4a32b92d7378ce8bdd7b9d61aaf0b2ee5c7724870f81132a16db97546230a43c12d12af83e6bd439aa19c8a03c5f30f27a26130ff64e81a608
   languageName: node
   linkType: hard
 
-"@zcloak/service@npm:^0.0.2-1":
-  version: 0.0.2-1
-  resolution: "@zcloak/service@npm:0.0.2-1"
-  checksum: d9792d328957c5c546cc371c1708f5513d6fae2021cd78aa529733989484d09a3b19185e5886136c4e6ef0d5a718c1d9801fd294378f2e988955274a720c878e
+"@zcloak/service@npm:^0.0.2-3":
+  version: 0.0.2-3
+  resolution: "@zcloak/service@npm:0.0.2-3"
+  checksum: 3354e4df5d8d99290114310bc47b3c99bb9c1662e2eb6e1c2aa826da5098948ca456c82fa9c4999bbd372e2c61cf69e300e8c6aa38be2e12e1f6d60a33386484
   languageName: node
   linkType: hard
 
-"@zcloak/web3-query@npm:^0.0.2-1":
-  version: 0.0.2-1
-  resolution: "@zcloak/web3-query@npm:0.0.2-1"
+"@zcloak/web3-query@npm:^0.0.2-3":
+  version: 0.0.2-3
+  resolution: "@zcloak/web3-query@npm:0.0.2-3"
   dependencies:
-    ethers: ^5.6.7
-  checksum: fc17782e9d11567b349cdb123615a4e2f3d1b368b8930a561f4819cd687e50d7c784f87f8343c372efd65bfc02d318a754428d0fc6c71e0789a53ea1a8a7b675
+    ethers: ^5.6.8
+  checksum: 4409fcaa1ac09b462bccefde8ed9740777def83b79755fe91309ba05cac8850450ac6327c1f440051b005f9e88820165233aa4f48e96bc918dfbde4b4203b911
   languageName: node
   linkType: hard
 
 "@zkid/app-config@^0.0.0, @zkid/app-config@workspace:packages/app-config":
   version: 0.0.0-use.local
   resolution: "@zkid/app-config@workspace:packages/app-config"
+  dependencies:
+    "@zcloak/react-wallet": ^0.0.2-3
   languageName: unknown
   linkType: soft
 
@@ -5676,8 +5586,7 @@ __metadata:
     "@mui/lab": ^5.0.0-alpha.83
     "@mui/material": ^5.8.1
     "@mui/x-date-pickers": ^5.0.0-alpha.4
-    "@web3-react/core": ^6.1.9
-    "@zcloak/react-wallet": ^0.0.2-1
+    "@zcloak/react-wallet": ^0.0.2-3
     "@zkid/app-config": ^0.0.0
     "@zkid/extension-core": ^0.0.0
     "@zkid/react-hooks": ^0.0.0
@@ -5696,8 +5605,8 @@ __metadata:
   resolution: "@zkid/react-hooks@workspace:packages/react-hooks"
   dependencies:
     "@kiltprotocol/sdk-js": ^0.26.0
-    "@zcloak/service": ^0.0.2-1
-    "@zcloak/web3-query": ^0.0.2-1
+    "@zcloak/service": ^0.0.2-3
+    "@zcloak/web3-query": ^0.0.2-3
     "@zkid/app-config": ^0.0.0
     copy-to-clipboard: ^3.3.1
     ethers: ^5.6.7
@@ -15068,11 +14977,11 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.5
     "@types/react-slick": ^0.23.8
-    "@zcloak/contracts-core": ^0.0.2-1
+    "@zcloak/contracts-core": ^0.0.2-3
     "@zcloak/dev": ^0.1.1
-    "@zcloak/react-wallet": ^0.0.2-1
-    "@zcloak/service": ^0.0.2-1
-    "@zcloak/web3-query": ^0.0.2-1
+    "@zcloak/react-wallet": ^0.0.2-3
+    "@zcloak/service": ^0.0.2-3
+    "@zcloak/web3-query": ^0.0.2-3
     babel-plugin-import: ^1.13.5
     concurrently: ^7.2.1
     devtron: ^1.4.0
@@ -16372,20 +16281,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tiny-invariant@npm:^1.0.6":
-  version: 1.2.0
-  resolution: "tiny-invariant@npm:1.2.0"
-  checksum: e09a718a7c4a499ba592cdac61f015d87427a0867ca07f50c11fd9b623f90cdba18937b515d4a5e4f43dac92370498d7bdaee0d0e7a377a61095e02c4a92eade
-  languageName: node
-  linkType: hard
-
-"tiny-warning@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "tiny-warning@npm:1.0.3"
-  checksum: da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
-  languageName: node
-  linkType: hard
-
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
@@ -16831,15 +16726,6 @@ __metadata:
   dependencies:
     prepend-http: ^2.0.0
   checksum: 1040e357750451173132228036aff1fd04abbd43eac1fb3e4fca7495a078bcb8d33cb765fe71ad7e473d9c94d98fd67adca63bd2716c815a2da066198dd37217
-  languageName: node
-  linkType: hard
-
-"use-sync-external-store@npm:1.1.0":
-  version: 1.1.0
-  resolution: "use-sync-external-store@npm:1.1.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 8993a0b642f91d7fcdbb02b7b3ac984bd3af4769686f38291fe7fcfe73dfb73d6c64d20dfb7e5e7fbf5a6da8f5392d6f8e5b00c243a04975595946e82c02b883
   languageName: node
   linkType: hard
 
@@ -17561,22 +17447,5 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^21.0.0
   checksum: 00d58a2c052937fa044834313f07910fd0a115dec5ee35919e857eeee3736b21a4eafa8264535800ba8bac312991ce785ecb8a51f4d2cc8c4676d865af1cfbde
-  languageName: node
-  linkType: hard
-
-"zustand@npm:^4.0.0-rc.0":
-  version: 4.0.0-rc.1
-  resolution: "zustand@npm:4.0.0-rc.1"
-  dependencies:
-    use-sync-external-store: 1.1.0
-  peerDependencies:
-    immer: ">=9.0"
-    react: ">=16.8"
-  peerDependenciesMeta:
-    immer:
-      optional: true
-    react:
-      optional: true
-  checksum: c88ae96286229b3c463cf7989c860fcde8ec9cf885eb50a0e0eaf9642388d407a854e5e07b9f80676454732bf15e1c7645201cff21fd9feacd5df8bbd62fcd46
   languageName: node
   linkType: hard

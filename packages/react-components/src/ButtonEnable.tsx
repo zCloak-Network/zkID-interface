@@ -1,7 +1,7 @@
-import { UnsupportedChainIdError } from '@web3-react/core';
 import React, { useCallback } from 'react';
 
 import { useWallet } from '@zcloak/react-wallet';
+import { UnsupportedChainIdError } from '@zcloak/react-wallet/errors';
 
 import { MOONBASE } from '@zkid/app-config/endpoints';
 import { useToggle } from '@zkid/react-hooks';
@@ -14,10 +14,10 @@ interface Props extends ButtonWithErrorProps {
 }
 
 const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
-  const { active, error } = useWallet();
+  const { active, error, wallet } = useWallet();
   const [open, toggle] = useToggle();
   const onSwitchNetwork = useCallback(() => {
-    switchNetwork(MOONBASE.chainId, {
+    wallet?.switchNetwork(MOONBASE.chainId, {
       chainId: MOONBASE.chainId,
       chainName: MOONBASE.name,
       nativeCurrency: {
@@ -28,7 +28,7 @@ const ButtonEnable: React.FC<Props> = ({ children, enableText, ...props }) => {
       rpcUrls: MOONBASE.rpcs,
       blockExplorerUrls: [MOONBASE.explorer]
     });
-  }, []);
+  }, [wallet]);
 
   return (
     <>

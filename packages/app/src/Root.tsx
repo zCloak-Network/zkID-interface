@@ -5,7 +5,7 @@ import React from 'react';
 
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
 
-import { endpoints } from '@zkid/app-config/endpoints';
+import { supportedChinId } from '@zkid/app-config/endpoints';
 import {
   BalancesProvider,
   CredentialProvider,
@@ -22,7 +22,7 @@ const Root: React.FC = () => {
       <ThemeProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <NotificationProvider>
-            <WalletProvider endpoints={endpoints}>
+            <WalletProvider supportedChainId={supportedChinId}>
               <BalancesProvider>
                 <ZkidExtensionProvider>
                   <CredentialProvider>

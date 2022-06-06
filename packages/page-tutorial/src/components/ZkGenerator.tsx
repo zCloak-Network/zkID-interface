@@ -103,6 +103,7 @@ const ZkGenerator: React.FC = () => {
               sx={{
                 padding: 0,
                 color: 'inherit',
+                fontSize: '12px',
                 ':hover': {
                   color: palette.primary.main
                 }
