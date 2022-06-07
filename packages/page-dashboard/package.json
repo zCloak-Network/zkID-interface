@@ -1,16 +1,16 @@
 {
   "author": "zCloak",
-  "bugs": "https://github.com/zCloak-Network/zkID-interface2.0/issues",
+  "bugs": "https://github.com/zCloak-Network/zkID-interface/issues",
   "contributors": [],
   "description": "zkID page-dashboard",
-  "homepage": "https://github.com/zCloak-Network/zkID-interface2.0/tree/master/packages/page-dashboard#readme",
+  "homepage": "https://github.com/zCloak-Network/zkID-interface/tree/master/packages/page-dashboard#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zkid/page-dashboard",
   "repository": {
     "directory": "packages/page-dashboard",
     "type": "git",
-    "url": "https://github.com/zCloak-Network/zkID-interface2.0.git"
+    "url": "https://github.com/zCloak-Network/zkID-interface.git"
   },
   "sideEffects": false,
   "type": "module",
