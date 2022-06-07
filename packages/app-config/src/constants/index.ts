@@ -1,5 +1,5 @@
 export const zkIDEXTENSION =
-  'https://chrome.google.com/webstore/detail/zkid/hkdbehojhcibpbcdpjphajfbgigldjkh?hl=zh-CN&authuser=0';
+  'https://chrome.google.com/webstore/detail/zcloak-id-wallet/hkdbehojhcibpbcdpjphajfbgigldjkh';
 
 export const CTYPE = {
   $schema: 'http://kilt-protocol.org/draft-01/ctype#',
