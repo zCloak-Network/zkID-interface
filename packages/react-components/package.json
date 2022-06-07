@@ -30,7 +30,7 @@
     "@zkid/extension-core": "^0.0.0",
     "@zkid/react-hooks": "^0.0.0",
     "ace-builds": "^1.5.1",
-    "ethers": "^5.6.7",
+    "ethers": "^5.6.8",
     "lottie-web": "^5.9.4",
     "react-ace": "^10.1.0",
     "react-slick": "^0.29.0",
