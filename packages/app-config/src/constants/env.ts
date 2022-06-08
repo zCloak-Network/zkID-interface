@@ -3,6 +3,6 @@ export const env: {
   ZKID_SERVICE: string;
 } = {
   CREDENTIAL_SERVICE:
-    (window?.zkidEnv?.CREDENTIAL_SERVICE as string) || 'https://credential-service.zcloak.network',
-  ZKID_SERVICE: (window?.zkidEnv?.ZKID_SERVICE as string) || 'https://zkid-service.zcloak.network'
+    (window?.zkidEnv?.CREDENTIAL_SERVICE as string) || 'https://credential-service.zkid.app',
+  ZKID_SERVICE: (window?.zkidEnv?.ZKID_SERVICE as string) || 'https://zkid-service.zkid.app'
 };
