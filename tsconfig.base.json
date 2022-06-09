@@ -6,16 +6,12 @@
     "composite": false,
     "jsx": "react",
     "paths": {
-      "@zcloak/react-wallet": ["react-wallet/src"],
-      "@zcloak/react-wallet/*": ["react-wallet/src/*"],
-      "@zcloak/zkid-core": ["zkid-core/src"],
-      "@zcloak/zkid-core/*": ["zkid-core/src/*"],
-      "@zcloak/web3-query": ["web3-query/src"],
-      "@zcloak/web3-query/*": ["web3-query/src/*"],
       "@zkid/app": ["app/src"],
       "@zkid/app/*": ["app/src/*"],
       "@zkid/app-config": ["app-config/src"],
       "@zkid/app-config/*": ["app-config/src/*"],
+      "@zkid/extension-core": ["extension-core/src"],
+      "@zkid/extension-core/*": ["extension-core/src/*"],
       "@zkid/react-components": ["react-components/src"],
       "@zkid/react-components/*": ["react-components/src/*"],
       "@zkid/react-hooks": ["react-hooks/src"],
@@ -25,9 +21,7 @@
       "@zkid/page-home": ["page-home/src"],
       "@zkid/page-home/*": ["page-home/src/*"],
       "@zkid/page-tutorial": ["page-tutorial/src"],
-      "@zkid/page-tutorial/*": ["page-tutorial/src/*"],
-      "@zkid/service": ["service/src"],
-      "@zkid/service/*": ["service/src/*"],
+      "@zkid/page-tutorial/*": ["page-tutorial/src/*"]
     },
     "skipLibCheck": true
   }

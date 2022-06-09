@@ -7,14 +7,14 @@ import { Web3Query } from '@zcloak/web3-query';
 
 export const useNativeBalances = (
   accounts?: string[] | null,
-  provider?: Provider
+  _provider?: Provider
 ): BigNumber[] | undefined => {
-  const { library } = useWallet();
+  const { provider } = useWallet();
   const [balances, setBalances] = useState<BigNumber[]>();
 
-  const _provider = useMemo(() => provider || library, [library, provider]);
+  const theProvider = useMemo(() => provider || _provider, [provider, _provider]);
 
-  const web3Query = useMemo(() => (_provider ? new Web3Query(_provider) : null), [_provider]);
+  const web3Query = useMemo(() => (theProvider ? new Web3Query(theProvider) : null), [theProvider]);
 
   useEffect(() => {
     let unsub: (() => void) | undefined;

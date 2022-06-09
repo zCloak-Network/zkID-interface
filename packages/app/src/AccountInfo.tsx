@@ -1,6 +1,8 @@
 import { Box, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import React, { useContext } from 'react';
 
+import { FaucetStatus } from '@zcloak/service/types';
+
 import {
   Address,
   AddressIcon,
@@ -9,7 +11,6 @@ import {
   FormatBalance
 } from '@zkid/react-components';
 import { useEndpoint } from '@zkid/react-hooks';
-import { FaucetStatus } from '@zkid/service/types';
 
 import AccountDetails from './AccountDetails';
 

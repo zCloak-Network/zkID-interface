@@ -1,8 +1,9 @@
 import { Button, Dialog, DialogContent, styled } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
 
-import { useConnectors } from '@zcloak/react-wallet';
-import useAuth from '@zcloak/react-wallet/useAuth';
+import { AbstractWallet, MetaMaskWallet, useWallet } from '@zcloak/react-wallet';
+
+import { metaMaskWallet, walletConnectWallet } from '@zkid/app-config/wallets';
 
 import DialogHeader from './DialogHeader';
 
@@ -21,13 +22,21 @@ const Cell = styled(Button)`
   }
 `;
 
-const Metamask: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  const isInstall = useMemo(() => typeof window.ethereum !== 'undefined', []);
+const WalletCell: React.FC<{ wallet: AbstractWallet; onClose?: () => void }> = ({
+  onClose,
+  wallet
+}) => {
+  const { connect } = useWallet();
 
-  return isInstall ? (
+  const handleConnect = useCallback(() => {
+    connect(wallet);
+    onClose?.();
+  }, [connect, onClose, wallet]);
+
+  return wallet instanceof MetaMaskWallet ? (
     <Cell
       fullWidth
-      onClick={onClick}
+      onClick={handleConnect}
       size="large"
       startIcon={<img src={require('@zkid/app-config/assets/metamask.svg')} />}
     >
@@ -36,29 +45,27 @@ const Metamask: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   ) : (
     <Cell
       fullWidth
-      onClick={() => window.open('https://metamask.io/')}
+      onClick={handleConnect}
       size="large"
-      startIcon={<img src={require('@zkid/app-config/assets/metamask.svg')} />}
+      startIcon={<img src={require('@zkid/app-config/assets/walletconnect.svg')} />}
     >
-      MetaMask not install, click to install
+      WalletConnect
     </Cell>
   );
 };
 
 const WalletModal: React.FC<Props> = ({ onClose, open }) => {
-  const { login } = useAuth();
-  const { injected } = useConnectors();
-
-  const toggleMetamask = useCallback(() => {
-    login(injected);
-    onClose?.();
-  }, [injected, login, onClose]);
+  const hasEthereum = useMemo(() => typeof window.ethereum !== 'undefined', []);
 
   return (
     <Dialog maxWidth="md" onClose={onClose} open={open}>
       <DialogHeader onClose={onClose}>Connect to a wallet</DialogHeader>
       <DialogContent sx={{ width: '424px', maxWidth: '100%' }}>
-        <Metamask onClick={toggleMetamask} />
+        {(hasEthereum ? [metaMaskWallet, walletConnectWallet] : [walletConnectWallet]).map(
+          (wallet, index) => (
+            <WalletCell key={index} onClose={onClose} wallet={wallet} />
+          )
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -4,7 +4,12 @@ import { Alert, AlertTitle, Box, Collapse, Link, Portal, styled } from '@mui/mat
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
-import { CallError, ContractError, OutOfGasError, UserRejectError } from '@zcloak/zkid-core/errors';
+import {
+  CallError,
+  ContractError,
+  OutOfGasError,
+  UserRejectError
+} from '@zcloak/contracts-core/errors';
 
 import { endpoints } from '@zkid/app-config/endpoints';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';

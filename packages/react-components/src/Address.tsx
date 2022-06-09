@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { shortenAddress } from '@zcloak/zkid-core/utils';
+import { shortenAddress } from '@zcloak/contracts-core/utils';
 
 interface Props {
   value?: string | null;

@@ -9,9 +9,9 @@ import React, {
   useState
 } from 'react';
 
+import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/contracts-core';
+import { getRequestHash } from '@zcloak/contracts-core/utils';
 import { useWallet } from '@zcloak/react-wallet';
-import { KiltProofs, Poap, SimpleAggregator } from '@zcloak/zkid-core';
-import { getRequestHash } from '@zcloak/zkid-core/utils';
 
 import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import {
@@ -47,7 +47,7 @@ export const requestHash = getRequestHash({
 export const JudgeStepContext = createContext<JudgeStepState>({} as JudgeStepState);
 
 const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ children }) => {
-  const { account, library } = useWallet();
+  const { account, provider } = useWallet();
   const { credential, ready, reset } = useContext(CredentialContext);
   const [step, setStep] = useState(0);
   const [exists, setExists, existsInitial] = useIsInitialState<boolean>(false);
@@ -58,18 +58,18 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
   const prevStep = useCallback(() => setStep(step - 1), [step]);
 
   const kiltProofs = useMemo(
-    () => (library ? new KiltProofs(KiltProofsAdddress, library, account) : null),
-    [account, library]
+    () => (provider ? new KiltProofs(KiltProofsAdddress, provider, account) : null),
+    [account, provider]
   );
 
   const poap = useMemo(
-    () => (library ? new Poap(PoapAdddress, library, account) : null),
-    [account, library]
+    () => (provider ? new Poap(PoapAdddress, provider, account) : null),
+    [account, provider]
   );
 
   const simpleAggregator = useMemo(
-    () => (library ? new SimpleAggregator(SimpleAggregatorAddress, library, account) : null),
-    [account, library]
+    () => (provider ? new SimpleAggregator(SimpleAggregatorAddress, provider, account) : null),
+    [account, provider]
   );
 
   useEffect(() => {

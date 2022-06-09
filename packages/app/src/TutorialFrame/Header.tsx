@@ -41,7 +41,7 @@ const Logo = styled('div')`
 `;
 
 const Header: React.FC = () => {
-  const { account } = useWallet();
+  const { account, active } = useWallet();
   const navigate = useNavigate();
   const theme = useTheme();
   const upMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
         {upMd && 'zCloak Network'}
       </Logo>
       <Stack className="ZkidHeader-right" direction="row" spacing={1}>
-        {!account && <ButtonEnable variant="rounded"></ButtonEnable>}
+        {!active && <ButtonEnable variant="rounded"></ButtonEnable>}
         {upSm && <NetworkCell />}
         {account && (
           <>

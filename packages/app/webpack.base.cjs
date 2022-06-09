@@ -124,10 +124,10 @@ function createWebpack(context, mode = 'production') {
           ...mapChunks('ethers', [/node_modules\/(ethers|@ethersproject)/]),
           ...mapChunks('zkid', [
             /* 00 */ /packages\/(app|app-config)/,
-            /* 01 */ /packages\/(react-components|react-hooks|service)/,
+            /* 01 */ /packages\/(react-components|react-hooks|extension-core)/,
             /* 02 */ /packages\/(page-dashboard|page-home|page-tutorial)/
           ]),
-          ...mapChunks('zcloak', [/packages\/(react-wallet|web3-query|zkid-core)/]),
+          ...mapChunks('zcloak', [/packages\/(react-wallet|web3-query|contracts-core|service)/]),
           ...mapChunks('other', [
             /* 00 */ /node_modules\/(@babel|ansi-styles|asn1|browserify|buffer|history|html-parse|inherit|lodash|object|path-|parse-asn1|pbkdf2|process|public-encrypt|query-string|readable-stream|regenerator-runtime|repeat|rtcpeerconnection-shim|safe-buffer|stream-browserify|store|tslib|unified|unist-util|util|vfile|vm-browserify|webrtc-adapter|whatwg-fetch)/,
             /* 01 */ /node_modules\/(attr|brorand|camelcase|core|chalk|color|create|cuint|decode-uri|deep-equal|define-properties|detect-browser|es|event|evp|ext|function-bind|has-symbols|ieee754|ip|is|lru|markdown|minimalistic-|moment|next-tick|node-libs-browser|random|regexp|resolve|rxjs|scheduler|sdp|setimmediate|timers-browserify|trough)/,
@@ -158,7 +158,9 @@ function createWebpack(context, mode = 'production') {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(mode),
-          VERSION: JSON.stringify(pkgJson.version)
+          VERSION: JSON.stringify(pkgJson.version),
+          CREDENTIAL_SERVICE: JSON.stringify(process.env.CREDENTIAL_SERVICE),
+          ZKID_SERVICE: JSON.stringify(process.env.ZKID_SERVICE)
         }
       }),
       new webpack.optimize.SplitChunksPlugin(),

@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-import { ZkidExtension } from '@zcloak/zkid-core';
-
 import { CTYPE_HASH } from '@zkid/app-config/constants';
+import { ZkidExtension } from '@zkid/extension-core';
 
 interface ZkidExtensionState {
   isReady: boolean;
