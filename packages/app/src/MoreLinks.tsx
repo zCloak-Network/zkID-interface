@@ -30,7 +30,7 @@ const MoreLinks: React.FC = () => {
       </IconButton>
       <Menu {...bindMenu(popupState)}>
         <MenuItem onClick={() => handleItemClick('https://zcloak.network')}>About</MenuItem>
-        <MenuItem onClick={() => handleItemClick('https://discord.gg/3bzTAXS9Ys')}>
+        <MenuItem onClick={() => handleItemClick('https://discord.gg/j3mATwNVSH')}>
           Discord
         </MenuItem>
         <MenuItem onClick={() => handleItemClick('https://twitter.com/zcloaknetwork')}>

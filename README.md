@@ -6,7 +6,7 @@ Website: [zcloak.network](https://zcloak.network)
 
 App: [zkid.app](https://zkid.app)
 
-Discord: [zCloak](https://discord.gg/3bzTAXS9Ys)
+Discord: [zCloak](https://discord.gg/j3mATwNVSH)
 
 Twitter: [@zCloakNetwork](https://twitter.com/zcloaknetwork)
 
