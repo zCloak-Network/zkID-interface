@@ -5056,14 +5056,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/contracts-core@npm:^0.0.2-4":
-  version: 0.0.2-4
-  resolution: "@zcloak/contracts-core@npm:0.0.2-4"
+"@zcloak/contracts-core@npm:^0.0.2-7":
+  version: 0.0.2-7
+  resolution: "@zcloak/contracts-core@npm:0.0.2-7"
   dependencies:
-    "@zcloak/web3-query": ^0.0.2-4
+    "@zcloak/web3-query": ^0.0.2-7
     ethers: ^5.6.8
     eventemitter3: ^4.0.7
-  checksum: 95b194d5483a9ac51e8d82605a22249d38a1cb574ec4a84b4c2959045b82cc3d6bf26c80d73ad3e073bb741c30bcfc0a0d9ff3ce22b62c3f40440c7c17b14957
+  checksum: 0419e730f987409253c11d49ace83410705ab139318069ae4d9a14075e53dc4e18161a2958f6362c03fdc9b2e677e63491bdcb998fa2be694b6e6660a450fc2c
   languageName: node
   linkType: hard
 
@@ -5155,10 +5155,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/react-wallet@npm:^0.0.2-4":
-  version: 0.0.2-4
-  resolution: "@zcloak/react-wallet@npm:0.0.2-4"
+"@zcloak/react-wallet@npm:^0.0.2-7":
+  version: 0.0.2-7
+  resolution: "@zcloak/react-wallet@npm:0.0.2-7"
   dependencies:
+    "@ethersproject/address": ^5.6.1
     "@ethersproject/providers": ^5.6.8
     "@metamask/detect-provider": ^1.2.0
     "@walletconnect/ethereum-provider": ^1.7.8
@@ -5166,23 +5167,23 @@ __metadata:
   peerDependencies:
     react: "*"
     react-dom: "*"
-  checksum: 3e6fccf55b080c2bc3afc3ccce6bf7074a0bc4275853536c25875c5e66c593a6923a7f1369c4200cd69a1318865221745381793a67af97d10c1e4f84860bda70
+  checksum: df9d17e20f3408f61c14b47558d09a0b1ec20a66922c5ed5b4cc43f1fdb09102369e6d2f7352b0ecf929189f94ca708f8d762d7d24e0cc2a46c135a21261dcb4
   languageName: node
   linkType: hard
 
-"@zcloak/service@npm:^0.0.2-4":
-  version: 0.0.2-4
-  resolution: "@zcloak/service@npm:0.0.2-4"
-  checksum: 286edbf0d54d8a34ba201451dcb13830dc339d90f8313af8e53156ce392355c33604ce977e109045e9a5ce1509fd6679df51b99b3dbe4567c922f62b4f0ff460
+"@zcloak/service@npm:^0.0.2-7":
+  version: 0.0.2-7
+  resolution: "@zcloak/service@npm:0.0.2-7"
+  checksum: 59548a6f65e975e8b09660afba88dbd241da836e6483a252342bfc1b8aa96669bab80a1d64014b49f0eefba94cdf0c80a2d6a2c5ef16731e97f3847d08b7d1ad
   languageName: node
   linkType: hard
 
-"@zcloak/web3-query@npm:^0.0.2-4":
-  version: 0.0.2-4
-  resolution: "@zcloak/web3-query@npm:0.0.2-4"
+"@zcloak/web3-query@npm:^0.0.2-7":
+  version: 0.0.2-7
+  resolution: "@zcloak/web3-query@npm:0.0.2-7"
   dependencies:
     ethers: ^5.6.8
-  checksum: c0960baf5a9ae73424cf4f12c55c80d38053210d54a73a74dfb52ceb7579ead30b6b595bdf440aefd3d195390e777d57a97b0936c28468a7a837f0f320f67ae5
+  checksum: 5baa33047b664ad87608787763e079d10494adc90497691943c50f9575b68752b1a09f3dd5d57e5d2d017d2c9bd942b307aed5cfe71d2a639d96459273952c38
   languageName: node
   linkType: hard
 
@@ -5190,7 +5191,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zkid/app-config@workspace:packages/app-config"
   dependencies:
-    "@zcloak/react-wallet": ^0.0.2-4
+    "@zcloak/react-wallet": ^0.0.2-7
   languageName: unknown
   linkType: soft
 
@@ -5279,7 +5280,7 @@ __metadata:
     "@mui/lab": ^5.0.0-alpha.83
     "@mui/material": ^5.8.1
     "@mui/x-date-pickers": ^5.0.0-alpha.4
-    "@zcloak/react-wallet": ^0.0.2-4
+    "@zcloak/react-wallet": ^0.0.2-7
     "@zkid/app-config": ^0.0.0
     "@zkid/extension-core": ^0.0.0
     "@zkid/react-hooks": ^0.0.0
@@ -5298,8 +5299,8 @@ __metadata:
   resolution: "@zkid/react-hooks@workspace:packages/react-hooks"
   dependencies:
     "@kiltprotocol/sdk-js": ^0.26.0
-    "@zcloak/service": ^0.0.2-4
-    "@zcloak/web3-query": ^0.0.2-4
+    "@zcloak/service": ^0.0.2-7
+    "@zcloak/web3-query": ^0.0.2-7
     "@zkid/app-config": ^0.0.0
     copy-to-clipboard: ^3.3.1
     ethers: ^5.6.8
@@ -14670,11 +14671,11 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.5
     "@types/react-slick": ^0.23.8
-    "@zcloak/contracts-core": ^0.0.2-4
+    "@zcloak/contracts-core": ^0.0.2-7
     "@zcloak/dev": ^0.1.1
-    "@zcloak/react-wallet": ^0.0.2-4
-    "@zcloak/service": ^0.0.2-4
-    "@zcloak/web3-query": ^0.0.2-4
+    "@zcloak/react-wallet": ^0.0.2-7
+    "@zcloak/service": ^0.0.2-7
+    "@zcloak/web3-query": ^0.0.2-7
     babel-plugin-import: ^1.13.5
     concurrently: ^7.2.1
     devtron: ^1.4.0
