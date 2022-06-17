@@ -2,7 +2,7 @@ name: GitHub Actions
 on: [push]
 jobs:
   dev-deploy:
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/grecaptcha'
     runs-on: ubuntu-latest
     strategy:
       matrix:

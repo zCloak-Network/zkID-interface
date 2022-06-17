@@ -16,6 +16,7 @@ import { AttestationStatus } from '@zcloak/service/types';
 
 import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
 import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
+import Recaptcha from '@zkid/react-components/Recaptcha';
 import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/react-hooks/api';
 
@@ -55,6 +56,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
   const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState<string>('');
 
   const listenAttestationStatus = useCallback(() => {
     if (
@@ -140,8 +142,9 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         ciphertext: encryptedPresentationMessage.ciphertext,
         nonce: encryptedPresentationMessage.nonce,
         senderKeyId: encryptedPresentationMessage.senderKeyId,
-        receiverKeyId: encryptedPresentationMessage.receiverKeyId
-      });
+        receiverKeyId: encryptedPresentationMessage.receiverKeyId,
+        reCaptchaToken: token
+      } as any);
 
       if (data.code === 200) {
         setAttestationStatus(AttestationStatus.attesting);
@@ -151,10 +154,11 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
     } finally {
       setLoading(false);
     }
-  }, [claimerLightDid, contents, keystore, reportError, setCredential]);
+  }, [claimerLightDid, contents, keystore, reportError, setCredential, token]);
 
   return (
     <>
+      <Recaptcha onCallback={setToken} />
       <StayAlert
         message="We are checking your documents. The attestation takes around 30s."
         open={loading || attestationStatus === AttestationStatus.attesting}
