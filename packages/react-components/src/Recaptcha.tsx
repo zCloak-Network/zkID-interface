@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 import { env } from '@zkid/app-config/constants/env';
@@ -38,7 +39,7 @@ const Recaptcha: React.FunctionComponent<Props> = ({ onCallback }) => {
     document.body.appendChild(script);
   }, [onCallback]);
 
-  return <div ref={container} />;
+  return <Box ref={container} sx={{ display: 'flex', justifyContent: 'center' }} />;
 };
 
 export default React.memo(Recaptcha);

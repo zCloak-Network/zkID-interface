@@ -56,7 +56,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
   const { notifyError } = useContext(NotificationContext);
   const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<string>();
 
   const listenAttestationStatus = useCallback(() => {
     if (
@@ -148,6 +148,8 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
 
       if (data.code === 200) {
         setAttestationStatus(AttestationStatus.attesting);
+      } else {
+        throw new Error((data as any)?.message || 'Server error');
       }
     } catch (error) {
       reportError(error as Error);
@@ -165,6 +167,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         severity="warning"
       />
       <LoadingButton
+        disabled={!token}
         loading={loading || attestationStatus === AttestationStatus.attesting}
         onClick={handleClick}
         variant="rounded"
