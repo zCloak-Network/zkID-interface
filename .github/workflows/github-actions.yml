@@ -12,12 +12,12 @@ jobs:
       - run: echo "🎉 ${{ github.repository }}, ${{ github.ref }}, ${{ github.event_name }} , ${{ runner.os }}, "
       - uses: actions/checkout@v2
         with:
-          ref: dev
+          ref: grecaptcha
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      - run: CREDENTIAL_SERVICE=https://credential-service.starks.network ZKID_SERVICE=https://zkid-service.starks.network yarn build
+      - run: RECAPTCHA_KEY=6LdmRHogAAAAAF9YN6bMc6hNExitqRJog3-wDkH- CREDENTIAL_SERVICE=https://credential-service.starks.network ZKID_SERVICE=https://zkid-service.starks.network yarn build
       - uses: appleboy/scp-action@master
         with:
           username: ubuntu
