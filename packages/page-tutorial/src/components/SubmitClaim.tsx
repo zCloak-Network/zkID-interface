@@ -143,7 +143,6 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
 
       if (data.code === 200) {
         setAttestationStatus(AttestationStatusV2.submiting);
-        setAttestationStatus(AttestationStatus.attesting);
       } else {
         throw new Error((data as any)?.message || 'Server error');
       }
@@ -152,7 +151,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
     } finally {
       setLoading(false);
     }
-  }, [claimerLightDid, contents, keystore, reportError, setCredential, token]);
+  }, [claimerLightDid, contents, keystore, reportError, setCredential, setRootHash, token]);
 
   return (
     <>
