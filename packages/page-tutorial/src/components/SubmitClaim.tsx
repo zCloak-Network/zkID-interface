@@ -16,6 +16,7 @@ import { AttestationStatusV2 } from '@zcloak/service/types';
 
 import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
 import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
+import Recaptcha from '@zkid/react-components/Recaptcha';
 import { useInterval } from '@zkid/react-hooks';
 import { credentialApi } from '@zkid/react-hooks/api';
 
@@ -57,6 +58,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
   const [loading, setLoading] = useState(false);
   const [rootHash, setRootHash] = useState<string>();
   const [position, setPosition] = useState<number>();
+  const [token, setToken] = useState<string>();
 
   const listenAttestationStatus = useCallback(() => {
     if ((attestationStatus === AttestationStatusV2.submiting || !attestationStatus) && rootHash) {
@@ -135,27 +137,33 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         ciphertext: encryptedPresentationMessage.ciphertext,
         nonce: encryptedPresentationMessage.nonce,
         senderKeyId: encryptedPresentationMessage.senderKeyId,
-        receiverKeyId: encryptedPresentationMessage.receiverKeyId
-      });
+        receiverKeyId: encryptedPresentationMessage.receiverKeyId,
+        reCaptchaToken: token
+      } as any);
 
       if (data.code === 200) {
         setAttestationStatus(AttestationStatusV2.submiting);
+        setAttestationStatus(AttestationStatus.attesting);
+      } else {
+        throw new Error((data as any)?.message || 'Server error');
       }
     } catch (error) {
       reportError(error as Error);
     } finally {
       setLoading(false);
     }
-  }, [claimerLightDid, contents, keystore, reportError, setCredential]);
+  }, [claimerLightDid, contents, keystore, reportError, setCredential, token]);
 
   return (
     <>
+      <Recaptcha onCallback={setToken} />
       <StayAlert
         message={`We are checking your documents. The attestation in queued ${position}`}
         open={loading || attestationStatus === AttestationStatusV2.submiting}
         severity="warning"
       />
       <LoadingButton
+        disabled={!token}
         loading={loading || attestationStatus === AttestationStatusV2.submiting}
         onClick={handleClick}
         variant="rounded"
