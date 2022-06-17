@@ -5171,10 +5171,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/service@npm:^0.0.2-7":
-  version: 0.0.2-7
-  resolution: "@zcloak/service@npm:0.0.2-7"
-  checksum: 59548a6f65e975e8b09660afba88dbd241da836e6483a252342bfc1b8aa96669bab80a1d64014b49f0eefba94cdf0c80a2d6a2c5ef16731e97f3847d08b7d1ad
+"@zcloak/service@npm:^0.0.2-18":
+  version: 0.0.2-18
+  resolution: "@zcloak/service@npm:0.0.2-18"
+  checksum: 252b4331fdc202d56a59f69e276670e12ff3195768e77b1adab81a9ea297130a04a8f9b44a6a70649c82e4f35b33281961e939ff80f94c7f14de87e9496a4304
   languageName: node
   linkType: hard
 
@@ -5299,7 +5299,7 @@ __metadata:
   resolution: "@zkid/react-hooks@workspace:packages/react-hooks"
   dependencies:
     "@kiltprotocol/sdk-js": ^0.26.0
-    "@zcloak/service": ^0.0.2-7
+    "@zcloak/service": ^0.0.2-18
     "@zcloak/web3-query": ^0.0.2-7
     "@zkid/app-config": ^0.0.0
     copy-to-clipboard: ^3.3.1
@@ -14674,7 +14674,7 @@ __metadata:
     "@zcloak/contracts-core": ^0.0.2-7
     "@zcloak/dev": ^0.1.1
     "@zcloak/react-wallet": ^0.0.2-7
-    "@zcloak/service": ^0.0.2-7
+    "@zcloak/service": ^0.0.2-18
     "@zcloak/web3-query": ^0.0.2-7
     babel-plugin-import: ^1.13.5
     concurrently: ^7.2.1

@@ -12,7 +12,7 @@ import { LoadingButton } from '@mui/lab';
 import React, { useCallback, useContext, useState } from 'react';
 
 import { assert } from '@zcloak/contracts-core/utils';
-import { AttestationStatus } from '@zcloak/service/types';
+import { AttestationStatusV2 } from '@zcloak/service/types';
 
 import { ATTESTER_ASSEMBLE_KEY_ID, ATTESTER_DID, CTYPE } from '@zkid/app-config/constants';
 import { CredentialContext, NotificationContext, StayAlert } from '@zkid/react-components';
@@ -53,32 +53,25 @@ function checkContents(contents?: Contents | null): {
 const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
   const { claimerLightDid, keystore, setCredential } = useContext(CredentialContext);
   const { notifyError } = useContext(NotificationContext);
-  const [attestationStatus, setAttestationStatus] = useState<AttestationStatus>();
+  const [attestationStatus, setAttestationStatus] = useState<AttestationStatusV2>();
   const [loading, setLoading] = useState(false);
+  const [rootHash, setRootHash] = useState<string>();
+  const [position, setPosition] = useState<number>();
 
   const listenAttestationStatus = useCallback(() => {
-    if (
-      claimerLightDid &&
-      claimerLightDid.encryptionKey &&
-      (attestationStatus === AttestationStatus.attesting || !attestationStatus)
-    ) {
-      const senderKeyId = `${claimerLightDid.did}#${claimerLightDid.encryptionKey.id}`;
+    if ((attestationStatus === AttestationStatusV2.submiting || !attestationStatus) && rootHash) {
+      credentialApi.getAttestationStatusV2(rootHash).then(({ data: { position, status } }) => {
+        if (status === AttestationStatusV2.attestedFailed) {
+          notifyError(new Error('Attestation failed, please resubmit.'));
+        }
 
-      credentialApi
-        .getAttestationStatus({
-          senderKeyId
-        })
-        .then(({ data: { attestationStatus } }) => {
-          if (attestationStatus === AttestationStatus.attestedFailed) {
-            notifyError(new Error('Attestation failed, please resubmit.'));
-          }
+        setAttestationStatus(attestationStatus);
+        setPosition(position);
 
-          setAttestationStatus(attestationStatus);
-
-          return attestationStatus;
-        });
+        return attestationStatus;
+      });
     }
-  }, [attestationStatus, claimerLightDid, notifyError]);
+  }, [attestationStatus, notifyError, rootHash]);
 
   useInterval(listenAttestationStatus, 6000, true);
 
@@ -109,6 +102,8 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         claimerLightDid.authenticationKey.id
       );
 
+      setRootHash(requestForAttestation.rootHash);
+
       setCredential(
         Credential.fromRequestAndAttestation(
           requestForAttestation,
@@ -136,7 +131,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         ATTESTER_ASSEMBLE_KEY_ID
       );
 
-      const data = await credentialApi.submitClaim({
+      const data = await credentialApi.submitClaimV2({
         ciphertext: encryptedPresentationMessage.ciphertext,
         nonce: encryptedPresentationMessage.nonce,
         senderKeyId: encryptedPresentationMessage.senderKeyId,
@@ -144,7 +139,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
       });
 
       if (data.code === 200) {
-        setAttestationStatus(AttestationStatus.attesting);
+        setAttestationStatus(AttestationStatusV2.submiting);
       }
     } catch (error) {
       reportError(error as Error);
@@ -156,12 +151,12 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
   return (
     <>
       <StayAlert
-        message="We are checking your documents. The attestation takes around 30s."
-        open={loading || attestationStatus === AttestationStatus.attesting}
+        message={`We are checking your documents. The attestation in queued ${position}`}
+        open={loading || attestationStatus === AttestationStatusV2.submiting}
         severity="warning"
       />
       <LoadingButton
-        loading={loading || attestationStatus === AttestationStatus.attesting}
+        loading={loading || attestationStatus === AttestationStatusV2.submiting}
         onClick={handleClick}
         variant="rounded"
       >

@@ -48,7 +48,7 @@
     "@zcloak/contracts-core": "^0.0.2-7",
     "@zcloak/dev": "^0.1.1",
     "@zcloak/react-wallet": "^0.0.2-7",
-    "@zcloak/service": "^0.0.2-7",
+    "@zcloak/service": "^0.0.2-18",
     "@zcloak/web3-query": "^0.0.2-7",
     "babel-plugin-import": "^1.13.5",
     "concurrently": "^7.2.1",
