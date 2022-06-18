@@ -67,7 +67,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
           notifyError(new Error('Attestation failed, please resubmit.'));
         }
 
-        setAttestationStatus(attestationStatus);
+        setAttestationStatus(status);
         setPosition(position);
 
         return attestationStatus;
