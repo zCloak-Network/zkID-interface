@@ -2,7 +2,7 @@ name: GitHub Actions
 on: [push]
 jobs:
   dev-deploy:
-    if: github.ref == 'refs/heads/grecaptcha'
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -12,7 +12,7 @@ jobs:
       - run: echo "🎉 ${{ github.repository }}, ${{ github.ref }}, ${{ github.event_name }} , ${{ runner.os }}, "
       - uses: actions/checkout@v2
         with:
-          ref: grecaptcha
+          ref: dev
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}

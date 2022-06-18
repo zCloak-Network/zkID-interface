@@ -16,6 +16,6 @@
   "type": "module",
   "version": "0.0.0",
   "dependencies": {
-    "@zcloak/react-wallet": "^0.0.2-7"
+    "@zcloak/react-wallet": "^0.0.2-18"
   }
 }
