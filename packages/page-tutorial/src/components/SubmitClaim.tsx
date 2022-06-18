@@ -70,7 +70,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         setAttestationStatus(status);
         setPosition(position);
 
-        return attestationStatus;
+        return status;
       });
     }
   }, [attestationStatus, notifyError, rootHash]);
