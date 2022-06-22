@@ -157,7 +157,11 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
     <>
       <Recaptcha onCallback={setToken} />
       <StayAlert
-        message={`We are checking your documents. The attestation in queued ${position}`}
+        message={
+          position
+            ? `Your request is No.${position} in the attestation queue...`
+            : 'Request sent. We are checking your document...'
+        }
         open={loading || attestationStatus === AttestationStatusV2.submiting}
         severity="warning"
       />
