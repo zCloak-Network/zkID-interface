@@ -34,17 +34,17 @@ const Step2: React.FC = () => {
       <Readme />
       {credential && verified ? (
         <>
-          <Typography variant="h3">Describe Yourself</Typography>
+          <Typography variant="h3">Receive Your Credential</Typography>
           <Typography variant="inherit">
-            We have prepared a gift POAP for you. The POAP style varies by your age, class and
-            equipment. To claim it, first describe yourself. Then submit.
+            Your data is good. Please download your credential and save it properly.
           </Typography>
         </>
       ) : (
         <>
-          <Typography variant="h3">Receive Your Credential</Typography>
+          <Typography variant="h3">Describe Yourself</Typography>
           <Typography variant="inherit">
-            Your data is good. Please download your credential and save it properly.
+            We have prepared a gift POAP for you. The POAP style varies by your age, class and
+            equipment. To claim it, first describe yourself. Then submit.
           </Typography>
         </>
       )}
