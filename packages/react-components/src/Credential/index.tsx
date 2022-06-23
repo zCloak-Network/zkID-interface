@@ -39,6 +39,8 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
 
         setVerified(true);
         await disconnect();
+      } else {
+        setVerified(false);
       }
     })();
   }, [credential]);
