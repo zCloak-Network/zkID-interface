@@ -48,7 +48,7 @@ export const JudgeStepContext = createContext<JudgeStepState>({} as JudgeStepSta
 
 const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ children }) => {
   const { account, provider } = useWallet();
-  const { credential, ready, reset } = useContext(CredentialContext);
+  const { credential, reset } = useContext(CredentialContext);
   const [step, setStep] = useState(0);
   const [exists, setExists, existsInitial] = useIsInitialState<boolean>(false);
   const [finished, setFinished, finishedInitial] = useIsInitialState<boolean>(false);
@@ -105,7 +105,7 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
   });
 
   useEffect(() => {
-    if (existsInitial && ready) {
+    if (existsInitial) {
       if (exists) {
         isMounted.current && setStep(3);
       } else if (credential) {
@@ -114,9 +114,9 @@ const JudgeStep: React.FC<{ children: (step: number) => React.ReactNode }> = ({ 
 
       isMounted.current = false;
     }
-  }, [credential, exists, existsInitial, ready, reset]);
+  }, [credential, exists, existsInitial, reset]);
 
-  return existsInitial && finishedInitial && ready ? (
+  return existsInitial && finishedInitial ? (
     <JudgeStepContext.Provider
       value={{
         step,

@@ -1,15 +1,14 @@
-import { connect, Credential, Did, disconnect, ICredential, init } from '@kiltprotocol/sdk-js';
+import { Credential, Did, disconnect, ICredential, init } from '@kiltprotocol/sdk-js';
 import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { KILT_ENDPOINT } from '@zkid/app-config/endpoints';
-import { useInterval, useLightDid, useLocalStorage } from '@zkid/react-hooks';
+import { useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { CREDENTIAL, CREDENTIAL_MNEMONIC } from './keys';
 
 interface CredentialState {
   mnemonic?: string;
-  ready: boolean;
   verified: boolean;
   keystore: Did.DemoKeystore;
   claimerLightDid?: Did.LightDidDetails;
@@ -22,31 +21,27 @@ export const CredentialContext = createContext<CredentialState>({} as Credential
 
 init({ address: KILT_ENDPOINT });
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
   const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
-  const [ready, setReady] = useState(false);
   const [verified, setVerified] = useState(false);
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
 
-  const getVerify = useCallback(() => {
-    if (credential && !verified) {
-      Credential.verify(credential).then(setVerified);
-    } else if (!credential) {
-      setVerified(false);
-    }
-  }, [credential, verified]);
-
-  useInterval(getVerify, 6000);
-
   useEffect(() => {
-    connect().then(() => setReady(true));
+    (async () => {
+      if (credential) {
+        while (!(await Credential.verify(credential))) {
+          await sleep(6000);
+        }
 
-    return () => {
-      disconnect();
-    };
-  }, []);
+        setVerified(true);
+        await disconnect();
+      }
+    })();
+  }, [credential]);
 
   useEffect(() => {
     // Migration
@@ -76,7 +71,6 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
     <CredentialContext.Provider
       value={{
         mnemonic,
-        ready,
         verified,
         keystore,
         claimerLightDid,
