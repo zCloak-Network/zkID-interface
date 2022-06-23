@@ -52,6 +52,9 @@ const Step1: React.FC = () => {
       ) : (
         !hasPassword && <Createpassword />
       )}
+      <Typography mt={2}>
+        tips: try refreshing the page if the extension already installed
+      </Typography>
     </Wrapper>
   );
 };
