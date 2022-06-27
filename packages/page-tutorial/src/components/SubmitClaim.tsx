@@ -166,7 +166,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         severity="warning"
       />
       <StayAlert
-        message="Service is temporarily unavailable due to breaking changes of KILT Network upgrade, hotfixing now..."
+        message="Service is temporarily unavailable due to breaking changes of KILT Testnet upgrade, hotfixing now..."
         open
         severity="warning"
       />
