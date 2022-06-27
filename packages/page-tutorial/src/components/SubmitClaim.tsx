@@ -165,8 +165,14 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         open={loading || attestationStatus === AttestationStatusV2.submiting}
         severity="warning"
       />
+      <StayAlert
+        message="Service is temporarily unavailable due to breaking changes of KILT Network upgrade, hotfixing now..."
+        open
+        severity="warning"
+      />
       <LoadingButton
-        disabled={!token}
+        // disabled={!token}
+        disabled
         loading={loading || attestationStatus === AttestationStatusV2.submiting}
         onClick={handleClick}
         variant="rounded"
