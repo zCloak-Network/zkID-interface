@@ -20,8 +20,7 @@ import { useWallet } from '@zcloak/react-wallet';
 import { ProofStatus } from '@zcloak/service/types';
 
 import { CircularProgressWithLabel, Ellipsis } from '@zkid/react-components';
-import { useToggle } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useToggle, useZkidApi } from '@zkid/react-hooks';
 
 const Progress: React.FC<{ progress: number; status: ProofStatus }> = ({ progress, status }) => {
   return status === ProofStatus.True ? (
@@ -128,11 +127,13 @@ const Proof: React.FC = () => {
   const { account } = useWallet();
   const [proofs, setProofs] = useState<ProofType[]>([]);
 
+  const zkidApi = useZkidApi();
+
   useEffect(() => {
     if (account) {
-      zkidApi.userProof({ dataOwner: account }).then(({ data }) => setProofs(data));
+      zkidApi?.userProof({ dataOwner: account }).then(({ data }) => setProofs(data));
     }
-  }, [account]);
+  }, [account, zkidApi]);
 
   return (
     <Box id="dashboard-proof">

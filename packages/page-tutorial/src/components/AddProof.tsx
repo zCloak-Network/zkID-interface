@@ -10,7 +10,7 @@ import { ATTESTER_ADDRESS, CTYPE_HASH } from '@zkid/app-config/constants';
 import { ZK_PROGRAM } from '@zkid/app-config/constants/zk';
 import { KILT_SS58 } from '@zkid/app-config/endpoints';
 import { ButtonEnable, CredentialContext, NotificationContext } from '@zkid/react-components';
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useZkidApi } from '@zkid/react-hooks';
 
 import { JudgeStepContext } from '../JudgeStep';
 import { decodeSs58Address, stringToHex } from '../utils';
@@ -27,8 +27,10 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, r
   const { account, chainId } = useWallet();
   const [loading, setLoading] = useState(false);
 
+  const zkidApi = useZkidApi();
+
   const errorsPromise = useMemo(() => {
-    if (proof) {
+    if (proof && zkidApi) {
       return [
         zkidApi.rootHashUser(proof.rootHash).then(({ data: { address } }) => {
           if (address && address !== account) {
@@ -39,7 +41,7 @@ const AddProof: React.FC<React.PropsWithChildren<Props>> = ({ children, proof, r
     } else {
       return [];
     }
-  }, [account, proof]);
+  }, [account, proof, zkidApi]);
 
   const handleClick = useCallback(async () => {
     try {
