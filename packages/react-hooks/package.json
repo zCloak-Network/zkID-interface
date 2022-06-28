@@ -17,8 +17,8 @@
   "version": "0.0.0",
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.28.0",
-    "@zcloak/service": "^0.0.2-23",
-    "@zcloak/web3-query": "^0.0.2-23",
+    "@zcloak/service": "^0.0.2-24",
+    "@zcloak/web3-query": "^0.0.2-24",
     "@zkid/app-config": "^0.0.0",
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.6.8",

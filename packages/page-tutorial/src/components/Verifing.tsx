@@ -120,7 +120,7 @@ const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setF
     if (account) {
       zkidApi
         ?.proofProcess({ dataOwner: account, requestHash })
-        .then(({ data }) => data._id && setProcess(data));
+        .then(({ data }) => data.requestHash && setProcess(data));
     }
   }, [account, zkidApi]);
 
@@ -132,7 +132,7 @@ const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setF
     } else {
       setFinished(false);
     }
-  }, [process?.finished, setFinished]);
+  }, [process, process?.finished, setFinished]);
 
   return (
     <Box
