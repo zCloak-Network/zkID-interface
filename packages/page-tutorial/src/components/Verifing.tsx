@@ -9,8 +9,7 @@ import { useWallet } from '@zcloak/react-wallet';
 
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Address } from '@zkid/react-components';
-import { useEndpoint, useInterval } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useEndpoint, useInterval, useZkidApi } from '@zkid/react-hooks';
 
 import { requestHash } from '../JudgeStep';
 
@@ -115,13 +114,15 @@ const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setF
   const { account } = useWallet();
   const [process, setProcess] = useState<ProofProcess>();
 
+  const zkidApi = useZkidApi();
+
   const fetchProofProcess = useCallback(() => {
     if (account) {
       zkidApi
-        .proofProcess({ dataOwner: account, requestHash })
-        .then(({ data }) => data._id && setProcess(data));
+        ?.proofProcess({ dataOwner: account, requestHash })
+        .then(({ data }) => data.requestHash && setProcess(data));
     }
-  }, [account]);
+  }, [account, zkidApi]);
 
   useInterval(fetchProofProcess, 6000);
 
@@ -131,7 +132,7 @@ const Verifing: React.FC<{ setFinished: (finished: boolean) => void }> = ({ setF
     } else {
       setFinished(false);
     }
-  }, [process?.finished, setFinished]);
+  }, [process, process?.finished, setFinished]);
 
   return (
     <Box

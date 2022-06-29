@@ -12,3 +12,4 @@ export * from './useQueryParams';
 export * from './useAccountPoap';
 export * from './useRequestForAttestation';
 export * from './useToggle';
+export * from './useZkidApi';

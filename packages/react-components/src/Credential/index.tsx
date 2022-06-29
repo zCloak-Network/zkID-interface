@@ -3,7 +3,7 @@ import { mnemonicGenerate } from '@polkadot/util-crypto';
 import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { KILT_ENDPOINT } from '@zkid/app-config/endpoints';
-import { useLightDid, useLocalStorage } from '@zkid/react-hooks';
+import { useInterval, useLightDid, useLocalStorage } from '@zkid/react-hooks';
 
 import { CREDENTIAL, CREDENTIAL_MNEMONIC } from './keys';
 
@@ -21,8 +21,6 @@ export const CredentialContext = createContext<CredentialState>({} as Credential
 
 init({ address: KILT_ENDPOINT });
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [mnemonic, setMnemonic, removeMnemonic] = useLocalStorage<string>(CREDENTIAL_MNEMONIC);
   const [credential, setCredential, removeCredential] = useLocalStorage<ICredential>(CREDENTIAL);
@@ -30,20 +28,15 @@ const CredentialProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
   const keystore = useMemo(() => new Did.DemoKeystore(), []);
   const claimerLightDid = useLightDid(keystore, mnemonic);
 
-  useEffect(() => {
-    (async () => {
-      if (credential) {
-        while (!(await Credential.verify(credential))) {
-          await sleep(6000);
-        }
+  const getVerified = useCallback(async () => {
+    if (!verified && credential) {
+      setVerified(await Credential.verify(credential));
+    } else if (verified && credential) {
+      disconnect();
+    }
+  }, [credential, verified]);
 
-        setVerified(true);
-        await disconnect();
-      } else {
-        setVerified(false);
-      }
-    })();
-  }, [credential]);
+  useInterval(getVerified, 6000, false);
 
   useEffect(() => {
     // Migration

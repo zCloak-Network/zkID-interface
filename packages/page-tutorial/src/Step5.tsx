@@ -11,7 +11,7 @@ import {
   NotificationContext,
   PoapCard
 } from '@zkid/react-components';
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useZkidApi } from '@zkid/react-hooks';
 
 import { JudgeStepContext } from './JudgeStep';
 
@@ -44,10 +44,12 @@ const Step5: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [nftId, setNftId] = useState<string>();
 
+  const zkidApi = useZkidApi();
+
   useEffect(() => {
     if (account) {
       zkidApi
-        .getMintPoap({ who: account })
+        ?.getMintPoap({ who: account })
         .then(({ data }) => {
           if (data) {
             setNftId(data.nftId);
@@ -57,7 +59,7 @@ const Step5: React.FC = () => {
         })
         .finally(() => setReady(true));
     }
-  }, [account]);
+  }, [account, zkidApi]);
 
   const claim = useCallback(() => {
     if (poap) {

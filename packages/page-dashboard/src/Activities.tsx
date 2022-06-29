@@ -18,8 +18,7 @@ import { Activity, ActivityType } from '@zcloak/service/types';
 
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
 import { Ellipsis } from '@zkid/react-components';
-import { useEndpoint } from '@zkid/react-hooks';
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useEndpoint, useZkidApi } from '@zkid/react-hooks';
 
 const Activities: React.FC = () => {
   const { account } = useWallet();
@@ -27,11 +26,13 @@ const Activities: React.FC = () => {
   const [activityType, setActivityType] = useState<ActivityType>();
   const endpoint = useEndpoint();
 
+  const zkidApi = useZkidApi();
+
   useEffect(() => {
     if (account) {
-      zkidApi.userActivities({ dataOwner: account }).then(({ data }) => setActivities(data));
+      zkidApi?.userActivities({ dataOwner: account }).then(({ data }) => setActivities(data));
     }
-  }, [account]);
+  }, [account, zkidApi]);
 
   const visibleActivities = useMemo(() => {
     return activities.filter((activity) =>

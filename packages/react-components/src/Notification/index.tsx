@@ -4,12 +4,7 @@ import { Alert, AlertTitle, Box, Collapse, Link, Portal, styled } from '@mui/mat
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
-import {
-  CallError,
-  ContractError,
-  OutOfGasError,
-  UserRejectError
-} from '@zcloak/contracts-core/errors';
+import { CallError, ContractError, OutOfGasError, RpcError } from '@zcloak/contracts-core/errors';
 
 import { endpoints } from '@zkid/app-config/endpoints';
 import { ExplorerDataType, getExplorerLink } from '@zkid/app-config/getExplorerLink';
@@ -54,10 +49,10 @@ function makeErrorMessage(error: unknown): Message {
       message: error.message,
       severity: 'error'
     };
-  } else if (error instanceof UserRejectError) {
+  } else if (error instanceof RpcError) {
     return {
       id: theId,
-      title: 'User reject transaction',
+      title: `${error.code} error when send transaction`,
       message: error.message,
       severity: 'error'
     };

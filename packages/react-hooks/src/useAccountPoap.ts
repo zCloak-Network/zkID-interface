@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { zkidApi } from '@zkid/react-hooks/api';
+import { useZkidApi } from '.';
 
 export function useAccountPoap(account?: string | null) {
   const [nftId, setNftId] = useState<string>();
 
+  const zkidApi = useZkidApi();
+
   useEffect(() => {
     if (account) {
-      zkidApi.getMintPoap({ who: account }).then(({ data }) => {
+      zkidApi?.getMintPoap({ who: account }).then(({ data }) => {
         if (data) {
           setNftId(data.nftId);
         } else {
@@ -15,7 +17,7 @@ export function useAccountPoap(account?: string | null) {
         }
       });
     }
-  }, [account]);
+  }, [account, zkidApi]);
 
   return nftId;
 }

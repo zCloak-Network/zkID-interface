@@ -95,7 +95,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
           chest_rarity: _contents.rarity[1],
           weapon_rarity: _contents.rarity[2]
         },
-        claimerLightDid.did
+        claimerLightDid.uri
       );
 
       const requestForAttestation = await RequestForAttestation.fromClaim(claim).signWithDidKey(
@@ -120,7 +120,7 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
           },
           type: Message.BodyType.REQUEST_ATTESTATION
         },
-        claimerLightDid.did,
+        claimerLightDid.uri,
         ATTESTER_DID
       );
 
@@ -136,8 +136,8 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
       const data = await credentialApi.submitClaimV2({
         ciphertext: encryptedPresentationMessage.ciphertext,
         nonce: encryptedPresentationMessage.nonce,
-        senderKeyId: encryptedPresentationMessage.senderKeyId,
-        receiverKeyId: encryptedPresentationMessage.receiverKeyId,
+        senderKeyId: encryptedPresentationMessage.senderKeyUri,
+        receiverKeyId: encryptedPresentationMessage.receiverKeyUri,
         reCaptchaToken: token
       } as any);
 
@@ -165,14 +165,8 @@ const SubmitClaim: React.FC<Props> = ({ contents, reportError }) => {
         open={loading || attestationStatus === AttestationStatusV2.submiting}
         severity="warning"
       />
-      <StayAlert
-        message="Service is temporarily unavailable due to breaking changes of KILT Testnet upgrade, hotfixing now..."
-        open
-        severity="warning"
-      />
       <LoadingButton
-        // disabled={!token}
-        disabled
+        disabled={!token}
         loading={loading || attestationStatus === AttestationStatusV2.submiting}
         onClick={handleClick}
         variant="rounded"
