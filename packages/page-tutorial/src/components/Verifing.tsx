@@ -57,11 +57,7 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
           alignItems: 'center',
           justifyContent: 'center',
           background:
-            success === undefined
-              ? 'white'
-              : success === true
-              ? palette.success.main
-              : palette.error.main,
+            success === undefined ? 'white' : success ? palette.success.main : palette.error.main,
           borderRadius: '12px',
           color: '#fff',
           fontSize: '12px'
@@ -69,7 +65,7 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
       >
         {success === undefined ? (
           <CircularProgress size={16} />
-        ) : success === true ? (
+        ) : success ? (
           <DoneIcon sx={{ stroke: 'white', strokeWidth: 2, color: 'white', fontSize: '12px' }} />
         ) : (
           <CloseIcon sx={{ stroke: 'white', strokeWidth: 2, color: 'white', fontSize: '12px' }} />
@@ -80,18 +76,14 @@ const Cell: React.FC<{ success?: boolean; address?: string; transactionHash?: st
           color:
             success === undefined
               ? palette.grey[900]
-              : success === true
+              : success
               ? palette.success.main
               : palette.error.main,
 
           fontWeight: 500
         })}
       >
-        {success === undefined
-          ? 'Loading...'
-          : success === true
-          ? 'Proof Verified'
-          : 'Verified False'}
+        {success === undefined ? 'Loading...' : success ? 'Proof Verified' : 'Verified False'}
       </Box>
       {transactionHash && (
         <Box>
