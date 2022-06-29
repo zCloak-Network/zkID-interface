@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      - run: RECAPTCHA_KEY=6LdmRHogAAAAAF9YN6bMc6hNExitqRJog3-wDkH- CREDENTIAL_SERVICE=https://credential-service.zkid.app ZKID_SERVICE=https://zkid-service.zkid.app yarn build
+      - run: RECAPTCHA_KEY=6LdmRHogAAAAAF9YN6bMc6hNExitqRJog3-wDkH- CREDENTIAL_SERVICE=https://credential-service.zkid.app ZKID_SERVICE=https://zkid-service.zkid.app/v2 yarn build
       - uses: appleboy/scp-action@master
         with:
           username: ubuntu
