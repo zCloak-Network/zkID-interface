@@ -13,7 +13,7 @@ export function getLow128(value: BigNumberish) {
   return BigNumber.from(hexDataSlice(BigNumber.from(value).toHexString(), 16));
 }
 
-const PoapCard: React.FC<Props> = ({ base = '/images/poaps/', ext = 'webp', nftId }) => {
+const PoapCard: React.FC<Props> = ({ base = 'images/poaps/', ext = 'webp', nftId }) => {
   const poapId = useMemo(() => BigNumber.from(nftId).shr(128).toString(), [nftId]);
   const imgName = useMemo(() => BigNumber.from(poapId).toString(), [poapId]);
 

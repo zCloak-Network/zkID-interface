@@ -24,147 +24,147 @@ const createComponents: Func = () => ({
       font-style: normal;
       font-display: swap;
       font-weight: 100;
-      src: url("/fonts/Kanit-Thin.ttf");
+      src: url("fonts/Kanit-Thin.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 100;
-      src: url("/fonts/Kanit-ThinItalic.ttf");
+      src: url("fonts/Kanit-ThinItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 200;
-      src: url("/fonts/Kanit-ExtraLight.ttf");
+      src: url("fonts/Kanit-ExtraLight.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 200;
-      src: url("/fonts/Kanit-ExtraLightItalic.ttf");
+      src: url("fonts/Kanit-ExtraLightItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 300;
-      src: url("/fonts/Kanit-Light.ttf");
+      src: url("fonts/Kanit-Light.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 300;
-      src: url("/fonts/Kanit-LightItalic.ttf");
+      src: url("fonts/Kanit-LightItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 400;
-      src: url("/fonts/Kanit-Regular.ttf");
+      src: url("fonts/Kanit-Regular.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 400;
-      src: url("/fonts/Kanit-Italic.ttf");
+      src: url("fonts/Kanit-Italic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 500;
-      src: url("/fonts/Kanit-Medium.ttf");
+      src: url("fonts/Kanit-Medium.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 500;
-      src: url("/fonts/Kanit-MediumItalic.ttf");
+      src: url("fonts/Kanit-MediumItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 600;
-      src: url("/fonts/Kanit-SemiBold.ttf");
+      src: url("fonts/Kanit-SemiBold.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 600;
-      src: url("/fonts/Kanit-SemiBoldItalic.ttf");
+      src: url("fonts/Kanit-SemiBoldItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 700;
-      src: url("/fonts/Kanit-Bold.ttf");
+      src: url("fonts/Kanit-Bold.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 700;
-      src: url("/fonts/Kanit-BoldItalic.ttf");
+      src: url("fonts/Kanit-BoldItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 800;
-      src: url("/fonts/Kanit-ExtraBold.ttf");
+      src: url("fonts/Kanit-ExtraBold.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 800;
-      src: url("/fonts/Kanit-ExtraBoldItalic.ttf");
+      src: url("fonts/Kanit-ExtraBoldItalic.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: normal;
       font-display: swap;
       font-weight: 900;
-      src: url("/fonts/Kanit-Black.ttf");
+      src: url("fonts/Kanit-Black.ttf");
     }
     @font-face {
       font-family: "Kanit";
       font-style: italic;
       font-display: swap;
       font-weight: 900;
-      src: url("/fonts/Kanit-BlackItalic.ttf");
+      src: url("fonts/Kanit-BlackItalic.ttf");
     }
     @font-face {
       font-family: "RobotoSlab";
       font-style: normal;
       font-display: swap;
       font-weight: 700;
-      src: url("/fonts/RobotoSlab-Bold.ttf");
+      src: url("fonts/RobotoSlab-Bold.ttf");
     }
     @font-face {
       font-family: "Roboto";
       font-style: normal;
       font-display: swap;
       font-weight: 400;
-      src: url("/fonts/Roboto-Regular.ttf");
+      src: url("fonts/Roboto-Regular.ttf");
     }
     @font-face {
       font-family: "Papyrus";
       font-style: normal;
       font-display: swap;
       font-weight: 400;
-      src: url("/fonts/PapyrusStd.OTF");
+      src: url("fonts/PapyrusStd.OTF");
     }
   `
   },

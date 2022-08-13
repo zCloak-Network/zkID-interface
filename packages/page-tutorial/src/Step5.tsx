@@ -104,7 +104,7 @@ const Step5: React.FC = () => {
             {nftId ? (
               <PoapCard nftId={nftId} />
             ) : (
-              <img src="/images/nft_cover.webp" style={{ width: 200 }} />
+              <img src="images/nft_cover.webp" style={{ width: 200 }} />
             )}
           </Box>
           {nftId ? (

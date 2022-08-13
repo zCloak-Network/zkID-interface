@@ -17,7 +17,7 @@ const Banner: React.FC = () => {
       id="dashboard"
       sx={{
         position: 'relative',
-        background: 'url(/images/pic_banner.webp) no-repeat',
+        background: 'url(images/pic_banner.webp) no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         borderRadius: '20px',

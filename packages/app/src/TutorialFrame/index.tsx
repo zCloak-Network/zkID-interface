@@ -10,9 +10,7 @@ const Wrapper = styled(Box)<{ inTutorial: boolean }>(
 width: 100vw;
 min-height: 100vh;
 padding-bottom: 44px;
-background: url('${
-    inTutorial ? '/images/tutorial-bg2.webp' : '/images/tutorial-bg.webp'
-  }') no-repeat;
+background: url('${inTutorial ? 'images/tutorial-bg2.webp' : 'images/tutorial-bg.webp'}') no-repeat;
 background-size: cover;
 background-position: center;
 `

@@ -80,7 +80,7 @@ const Home: React.FC = () => {
             />
           )}
         </Box>
-        <Box component="img" src="/images/home.webp" width={upSm ? '395px' : '200px'} />
+        <Box component="img" src="images/home.webp" width={upSm ? '395px' : '200px'} />
       </Stack>
     </>
   );

@@ -60,7 +60,7 @@ const Step3: React.FC = () => {
         credential never needs to leave your wallet.
       </Typography>
 
-      <img src="/images/pic_import.webp" />
+      <img src="images/pic_import.webp" />
 
       {isClick && isImport ? (
         <Button onClick={nextStep} variant="rounded">

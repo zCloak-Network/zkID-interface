@@ -23,7 +23,7 @@ const Wrapper = styled(Box)<{ downSm?: boolean }>(
   padding: 28px;
   margin-bottom: 44px;
 
-  background: url('/images/bg_credential.webp') no-repeat;
+  background: url('images/bg_credential.webp') no-repeat;
   background-size: ${downSm ? 'contain' : 'cover'};
   background-position: center;
 

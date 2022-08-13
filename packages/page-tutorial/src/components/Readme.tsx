@@ -36,7 +36,7 @@ const Readme: React.FC = () => {
             maxHeight: '75vh',
             borderRadius: '20px',
             padding: downSm ? '25px' : '50px',
-            background: 'url("/images/background_email.webp") no-repeat',
+            background: 'url("images/background_email.webp") no-repeat',
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             fontSize: '16px',

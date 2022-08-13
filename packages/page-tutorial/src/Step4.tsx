@@ -48,7 +48,7 @@ const ProofTrue: React.FC = () => {
         }
       }}
     >
-      <img src="/images/pic_true.webp" />
+      <img src="images/pic_true.webp" />
       <span>
         Congratulations! Your STARK proof has been verified.
         <br />

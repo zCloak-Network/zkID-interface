@@ -42,7 +42,7 @@ const Step1: React.FC = () => {
         Please install the zCloak ID Wallet to start your ZK adventure. The wallet performs some
         magic tricks — the STARK alchemy—to help you use your data and keep your secrets.
       </Typography>
-      <img src="/images/pic_install.webp" />
+      <img src="images/pic_install.webp" />
       {isInstall && hasPassword ? (
         <Button onClick={nextStep} variant="rounded">
           Next

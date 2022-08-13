@@ -35,7 +35,7 @@ const Faucet: React.FC = () => {
           }
         }}
       >
-        <img src="/images/pic_fail.webp" />
+        <img src="images/pic_fail.webp" />
         <span>Sorry, you don’t have token.</span>
       </Box>
       <ButtonEnable
